@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import StartScreen from '../components/StartScreen.vue'; // Korriger sti til StartScreen
-import BackgroundSelect from '../components/BackgroundSelect.vue'; // Korriger sti til BackgroundSelect
+import StartScreen from '../components/StartScreen.vue'; // Korrigeret sti til StartScreen
+import BackgroundSelect from '../components/BackgroundSelect.vue'; // Korrigeret sti til BackgroundSelect
+import ImageFormat from '../components/ImageFormat.vue'; // Ny import til ImageFormat
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/background-select',
     name: 'BackgroundSelect',
     component: BackgroundSelect
+  },
+  {
+    path: '/image-format', // Ny rute til ImageFormat
+    name: 'ImageFormat',
+    component: ImageFormat
   },
 ];
 
