@@ -26,7 +26,7 @@ CarbonCrush is a web application designed to help users track and reduce their c
 4. Start the development server:
   ```
   npm start
-  ```æl,æ,
+  fsdf
 
 ## Usage
 
