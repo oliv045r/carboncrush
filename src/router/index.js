@@ -3,6 +3,7 @@ import StartScreen from '../components/StartScreen.vue'; // Korrigeret sti til S
 import BackgroundSelect from '../components/BackgroundSelect.vue'; // Korrigeret sti til BackgroundSelect
 import ImageFormat from '../components/ImageFormat.vue'; // Ny import til ImageFormat
 import IconFormat from '@/components/IconFormat.vue';
+import FeedbackTemplate from '@/components/FeedbackTemplate.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/icon-format', // Ny rute til ImageFormat
     name: 'IconFormat',
     component: IconFormat
+  },
+  {
+    path: '/feedback-template', // Ny rute til ImageFormat
+    name: 'FeedbaclTemplate',
+    component: FeedbackTemplate
   },
 ];
 
