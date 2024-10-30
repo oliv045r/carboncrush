@@ -97,7 +97,7 @@ export default {
       this.$router.push('/');
     },
     goForward() {
-      this.$router.push('/another-route');
+      this.$router.push('/font-select');
     }
   }
 };
