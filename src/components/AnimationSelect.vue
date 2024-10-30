@@ -5,9 +5,10 @@
 
     <!-- Info sektion -->
     <div class="info-section">
-      <h1>Vælg animation</h1>
+      <h1>Vælg Billedkvalitet</h1>
       <p class="description">
-        Nu skal der vælges animationsgrad. Dette valg er afgørende for både brugeroplevelsen, ydeevnen og bæredygtigheden af dit webdesign. Mere komplekse animationer, såsom 3D-effekter eller kontinuerlige bevægelser, kan forbedre det visuelle indtryk, men kræver også flere ressourcer og mere databehandling, hvilket kan øge energiforbruget. Simpel animation eller brug af CSS-transitioner reducerer belastningen på systemet, indlæser hurtigere og minimerer miljøpåvirkningen. Ved at vælge lettere animationer kan du opnå en bedre balance mellem æstetik og bæredygtighed, samtidig med at du forbedrer performance på tværs af enheder. </p>
+        Nu skal der vælges billedkvalitet. Dette valg er afgørende for både billedets udseende, ydeevne og dets indflydelse på bæredygtigheden af dit design. Højere billedkvalitet giver skarpere billeder, men kræver mere databehandling og længere indlæsningstid, hvilket kan øge energiforbruget. Lavere billedkvalitet reducerer belastningen på systemet og kan forbedre brugeroplevelsen på langsommere forbindelser, samtidig med at det mindsker miljøpåvirkningen.
+      </p>
 
       <!-- Billedkvalitet slider -->
       <div>
