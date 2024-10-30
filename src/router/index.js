@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import StartScreen from '../components/StartScreen.vue'; // Korriger sti til StartScreen
 import BackgroundSelect from '../components/BackgroundSelect.vue'; // Korriger sti til BackgroundSelect
 import FontSelect from '../components/FontSelect.vue'; // Korriger sti til FontdSelect
+import FontColorSelect from '../components/FontColorSelect.vue'; // Korriger sti til FontColorSelect
 import ImageFormat from '../components/ImageFormat.vue'; // Ny import til ImageFormat
 import ImageQuality from '../components/ImageQuality.vue'; // Ny import til ImageQuality
 
@@ -21,6 +22,11 @@ const routes = [
     name: 'FontSelect',
     component: FontSelect
 },
+  {
+    path: '/font-color-select',
+    name: 'FontColorSelect',
+    component: FontColorSelect
+  },
 
   {
     path: '/image-format', // Ny rute til ImageFormat
