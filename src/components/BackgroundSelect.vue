@@ -2,19 +2,21 @@
   <div :style="{ backgroundColor: color }" class="background-select animate__animated animate__fadeIn">
     <!-- Gå tilbage pil -->
     <button class="nav-button left" @click="goBack">←</button>
-
     <!-- Info boks til baggrundsfarve valg -->
-    <div class="info-box" :style="{ backgroundColor: darkenColor(color, 20) }">
-      <h2>Vælg baggrundsfarve</h2>
-      <p>
+    <v-btn @click="goBack" color="primary">
+      →
+    </v-btn>
+
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-4 bg-black opacity-20" max-width="600" title="Vælg baggrundsfarve">
+      <v-card-text>
+        <p class="text-left">
         Baggrundsfarven spiller en afgørende rolle for din hjemmesides visuelle identitet. Den kan tilføre personlighed og stemning, men den kan også have en indflydelse på energiforbruget. Er du klar over, hvilken baggrundsfarve der er mest effektiv, når det kommer til energibesparelse?
         <br><br>
         Når du vælger baggrundsfarve, skal du overveje, om du skal prioritere æstetik over funktionalitet. Hvad er vigtigst for dig: den mest tiltalende farve eller den, der er mest bæredygtig?
       </p>
-    </div>
-    <v-btn color="primary">
-      Button
-    </v-btn>
+      </v-card-text>
+    </v-card>
+
     <!-- Circular color carousel -->
     <div
       class="carousel"
@@ -42,11 +44,14 @@
 
 <script>
 import { VBtn } from 'vuetify/lib/components'; // Import Vuetify button component
+import { VCard } from 'vuetify/lib/components'; // Import Vuetify button component
+
 
 export default {
   name: 'BackgroundSelect',
   components: {
-    VBtn, // Register Vuetify button component
+    VBtn,
+    VCard, // Register Vuetify button component
   },
   data() {
     return {
