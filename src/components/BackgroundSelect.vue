@@ -1,21 +1,10 @@
 <template>
   <div :style="{ backgroundColor: color }" class="background-select animate__animated animate__fadeIn">
     <!-- Gå tilbage pil -->
-    <button class="nav-button left" @click="goBack">←</button>
+    <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
     <!-- Info boks til baggrundsfarve valg -->
-    <v-btn @click="goBack" color="primary">
-      →
-    </v-btn>
 
-    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-4 bg-black opacity-20" max-width="600" title="Vælg baggrundsfarve">
-      <v-card-text>
-        <p class="text-left">
-        Baggrundsfarven spiller en afgørende rolle for din hjemmesides visuelle identitet. Den kan tilføre personlighed og stemning, men den kan også have en indflydelse på energiforbruget. Er du klar over, hvilken baggrundsfarve der er mest effektiv, når det kommer til energibesparelse?
-        <br><br>
-        Når du vælger baggrundsfarve, skal du overveje, om du skal prioritere æstetik over funktionalitet. Hvad er vigtigst for dig: den mest tiltalende farve eller den, der er mest bæredygtig?
-      </p>
-      </v-card-text>
-    </v-card>
+    <v-card class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" max-width="600" title="Vælg baggrundsfarve" text="Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen."></v-card>
 
     <!-- Circular color carousel -->
     <div
@@ -38,7 +27,7 @@
     <p>Valgt farve: {{ color }}</p>
 
     <!-- Gå frem pil -->
-    <button class="nav-button right" @click="goForward">→</button>
+    <v-btn class="position-absolute left-20 right" @click="goForward">→</v-btn>
   </div>
 </template>
 
@@ -124,15 +113,6 @@ export default {
   color: #ffffff;
 }
 
-.info-box {
-  color: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-  max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: left;
-}
 
 .carousel {
   position: relative;
@@ -149,6 +129,7 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border: 2px solid white;
   cursor: pointer;
   transition: transform 0.5s;
 }
