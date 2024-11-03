@@ -1,8 +1,8 @@
 <template>
-  <v-app id="app" :style="{ backgroundColor: backgroundColor }">
+  <v-app id="app" :style="appStyles">
     <v-container class="app-container">
       <transition name="fade" mode="out-in">
-        <div :style="{ backgroundColor: backgroundColor }">
+        <div>
           <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
         </div>
       </transition>
@@ -21,7 +21,14 @@ export default {
     BottomNav, // Register BottomNav component
   },
   computed: {
-    ...mapState(['backgroundColor']),
+    ...mapState(['backgroundColor', 'selectedFont', 'textColor']),
+    appStyles() {
+      return {
+        backgroundColor: this.backgroundColor,
+        fontFamily: this.selectedFont,
+        color: `${this.textColor} !important`
+      };
+    }
   },
 };
 </script>
@@ -46,18 +53,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin: 0;
-  padding: 0;
-  width: auto;
-}
-
-/* Transition styles */
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease; /* Animerer opacity */
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active i <2.1.8 */ {
-  opacity: 0; /* Starter og slutter med en opacity på 0 */
 }
 </style>

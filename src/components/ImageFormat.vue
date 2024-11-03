@@ -1,8 +1,5 @@
 <template>
     <div class="background-select animate__animated animate__fadeIn">
-      <!-- Gå tilbage pil -->
-      <button class="nav-button left" @click="goBack">←</button>
-  
       <!-- Info sektion -->
       <div class="info-section">
         <h1>Vælg billedformat</h1>
@@ -32,9 +29,6 @@
           @load="handleImageLoad"
         />
       </div>
-  
-      <!-- Gå frem pil -->
-      <button class="nav-button right" @click="goForward">→</button>
     </div>
   </template>
   
@@ -89,7 +83,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #333333;
   }
   
   .info-section {
@@ -101,7 +94,6 @@
     font-size: 1.1em;
     line-height: 1.6;
     margin: 1em 0;
-    color: #666666;
   }
   
   .format-options {

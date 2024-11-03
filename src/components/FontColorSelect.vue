@@ -1,10 +1,8 @@
 <template>
-  <div :style="{ color: textColor }" class="font-color-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
+  <div class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til skrifttype valg -->
     <v-card 
-      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4" 
+      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
       max-width="600" 
       title="Vælg tekstfarve" 
       text="Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.">
@@ -30,23 +28,20 @@
 
     <p>Valgt farve: {{ textColor }}</p>
 
-    <!-- Gå frem pil -->
-    <v-btn class="position-absolute left-20 right" @click="goForward">→</v-btn>
   </div>
 </template>
 
 <script>
-import { VBtn, VCard } from 'vuetify/lib/components';
+import { VCard } from 'vuetify/lib/components';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'FontColorSelect',
   components: {
-    VBtn,
     VCard,
   },
   data() {
     return {
-      textColor: '#000000',
       colorOptions: [
         '#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD',
         '#33DBFF', '#3375FF', '#3357FF', '#5733FF', '#BD33FF', '#FF33DB'
@@ -54,32 +49,56 @@ export default {
       selectedIndex: 0,
       angleStep: 360 / 12,
       rotationAngle: 0,
+      dragging: false,
+      startAngle: 0,
+      currentAngle: 0,
     };
   },
+  computed: {
+    ...mapState(['textColor']),
+  },
   methods: {
-    goBack() {
-      this.$router.push('/background-select');
+    ...mapActions(['updateTextColor']),
+    rotateToColor(index) {
+      this.selectedIndex = index;
+      this.rotationAngle = -this.selectedIndex * this.angleStep;
+      this.updateTextColor(this.colorOptions[this.selectedIndex]);
     },
-    goForward() {
-      this.$router.push('/another-route');
+    darkenColor(hex, percent = 20) {
+      hex = hex.replace('#', '');
+      let r = parseInt(hex.substring(0, 2), 16);
+      let g = parseInt(hex.substring(2, 4), 16);
+      let b = parseInt(hex.substring(4, 6), 16);
+      r = Math.max(0, r - Math.round((percent / 100) * 255));
+      g = Math.max(0, g - Math.round((percent / 100) * 255));
+      b = Math.max(0, b - Math.round((percent / 100) * 255));
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     },
     startDrag(event) {
       this.dragging = true;
-      this.startX = event.clientX;
+      this.startAngle = this.getMouseAngle(event);
+      this.currentAngle = this.rotationAngle;
+    },
+    onDrag(event) {
+      if (!this.dragging) return;
+      const angle = this.getMouseAngle(event);
+      const deltaAngle = angle - this.startAngle;
+      this.rotationAngle = this.currentAngle + deltaAngle;
     },
     endDrag() {
       this.dragging = false;
     },
-    onDrag(event) {
-      if (this.dragging) {
-        const deltaX = event.clientX - this.startX;
-        this.rotationAngle += deltaX / 2;
-        this.startX = event.clientX;
-      }
+    getMouseAngle(event) {
+      const rect = event.target.getBoundingClientRect();
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      return Math.atan2(y, x) * (180 / Math.PI);
     },
-    rotateToColor(index) {
-      this.selectedIndex = index;
-      this.textColor = this.colorOptions[index];
+    goBack() {
+      this.$router.push('/font-select');
+    },
+    goForward() {
+      this.$router.push('/font-color-select');
     }
   }
 };
@@ -92,9 +111,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
 }
-
 
 .carousel {
   position: relative;

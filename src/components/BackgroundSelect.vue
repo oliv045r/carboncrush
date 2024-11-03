@@ -1,7 +1,5 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
     <!-- Info boks til baggrundsfarve valg -->
 
     <v-card class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" max-width="600" title="Vælg baggrundsfarve" text="Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen."></v-card>
@@ -25,21 +23,16 @@
     </div>
 
     <p>Valgt farve: {{ color }}</p>
-
-    <!-- Gå frem pil -->
-    <v-btn class="position-absolute left-20 right" @click="goForward">→</v-btn>
   </div>
 </template>
 
 <script>
-import { VBtn } from 'vuetify/lib/components'; // Import Vuetify button component
 import { VCard } from 'vuetify/lib/components'; // Import Vuetify button component
 import { mapActions } from 'vuex';
 
 export default {
   name: 'BackgroundSelect',
   components: {
-    VBtn,
     VCard, // Register Vuetify button component
   },
   data() {
@@ -115,7 +108,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
 }
 
 .carousel {
@@ -141,7 +133,6 @@ export default {
 .nav-button {
   background-color: transparent;
   border: none;
-  color: #ffffff;
   font-size: 2rem;
   cursor: pointer;
   position: absolute;

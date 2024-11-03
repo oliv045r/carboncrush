@@ -1,24 +1,23 @@
 <template>
-  <div :style="{ fontFamily: selectedFont }" class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
+  <div :style="{ fontFamily: selectedFont, color: textColor }" class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til baggrundsfarve valg -->
 
-  <v-card 
-    class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
-    max-width="600" 
-    title="Vælg skrifttype" 
-    text="Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
+    <v-card 
+      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
+      max-width="600" 
+      title="Vælg skrifttype" 
+      text="Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
 
-    Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.">
-  </v-card>
+      Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.">
+    </v-card>
 
-<!-- Font carousel -->
-<v-carousel v-model="currentFontIndex" hide-delimiters>
+    <!-- Font carousel -->
+    <v-carousel v-model="currentFontIndex" hide-delimiters>
       <template v-slot:prev>
         <v-btn class="custom-prev-btn" icon @click="goBackwardFont">←</v-btn>
       </template>
       <v-carousel-item v-for="(font, index) in fonts" :key="index">
-        <div :style="{ fontFamily: font.font }" class="font-preview">
+        <div :style="{ fontFamily: font.font, color: textColor }" class="font-preview">
           {{ font.name }} - The quick brown fox jumps over the lazy dog.
         </div>
       </v-carousel-item>
@@ -26,13 +25,12 @@
         <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
       </template>
     </v-carousel>
-    
-
   </div>
 </template>
 
 <script>
 import { VBtn, VCard, VCarousel, VCarouselItem } from 'vuetify/lib/components'; // Import Vuetify button component
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'FontSelect',
@@ -40,12 +38,11 @@ export default {
     VBtn,
     VCard,
     VCarousel,
-    VCarouselItem // Register Vuetify button component
+    VCarouselItem, // Register Vuetify button component
   },
   data() {
     return {
       currentFontIndex: 0,
-      selectedFont: 'Arial, sans-serif',
       fonts: [
         { name: 'Arial', font: 'Arial, sans-serif' },
         { name: 'Courier New', font: 'Courier New, monospace' },
@@ -56,15 +53,13 @@ export default {
         { name: 'Trebuchet MS', font: 'Trebuchet MS, sans-serif' },
         { name: 'Comic Sans MS', font: 'Comic Sans MS, cursive, sans-serif' }
       ],
-      color: '#ffffff'
     };
   },
-  watch: {
-    currentFontIndex(newIndex) {
-      this.selectedFont = this.fonts[newIndex].font;
-    }
+  computed: {
+    ...mapState(['selectedFont', 'textColor']),
   },
   methods: {
+    ...mapActions(['updateSelectedFont']),
     goBack() {
       this.$router.push('/background-select');
     },
@@ -73,11 +68,21 @@ export default {
     },
     goForwardFont() {
       this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
     },
     goBackwardFont() {
       this.currentFontIndex = (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length;
-    }
-  }
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
+    },
+  },
+  watch: {
+    currentFontIndex(newIndex) {
+      this.updateSelectedFont(this.fonts[newIndex].font);
+    },
+  },
+  mounted() {
+    this.currentFontIndex = this.fonts.findIndex(font => font.font === this.selectedFont);
+  },
 };
 </script>
 
@@ -97,7 +102,7 @@ export default {
 }
 
 .font-preview {
-  color: black;
+  color: inherit !important;
   font-size: 24px;
   text-align: center;
   padding: 20px;
