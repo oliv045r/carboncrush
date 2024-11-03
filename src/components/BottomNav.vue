@@ -4,16 +4,12 @@
     color="primary"
     app
   >
-    <v-btn
-      v-for="item in items"
-      :key="item.title"
-      :to="item.to"
-      :exact="item.exact"
-      @click="navigate(item.to)"
-      icon
-    >
-      <v-icon>{{ item.icon }}</v-icon>
-      <span>{{ item.title }}</span>
+    <v-btn @click="goBack" icon>
+      <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <v-btn @click="goForward" icon>
+      <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>
@@ -31,16 +27,40 @@ export default {
   data() {
     return {
       active: null,
-      items: [
-        { title: 'Home', to: '/', exact: true, icon: 'mdi-home' },
-        { title: 'Background Select', to: '/background-select', icon: 'mdi-palette' },
-        // Add more navigation items as needed
+      routes: [
+        { name: 'Home', path: '/' },
+        { name: 'Background Select', path: '/background-select' },
+        { name: 'Font Select', path: '/font-select' },
+        { name: 'Font Color Select', path: '/font-color-select' },
+        { name: 'Image Format', path: '/image-format' },
+        { name: 'Image Quality', path: '/image-quality' },
+
+
+        // Add more routes as needed
       ],
     };
   },
+  computed: {
+    currentPage() {
+      const route = this.$route;
+      return this.routes.findIndex(r => r.path === route.path) + 1;
+    },
+    totalPages() {
+      return this.routes.length;
+    },
+  },
   methods: {
-    navigate(to) {
-      this.$router.push(to);
+    goBack() {
+      const currentIndex = this.currentPage - 1;
+      if (currentIndex > 0) {
+        this.$router.push(this.routes[currentIndex - 1].path);
+      }
+    },
+    goForward() {
+      const currentIndex = this.currentPage - 1;
+      if (currentIndex < this.totalPages - 1) {
+        this.$router.push(this.routes[currentIndex + 1].path);
+      }
     },
   },
 };
@@ -49,7 +69,11 @@ export default {
 <style scoped>
 .v-bottom-navigation {
   position: fixed;
-  bottom: 0;
-  width: 30%;
+  bottom: 1rem;
+  left: calc(50% - 10rem) !important;
+  width: 15rem !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
