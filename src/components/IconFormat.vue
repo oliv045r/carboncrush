@@ -62,24 +62,29 @@
       }
     },
     methods: {
-      selectFormat(format) {
-        this.isFading = true;
-        setTimeout(() => {
-          this.selectedFormat = format;
-          this.isFading = false;
-        }, 300);
-      },
-      handleImageLoad() {
-        this.isFading = false;
-      },
-      goBack() {
-        this.$router.push('/');
-      },
-      goForward() {
-        this.$router.push('/another-route');
-      }
+  selectFormat(format) {
+    this.isFading = true;
+    setTimeout(() => {
+      this.selectedFormat = format;
+      this.isFading = false;
+    }, 300);
+  },
+  handleImageLoad() {
+    this.isFading = false;
+  },
+  goBack() {
+    this.$router.push('/');
+  },
+  goForward() {
+    // Check the selected format and navigate based on it
+    if (this.selectedFormat.type === 'jpg') {
+      this.$router.push('/feedback-icon-wrong'); // Route for JPG format
+    } else {
+      this.$router.push('/feedback-icon'); // Route for PNG, SVG, etc.
     }
-  };
+  },
+  }
+  }
   </script>
   
   <style scoped>

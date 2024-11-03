@@ -29,4 +29,8 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active i <2.1.8 */ {
   opacity: 0; /* Starter og slutter med en opacity på 0 */
 }
+
+h1.title {
+  font-size: 50px;
+}
 </style>

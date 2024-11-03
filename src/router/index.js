@@ -1,35 +1,59 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import StartScreen from '../components/StartScreen.vue'; // Korrigeret sti til StartScreen
-import BackgroundSelect from '../components/BackgroundSelect.vue'; // Korrigeret sti til BackgroundSelect
-import ImageFormat from '../components/ImageFormat.vue'; // Ny import til ImageFormat
+import StartScreen from '@/components/StartScreen.vue';
+import BackgroundSelect from '@/components/BackgroundSelect.vue';
+import ImageFormat from '@/components/ImageFormat.vue';
 import IconFormat from '@/components/IconFormat.vue';
+import FeedbackIcon from '@/components/FeedbackIcon.vue';
 import FeedbackTemplate from '@/components/FeedbackTemplate.vue';
+import FeedbackIconBad from '@/components/FeedbackIconBad.vue';
+import AppHeader from '@/components/AppHeader.vue';
+import GameInformation from '@/components/GameInformation.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: StartScreen
+    component: StartScreen,
   },
   {
     path: '/background-select',
     name: 'BackgroundSelect',
-    component: BackgroundSelect
+    component: BackgroundSelect,
   },
   {
-    path: '/image-format', // Ny rute til ImageFormat
+    path: '/image-format',
     name: 'ImageFormat',
-    component: ImageFormat
+    component: ImageFormat,
   },
   {
-    path: '/icon-format', // Ny rute til ImageFormat
+    path: '/icon-format',
     name: 'IconFormat',
-    component: IconFormat
+    component: IconFormat,
   },
   {
-    path: '/feedback-template', // Ny rute til ImageFormat
-    name: 'FeedbaclTemplate',
-    component: FeedbackTemplate
+    path: '/feedback-icon',
+    name: 'FeedbackIcon',
+    component: FeedbackIcon,
+  },
+  {
+    path: '/feedback-icon-wrong',
+    name: 'FeedbackIconBad',
+    component: FeedbackIconBad,
+  },
+  {
+    path: '/feedback-template',
+    name: 'FeedbackTemplate',
+    component: FeedbackTemplate,
+  },
+  {
+    path: '/header-component',
+    name: 'AppHeader',
+    component: AppHeader,
+  },
+  {
+    path: '/info',
+    name: 'GameInformation',
+    component: GameInformation,
   },
 ];
 
