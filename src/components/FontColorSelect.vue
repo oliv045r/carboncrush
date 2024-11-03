@@ -4,7 +4,7 @@
     <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
     <!-- Info boks til skrifttype valg -->
     <v-card 
-      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
+      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4" 
       max-width="600" 
       title="Vælg tekstfarve" 
       text="Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.">

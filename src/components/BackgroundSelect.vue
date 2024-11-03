@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundColor: color }" class="background-select animate__animated animate__fadeIn">
+  <div class="background-select animate__animated animate__fadeIn">
     <!-- Gå tilbage pil -->
     <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
     <!-- Info boks til baggrundsfarve valg -->
@@ -34,7 +34,7 @@
 <script>
 import { VBtn } from 'vuetify/lib/components'; // Import Vuetify button component
 import { VCard } from 'vuetify/lib/components'; // Import Vuetify button component
-
+import { mapActions } from 'vuex';
 
 export default {
   name: 'BackgroundSelect',
@@ -58,10 +58,15 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['updateBackgroundColor']),
+    changeBackgroundColor(color) {
+      this.updateBackgroundColor(color);
+    },
     rotateToColor(index) {
       this.selectedIndex = index;
       this.rotationAngle = -this.selectedIndex * this.angleStep;
       this.color = this.colorOptions[this.selectedIndex];
+      this.changeBackgroundColor(this.color); // Call changeBackgroundColor
     },
     darkenColor(hex, percent = 20) {
       hex = hex.replace('#', '');
@@ -112,7 +117,6 @@ export default {
   justify-content: center;
   color: #ffffff;
 }
-
 
 .carousel {
   position: relative;

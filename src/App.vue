@@ -1,26 +1,35 @@
 <template>
-  <v-app id="app">
-      <v-container class="app-container">
-        <transition name="fade" mode="out-in">
+  <v-app id="app" :style="{ backgroundColor: backgroundColor }">
+    <v-container class="app-container">
+      <transition name="fade" mode="out-in">
+        <div :style="{ backgroundColor: backgroundColor }">
           <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
-        </transition>
-        <BottomNav /> <!-- Add BottomNav component here -->
-      </v-container>
+        </div>
+      </transition>
+      <BottomNav /> <!-- Add BottomNav component here -->
+    </v-container>
   </v-app>
 </template>
 
 <script>
 import BottomNav from '@/components/BottomNav.vue'; // Import BottomNav component
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     BottomNav, // Register BottomNav component
   },
+  computed: {
+    ...mapState(['backgroundColor']),
+  },
 };
 </script>
 
 <style>
+#app {
+  width: 100vw !important;
+}
 
 .app-container {
   margin: 0 !important;

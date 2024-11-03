@@ -1,7 +1,6 @@
 <template>
-  <div :style="{ fontFamily: selectedFont }" class="background-select animate__animated animate__fadeIn bg-grey">
+  <div :style="{ fontFamily: selectedFont }" class="background-select animate__animated animate__fadeIn">
     <!-- Gå tilbage pil -->
-    <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
     <!-- Info boks til baggrundsfarve valg -->
 
   <v-card 
@@ -28,8 +27,7 @@
       </template>
     </v-carousel>
     
-    <!-- Gå frem pil -->
-    <v-btn class="position-absolute left-20 right" @click="goForward">→</v-btn>
+
   </div>
 </template>
 
@@ -90,7 +88,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
 }
 
 .v-carousel {
