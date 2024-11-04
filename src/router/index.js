@@ -11,6 +11,12 @@ import GameInformation from '@/components/GameInformation.vue';
 import FeedbackImage from '@/components/FeedbackImage.vue';
 import ScoreDisplay from '@/components/ScoreDisplay.vue'; // Ensure this component exists
 import EndGame from '@/components/EndGame.vue';
+import AnimationSelect from '../components/AnimationSelect.vue'; // Ny import til Animation
+import ImageQuality from '../components/ImageQuality.vue'; // Ny import til ImageQuality
+import FontColorSelect from '../components/FontColorSelect.vue'; // Korriger sti til FontColorSelect
+import FontSelect from '../components/FontSelect.vue'; // Korriger sti til FontdSelect
+
+
 
 const routes = [
   {
@@ -24,7 +30,18 @@ const routes = [
     component: BackgroundSelect,
   },
   {
-    path: '/image-format',
+    path: '/font-select',
+    name: 'FontSelect',
+    component: FontSelect
+},
+  {
+    path: '/font-color-select',
+    name: 'FontColorSelect',
+    component: FontColorSelect
+  },
+
+  {
+    path: '/image-format', // Ny rute til ImageFormat
     name: 'ImageFormat',
     component: ImageFormat,
   },
@@ -72,6 +89,18 @@ const routes = [
     path: '/score', // Add this route if you want to display the score here
     name: 'ScoreDisplay',
     component: ScoreDisplay,
+  },
+
+  {
+    path: '/Image-Quality', // Ny rute til ImageQuality
+    name: 'ImageQuality',
+    component: ImageQuality
+  },
+
+  {
+    path: '/animation-select', // Ny rute til Animation
+    name: 'AnimationSelect',
+    component: AnimationSelect
   },
 ];
 
