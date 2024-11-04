@@ -1,35 +1,23 @@
 <template>
   <div class="container">
-    <button class="nav-button left" @click="goBack">←</button>
-    <!-- Apply fade-in class with dynamic binding -->
+    <!-- Tekstsektion med fade-in-effekt -->
     <v-container :class="{ 'fade-in': textVisible }" class="text-container">
       <h1 class="title">De er alle gode valg, men ...</h1>
       <p>
-        Når du vælger billedformat til din hjemmeside, er det vigtigt at tænke på kvalitet og filstørrelse, og med det blotte øje er der sjældent forskel på formaterne. Formater som JPEG og PNG er almindeligt anvendte, men nyere formater som WEBP og AVIF tilbyder bedre kompression og kvalitet.
+        Når du vælger billedformat, skal du tænke over både kvalitet og filstørrelse – lidt som at
+        finde den perfekte balance mellem stil og komfort. Klassiske formater som JPG og PNG klarer sig fint, men de
+        nyere formater WEBP og AVIF giver både høj kvalitet og langt mindre filstørrelse.
         <br /><br />
-        JPEG er ideelt til fotografier og giver en god balance mellem størrelse og kvalitet, mens PNG er bedre til billeder med gennemsigtighed. WEBP og AVIF kan reducere filstørrelserne betydeligt, hvilket forbedrer indlæsningstiderne og sparer båndbredde.
-        <br /><br />
-        Det rigtige valg kan også påvirke tilgængeligheden, da hurtigere indlæsning giver en bedre brugeroplevelse. Vær opmærksom på, hvordan dit valg kan optimere både ydeevne og bæredygtighed. Gør dit valg med omtanke!
+        Det bedste valg af billedformat gør ikke kun din side hurtigere; det gør også en forskel for miljøet. Mindre
+        filstørrelser betyder lavere energiforbrug, så du får en side, der både performer godt og er lidt grønnere.
       </p>
     </v-container>
 
-    <!-- Polaroid images with staggered fade-in effect -->
-    <div class="polaroids" v-if="textVisible">
-      <div
-        v-for="(image, index) in images"
-        :key="index"
-        class="polaroid"
-        :style="{ 
-          transform: `rotate(${Math.random() * 10 - 5}deg)`, 
-          transitionDelay: `${index * 0.5}s`, // Delay for staggered effect
-          opacity: polaroidVisible[index] ? 1 : 0 // Control opacity based on visibility
-        }"
-        @transitionend="handleTransitionEnd"
-      >
-        <img :src="image" alt="Polaroid Image" />
-      </div>
+    <!-- GIF display section -->
+    <div class="gif-container" v-if="textVisible">
+      <img src="@/images/king-of-the-hill-jpeg.gif" alt="King Of The Hill Jpeg GIF" class="gif-image" />
     </div>
-    <button class="nav-button right" @click="goForward">→</button>
+  
   </div>
 </template>
 
@@ -37,60 +25,19 @@
 export default {
   data() {
     return {
-      textVisible: false, // Controls when the text and images should fade in
-      images: [
-        require('@/images/jpeg.png'), // Adjust the path to your images
-        require('@/images/hotdog.png'),
-      ],
-      polaroidVisible: [false, false, false, false], // Control visibility of each polaroid
+      textVisible: false, // Controls when the text and GIF should fade in
     };
   },
   mounted() {
-    // Trigger the fade-in effect for text
+    // Trigger fade-in effect for text
     setTimeout(() => {
       this.textVisible = true;
-      this.showPolaroids(); // Start showing polaroids after text
     }, 100);
-  },
-  methods: {
-    showPolaroids() {
-      this.images.forEach((_, index) => {
-        setTimeout(() => {
-          this.polaroidVisible[index] = true; // Directly modify the array for visibility
-        }, index * 500); // Show each polaroid with a 500ms interval
-      });
-    },
-    handleTransitionEnd() {
-      // No specific action needed at the moment
-    },
-    goBack() {
-        this.$router.push('/image-format');
-      },
-      goForward() {
-        this.$router.push('/icon-format');
-      }
   },
 };
 </script>
 
 <style scoped>
-  .nav-button {
-    background-color: transparent;
-    border: none;
-    color: #333333;
-    font-size: 2rem;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .left {
-    left: 20px;
-  }
-  
-  .right {
-    right: 20px;
-  }
 /* Container styling */
 .container {
   display: flex;
@@ -114,25 +61,14 @@ export default {
   opacity: 1; /* Fades to full opacity */
 }
 
-/* Polaroid styling */
-.polaroids {
-  position: relative;
-  display: flex;
-  justify-content: center; /* Center the polaroids */
+/* GIF styling */
+.gif-container {
   margin-top: 30px;
+  text-align: center;
 }
 
-.polaroid {
-  position: relative; /* Change to relative to allow slight overlap */
-  margin: 0 -15px; /* Negative margin to overlap slightly */
-  width: 300px; /* Adjust width as necessary */
-  height: auto; /* Auto height based on the image aspect ratio */
-  opacity: 0; /* Start hidden */
-  transition: opacity 0.5s ease; /* Smooth fade-in for each polaroid */
-}
-
-.polaroid img {
-  width: 100%; /* Full width of the polaroid container */
-  border-radius: 5px; /* Optional rounded corners */
+.gif-image {
+  max-width: 50%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
 }
 </style>
