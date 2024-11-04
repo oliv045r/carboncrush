@@ -47,7 +47,7 @@
           { type: 'jpeg', label: 'JPEG', src: require('@/images/dog_jpg.jpg') },
           { type: 'png', label: 'PNG', src: require('@/images/dog_png.png') },
           { type: 'webp', label: 'WEBP', src: require('@/images/dog_webp.webp') },
-          { type: 'avif', label: 'AVIF', src: require('@/images/dog.avif') },
+          { type: 'avif', label: 'AVIF', src: require('@/images/dog_jpg.jpg') },
         ],
         selectedFormat: { type: 'jpeg', label: 'JPEG', src: require('@/images/dog_jpg.jpg') },
         isFading: false
@@ -76,7 +76,7 @@
         this.$router.push('/');
       },
       goForward() {
-        this.$router.push('/another-route');
+        this.$router.push('/feedback-image');
       }
     }
   };

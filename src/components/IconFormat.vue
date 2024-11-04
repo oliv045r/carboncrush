@@ -1,4 +1,6 @@
 <template>
+   <div>
+    <AppHeader />
     <v-container class="background-select">
       <!-- Gå tilbage pil -->
       <v-btn @click="goBack" class="nav-button left">←</v-btn>
@@ -40,10 +42,16 @@
       <!-- Gå frem pil -->
       <v-btn @click="goForward" class="nav-button right">→</v-btn>
     </v-container>
+    </div>
   </template>
   
   <script>
+  // Import the AppHeader component at the top
+import AppHeader from '@/components/AppHeader.vue'; // Adjust the path based on your file structure
   export default {
+    components: {
+    AppHeader // Register the component
+  },
     name: 'BackgroundSelect',
     data() {
       return {
@@ -100,6 +108,7 @@
   .info-section {
     text-align: center;
     max-width: 600px;
+    margin-top: 100px;
   }
   
   .description {
@@ -173,6 +182,10 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+  .background-select {
+  height: auto; /* or any other desired height, e.g., 50vh, 500px, etc. */
+}
   
   .left {
     left: 20px;

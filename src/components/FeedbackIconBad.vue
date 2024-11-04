@@ -1,4 +1,6 @@
 <template>
+     <div>
+      <AppHeader />
   <div class="container">
     <div class="wave-container" v-if="!loadingFinished">
       <img
@@ -32,10 +34,16 @@
       </div>
     </v-container>
   </div>
+  </div>
 </template>
 
 <script>
-export default {
+ // Import the AppHeader component at the top
+ import AppHeader from '@/components/AppHeader.vue'; // Adjust the path based on your file structure
+  export default {
+    components: {
+    AppHeader // Register the component
+  },
   data() {
     return {
       icons: Array(6).fill(0), // Initial wave icons

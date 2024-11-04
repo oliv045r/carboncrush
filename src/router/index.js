@@ -8,6 +8,9 @@ import FeedbackTemplate from '@/components/FeedbackTemplate.vue';
 import FeedbackIconBad from '@/components/FeedbackIconBad.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import GameInformation from '@/components/GameInformation.vue';
+import FeedbackImage from '@/components/FeedbackImage.vue';
+import ScoreDisplay from '@/components/ScoreDisplay.vue'; // Ensure this component exists
+import EndGame from '@/components/EndGame.vue';
 
 const routes = [
   {
@@ -54,6 +57,21 @@ const routes = [
     path: '/info',
     name: 'GameInformation',
     component: GameInformation,
+  },
+  {
+    path: '/feedback-image',
+    name: 'FeedbackImage',
+    component: FeedbackImage,
+  },
+  {
+    path: '/end-screen',
+    name: 'EndGame',
+    component: EndGame,
+  },
+  {
+    path: '/score', // Add this route if you want to display the score here
+    name: 'ScoreDisplay',
+    component: ScoreDisplay,
   },
 ];
 

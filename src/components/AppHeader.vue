@@ -79,7 +79,7 @@
     background-color: #f5f5f5; /* Light background for buttons */
     border-radius: 50%; /* Rounded buttons */
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-    left: 6px;
+    left: 7px;
   }
   
   /* Hover effect for buttons */
@@ -87,7 +87,7 @@
     background-color: #e0e0e0; /* Change color on hover */
   }
 
-  ::v-deep .v-application__wrap {
+  :deep(.v-application__wrap) {
     min-height: fit-content;
   }
 
