@@ -34,6 +34,7 @@ export default {
         { name: 'Font Color Select', path: '/font-color-select' },
         { name: 'Image Format', path: '/image-format' },
         { name: 'Image Quality', path: '/image-quality' },
+        { name: 'Animation Select', path: '/animation-select' },
 
 
         // Add more routes as needed
