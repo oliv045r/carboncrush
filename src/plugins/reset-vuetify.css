@@ -1,0 +1,4 @@
+/* reset-vuetify.css */
+.v-application--wrap, .v-container, .v-card, .v-btn, .v-carousel, .v-carousel-item {
+  color: inherit !important;
+}

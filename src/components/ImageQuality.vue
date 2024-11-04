@@ -1,8 +1,5 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <button class="nav-button left" @click="goBack">←</button>
-
     <!-- Info sektion -->
     <div class="info-section">
       <h1>Vælg Billedkvalitet</h1>
@@ -27,9 +24,6 @@
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
-
-    <!-- Gå frem pil -->
-    <button class="nav-button right" @click="goForward">→</button>
   </div>
 </template>
 
@@ -77,7 +71,6 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #333333;
   }
 
 .info-section {
@@ -89,18 +82,6 @@ export default {
     font-size: 1.1em;
     line-height: 1.6;
     margin: 1em 0;
-    color: #666666;
-  }
-
-.nav-button {
-    background-color: transparent;
-    border: none;
-    color: #333333;
-    font-size: 2rem;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
   }
   
   .left {

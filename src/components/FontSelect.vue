@@ -1,45 +1,88 @@
 <template>
-  <div :style="{ backgroundColor: color }" class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <v-btn class="position-absolute left-20 left" @click="goBack">←</v-btn>
+  <div :style="{ fontFamily: selectedFont, color: textColor }" class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til baggrundsfarve valg -->
 
-    <v-card class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" max-width="600" title="Vælg skrifttype" text="Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen."></v-card>
+    <v-card 
+      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
+      max-width="600" 
+      title="Vælg skrifttype" 
+      text="Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
 
-    <!-- Circular color carousel -->
-    <div></div>
-    </div>
+      Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.">
+    </v-card>
 
-    <p>Valgt font: {{ color }}</p>
-
-    <!-- Gå frem pil -->
-    <v-btn class="position-absolute left-20 right" @click="goForward">→</v-btn>
-
+    <!-- Font carousel -->
+    <v-carousel v-model="currentFontIndex" hide-delimiters>
+      <template v-slot:prev>
+        <v-btn class="custom-prev-btn" icon @click="goBackwardFont">←</v-btn>
+      </template>
+      <v-carousel-item v-for="(font, index) in fonts" :key="index">
+        <div :style="{ fontFamily: font.font, color: textColor }" class="font-preview">
+          {{ font.name }} - The quick brown fox jumps over the lazy dog.
+        </div>
+      </v-carousel-item>
+      <template v-slot:next>
+        <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
+      </template>
+    </v-carousel>
+  </div>
 </template>
 
 <script>
-import { VBtn } from 'vuetify/lib/components'; // Import Vuetify button component
-import { VCard } from 'vuetify/lib/components'; // Import Vuetify button component
-
+import { VBtn, VCard, VCarousel, VCarouselItem } from 'vuetify/lib/components'; // Import Vuetify button component
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'FontSelect',
   components: {
     VBtn,
-    VCard, // Register Vuetify button component
+    VCard,
+    VCarousel,
+    VCarouselItem, // Register Vuetify button component
   },
   data() {
     return {
+      currentFontIndex: 0,
+      fonts: [
+        { name: 'Arial', font: 'Arial, sans-serif' },
+        { name: 'Courier New', font: 'Courier New, monospace' },
+        { name: 'Georgia', font: 'Georgia, serif' },
+        { name: 'Times New Roman', font: 'Times New Roman, serif' },
+        { name: 'Verdana', font: 'Verdana, sans-serif' },
+        { name: 'Tahoma', font: 'Tahoma, sans-serif' },
+        { name: 'Trebuchet MS', font: 'Trebuchet MS, sans-serif' },
+        { name: 'Comic Sans MS', font: 'Comic Sans MS, cursive, sans-serif' }
+      ],
     };
   },
+  computed: {
+    ...mapState(['selectedFont', 'textColor']),
+  },
   methods: {
+    ...mapActions(['updateSelectedFont']),
     goBack() {
       this.$router.push('/background-select');
     },
     goForward() {
-      this.$router.push('/another-route');
-    }
-  }
+      this.$router.push('/font-color-select');
+    },
+    goForwardFont() {
+      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
+    },
+    goBackwardFont() {
+      this.currentFontIndex = (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
+    },
+  },
+  watch: {
+    currentFontIndex(newIndex) {
+      this.updateSelectedFont(this.fonts[newIndex].font);
+    },
+  },
+  mounted() {
+    this.currentFontIndex = this.fonts.findIndex(font => font.font === this.selectedFont);
+  },
 };
 </script>
 
@@ -50,7 +93,34 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+}
+
+.v-carousel {
+  height: 5rem !important;
+  padding: 0;
+  width: 60%;
+}
+
+.font-preview {
+  color: inherit !important;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+}
+.font-selector .v-select__selections {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.custom-prev-btn {
+  background-color: #fff;
+  color: #000;
+}
+.custom-next-btn {
+  background-color: #fff;
+  color: #000;
 }
 
 
