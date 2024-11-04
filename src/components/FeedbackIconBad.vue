@@ -48,10 +48,10 @@
     return {
       icons: Array(6).fill(0), // Initial wave icons
       iconSet: [
-        { src: "home.svg", alt: 'Icon by UIcons' },
-        { src: "cart.svg", alt: "Icon by UIcons" },
-        { src: "calendar.svg", alt: "Icon by UIcons" },
-        { src: "likes.svg", alt: "Icon by UIcons" }
+        { src: "home.jpg", alt: 'Icon by UIcons' },
+        { src: "cart.jpg", alt: "Icon by UIcons" },
+        { src: "calendar.jpg", alt: "Icon by UIcons" },
+        { src: "likes.jpg", alt: "Icon by UIcons" }
       ], // Different icons with alt text
       loadingFinished: false, // Control when to show the text
       textVisible: false, // Control when to fade in the text and icons
