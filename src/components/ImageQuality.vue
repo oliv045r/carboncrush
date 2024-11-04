@@ -1,8 +1,5 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <button class="nav-button left" @click="goBack">←</button>
-
     <!-- Info sektion -->
     <div class="info-section">
       <h1>Vælg Billedkvalitet</h1>
@@ -27,9 +24,6 @@
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
-
-    <!-- Gå frem pil -->
-    <button class="nav-button right" @click="goForward">→</button>
   </div>
 </template>
 
@@ -101,6 +95,7 @@ export default {
 </script>
 
 <style scoped>
+
 .background-select {
   height: 100vh;
   display: flex;
