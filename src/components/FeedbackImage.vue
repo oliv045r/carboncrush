@@ -39,10 +39,8 @@ export default {
     return {
       textVisible: false, // Controls when the text and images should fade in
       images: [
-        require('@/images/polaroid1.png'), // Adjust the path to your images
-        require('@/images/polaroid2.png'),
-        require('@/images/polaroid3.png'),
-        require('@/images/polaroid4.png'),
+        require('@/images/jpeg.png'), // Adjust the path to your images
+        require('@/images/hotdog.png'),
       ],
       polaroidVisible: [false, false, false, false], // Control visibility of each polaroid
     };
@@ -127,7 +125,7 @@ export default {
 .polaroid {
   position: relative; /* Change to relative to allow slight overlap */
   margin: 0 -15px; /* Negative margin to overlap slightly */
-  width: 200px; /* Adjust width as necessary */
+  width: 300px; /* Adjust width as necessary */
   height: auto; /* Auto height based on the image aspect ratio */
   opacity: 0; /* Start hidden */
   transition: opacity 0.5s ease; /* Smooth fade-in for each polaroid */
