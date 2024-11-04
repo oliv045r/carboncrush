@@ -1,10 +1,6 @@
 <template>
    <div>
-    <AppHeader />
-    <v-container class="background-select">
-      <!-- Gå tilbage pil -->
-      <v-btn @click="goBack" class="nav-button left">←</v-btn>
-  
+    <v-container class="background-select">  
       <!-- Info sektion -->
       <div class="info-section text-center">
         <h1>Vælg billedformat</h1>
@@ -38,20 +34,14 @@
         max-height="400"
         contain
       />
-  
-      <!-- Gå frem pil -->
-      <v-btn @click="goForward" class="nav-button right">→</v-btn>
+
     </v-container>
     </div>
   </template>
   
   <script>
   // Import the AppHeader component at the top
-import AppHeader from '@/components/AppHeader.vue'; // Adjust the path based on your file structure
   export default {
-    components: {
-    AppHeader // Register the component
-  },
     name: 'BackgroundSelect',
     data() {
       return {

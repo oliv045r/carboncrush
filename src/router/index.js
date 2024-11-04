@@ -6,7 +6,7 @@ import IconFormat from '@/components/IconFormat.vue';
 import FeedbackIcon from '@/components/FeedbackIcon.vue';
 import FeedbackTemplate from '@/components/FeedbackTemplate.vue';
 import FeedbackIconBad from '@/components/FeedbackIconBad.vue';
-import AppHeader from '@/components/AppHeader.vue';
+import AppHeader from '@/components/TopNav.vue';
 import GameInformation from '@/components/GameInformation.vue';
 import FeedbackImage from '@/components/FeedbackImage.vue';
 import ScoreDisplay from '@/components/ScoreDisplay.vue'; // Ensure this component exists
@@ -56,7 +56,7 @@ const routes = [
     component: FeedbackIcon,
   },
   {
-    path: '/feedback-icon-wrong',
+    path: '/feedback-icon-bad',
     name: 'FeedbackIconBad',
     component: FeedbackIconBad,
   },
@@ -81,7 +81,7 @@ const routes = [
     component: FeedbackImage,
   },
   {
-    path: '/end-screen',
+    path: '/end-game',
     name: 'EndGame',
     component: EndGame,
   },

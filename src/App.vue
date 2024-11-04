@@ -1,6 +1,7 @@
 <template>
   <v-app id="app" :style="appStyles">
     <v-container class="app-container">
+    <TopNav />
       <transition name="fade" mode="out-in">
         <div>
           <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
@@ -14,11 +15,13 @@
 <script>
 import BottomNav from '@/components/BottomNav.vue'; // Import BottomNav component
 import { mapState } from 'vuex';
+import TopNav from './components/TopNav.vue';
 
 export default {
   name: 'App',
   components: {
-    BottomNav, // Register BottomNav component
+    BottomNav,
+    TopNav, // Register BottomNav component
   },
   computed: {
     ...mapState(['backgroundColor', 'selectedFont', 'textColor']),
@@ -44,7 +47,6 @@ export default {
 }
 
 .router-container {
-  height: 100vh;
   width: 100vw;
 }
 

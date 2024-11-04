@@ -39,7 +39,7 @@
 
 <script>
  // Import the AppHeader component at the top
- import AppHeader from '@/components/AppHeader.vue'; // Adjust the path based on your file structure
+ import AppHeader from '@/components/TopNav.vue'; // Adjust the path based on your file structure
   export default {
     components: {
     AppHeader // Register the component

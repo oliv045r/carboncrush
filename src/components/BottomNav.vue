@@ -33,8 +33,14 @@ export default {
         { name: 'Font Select', path: '/font-select' },
         { name: 'Font Color Select', path: '/font-color-select' },
         { name: 'Image Format', path: '/image-format' },
+        { name: 'Feedback Image', path: '/feedback-image' },
         { name: 'Image Quality', path: '/image-quality' },
         { name: 'Animation Select', path: '/animation-select' },
+        { name: 'Icon Format', path: '/icon-format' },
+        { name: 'Feedback Icon', path: '/feedback-icon' },
+        { name: 'Feedback Icon Bad', path: '/feedback-icon-bad' },
+        { name: 'End Game', path: '/end-game' },
+
 
 
         // Add more routes as needed

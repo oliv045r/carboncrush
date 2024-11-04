@@ -1,6 +1,6 @@
 <template>
-    <v-app>
-      <v-container class="top-left-header" fluid>
+    <div>
+      <v-container  fluid class="top-left-header">
         <v-speed-dial
           v-model="fab"
           location="bottom left"
@@ -34,12 +34,15 @@
           ></v-btn>
         </v-speed-dial>
       </v-container>
-    </v-app>
+    </div>
   </template>
   
   <script>
+
   export default {
-    data() {
+    name: 'TopNav',
+     
+     data() {
       return {
         fab: false, // Controls speed dial open/close state
       };
@@ -56,6 +59,7 @@
   </script>
   
   <style scoped>
+
   .top-left-header {
     position: fixed; /* Fixed position to stay in view */
     top: 20px; /* Distance from the top of the viewport */
