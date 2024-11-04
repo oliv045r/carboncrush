@@ -5,7 +5,7 @@
       <h1 class="title">De er alle gode valg, men ...</h1>
       <p>
         Når du vælger billedformat, skal du tænke over både kvalitet og filstørrelse – lidt som at
-        finde den perfekte balance mellem stil og komfort. Klassiske formater som JPG og PNG klarer sig fint, men de
+        finde den perfekte balance mellem stil og komfort. Klassiske formater som JPEG og PNG klarer sig fint, men de
         nyere formater WEBP og AVIF giver både høj kvalitet og langt mindre filstørrelse.
         <br /><br />
         Det bedste valg af billedformat gør ikke kun din side hurtigere; det gør også en forskel for miljøet. Mindre
