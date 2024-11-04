@@ -54,4 +54,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+
+h1.title {
+  font-size: 50px;
+}
 </style>
