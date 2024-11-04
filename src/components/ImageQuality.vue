@@ -20,7 +20,7 @@
         />
         <br />
         <!-- Dynamisk billede -->
-        <img :src="imageSrc" :style="{ width: imageWidth + 'px' }" alt="Billede" />
+        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
@@ -32,24 +32,53 @@ export default {
   data() {
     return {
       quality: 80, // 80% billedkvalitet
-      imageSrc:require('@/images/dog_webp.webp'),
-      imageWidth: 500, // Standard billedbredde
+      imageSrc: require('@/images/dog_webp.webp'),
+      canvasWidth: 500, // Standard billedbredde
+      canvasHeight: 333, // Standard billedhøjde
       imageSize: 0, // Vil blive beregnet dynamisk
     };
   },
   methods: {
     goBack() {
-        this.$router.push('/');
-      },
-
-      goForward() {
-        this.$router.push('/another-route');
-      },
-
+      this.$router.push('/');
+    },
+    goForward() {
+      this.$router.push('/another-route');
+    },
     updateImage() {
-      // Opdater billedets bredde baseret på sliderens værdi
-      this.imageWidth = (this.quality / 100) * 500; // Justerer billedets bredde
-      this.calculateImageSize();
+      const canvas = this.$refs.canvas;
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.src = this.imageSrc;
+
+      img.onload = () => {
+        const aspectRatio = img.width / img.height;
+        let scaledWidth, scaledHeight;
+
+        if (aspectRatio > 1) {
+          // Landscape
+          scaledWidth = (this.quality / 100) * this.canvasWidth;
+          scaledHeight = scaledWidth / aspectRatio;
+        } else {
+          // Portrait or square
+          scaledHeight = (this.quality / 100) * this.canvasHeight;
+          scaledWidth = scaledHeight * aspectRatio;
+        }
+
+        // Draw the image at a lower resolution
+        const offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = scaledWidth;
+        offscreenCanvas.height = scaledHeight;
+        const offscreenCtx = offscreenCanvas.getContext('2d');
+        offscreenCtx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
+
+        // Scale the image back up to the canvas size
+        ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(offscreenCanvas, 0, 0, scaledWidth, scaledHeight, 0, 0, this.canvasWidth, this.canvasHeight);
+
+        this.calculateImageSize();
+      };
     },
     calculateImageSize() {
       // Her laver vi en simpel beregning af billedstørrelsen i KB baseret på kvaliteten
@@ -60,35 +89,50 @@ export default {
   mounted() {
     // Beregn initial billedstørrelse når komponentet monteres
     this.calculateImageSize();
+    this.updateImage();
   }
 };
 </script>
 
 <style scoped>
-  .background-select {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+
+.background-select {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+}
 
 .info-section {
-    text-align: center;
-    max-width: 600px;
-  }
-  
-  .description {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 1em 0;
-  }
-  
-  .left {
-    left: 20px;
-  }
-  
-  .right {
-    right: 20px;
-  }
+  text-align: center;
+  max-width: 600px;
+}
+
+.description {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin: 1em 0;
+  color: #666666;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  color: #333333;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.left {
+  left: 20px;
+}
+
+.right {
+  right: 20px;
+}
 </style>

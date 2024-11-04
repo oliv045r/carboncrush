@@ -5,6 +5,7 @@ import FontSelect from '../components/FontSelect.vue'; // Korriger sti til Fontd
 import FontColorSelect from '../components/FontColorSelect.vue'; // Korriger sti til FontColorSelect
 import ImageFormat from '../components/ImageFormat.vue'; // Ny import til ImageFormat
 import ImageQuality from '../components/ImageQuality.vue'; // Ny import til ImageQuality
+import AnimationSelect from '../components/AnimationSelect.vue'; // Ny import til Animation
 
 const routes = [
   {
@@ -38,6 +39,12 @@ const routes = [
     path: '/Image-Quality', // Ny rute til ImageQuality
     name: 'ImageQuality',
     component: ImageQuality
+  },
+
+  {
+    path: '/animation-select', // Ny rute til Animation
+    name: 'AnimationSelect',
+    component: AnimationSelect
   },
 ];
 
