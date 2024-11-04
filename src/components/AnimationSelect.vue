@@ -5,26 +5,17 @@
 
     <!-- Info sektion -->
     <div class="info-section">
-      <h1>Vælg Billedkvalitet</h1>
+      <h1>Vælg Animation</h1>
       <p class="description">
-        Nu skal der vælges billedkvalitet. Dette valg er afgørende for både billedets udseende, ydeevne og dets indflydelse på bæredygtigheden af dit design. Højere billedkvalitet giver skarpere billeder, men kræver mere databehandling og længere indlæsningstid, hvilket kan øge energiforbruget. Lavere billedkvalitet reducerer belastningen på systemet og kan forbedre brugeroplevelsen på langsommere forbindelser, samtidig med at det mindsker miljøpåvirkningen.
+        Vælg en knap for at se forskellige hover-animationer. Den første knap har mindst animation, og den sidste knap har mest animation.
       </p>
 
-      <!-- Billedkvalitet slider -->
-      <div>
-        <label for="qualitySlider">Billedkvalitet: {{ quality }}%</label>
-        <input 
-          id="qualitySlider"
-          type="range"
-          min="10"
-          max="100"
-          v-model="quality"
-          @input="updateImage"
-        />
-        <br />
-        <!-- Dynamisk billede -->
-        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
-        <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
+      <!-- Knapper med forskellige animationer -->
+      <div class="button-container">
+        <button class="animated-button button1">Knap 1</button>
+        <button class="animated-button button2">Knap 2</button>
+        <button class="animated-button button3" @click="bounceButton">Knap 3</button>
+        <button class="animated-button button4">Knap 4</button>
       </div>
     </div>
 
@@ -35,15 +26,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      quality: 80, // 80% billedkvalitet
-      imageSrc: require('@/images/dog_webp.webp'),
-      canvasWidth: 500, // Standard billedbredde
-      canvasHeight: 333, // Standard billedhøjde
-      imageSize: 0, // Vil blive beregnet dynamisk
-    };
-  },
   methods: {
     goBack() {
       this.$router.push('/');
@@ -51,51 +33,12 @@ export default {
     goForward() {
       this.$router.push('/another-route');
     },
-    updateImage() {
-      const canvas = this.$refs.canvas;
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.src = this.imageSrc;
-
-      img.onload = () => {
-        const aspectRatio = img.width / img.height;
-        let scaledWidth, scaledHeight;
-
-        if (aspectRatio > 1) {
-          // Landscape
-          scaledWidth = (this.quality / 100) * this.canvasWidth;
-          scaledHeight = scaledWidth / aspectRatio;
-        } else {
-          // Portrait or square
-          scaledHeight = (this.quality / 100) * this.canvasHeight;
-          scaledWidth = scaledHeight * aspectRatio;
-        }
-
-        // Draw the image at a lower resolution
-        const offscreenCanvas = document.createElement('canvas');
-        offscreenCanvas.width = scaledWidth;
-        offscreenCanvas.height = scaledHeight;
-        const offscreenCtx = offscreenCanvas.getContext('2d');
-        offscreenCtx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
-
-        // Scale the image back up to the canvas size
-        ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-        ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(offscreenCanvas, 0, 0, scaledWidth, scaledHeight, 0, 0, this.canvasWidth, this.canvasHeight);
-
-        this.calculateImageSize();
-      };
-    },
-    calculateImageSize() {
-      // Her laver vi en simpel beregning af billedstørrelsen i KB baseret på kvaliteten
-      const baseSize = 500; // Antag at billedet på 100% kvalitet er 500 KB
-      this.imageSize = Math.round((this.quality / 100) * baseSize);
+    bounceButton(event) {
+      const button = event.target;
+      button.classList.remove('bounce'); // Reset animation
+      void button.offsetWidth; // Trigger reflow to restart animation
+      button.classList.add('bounce');
     }
-  },
-  mounted() {
-    // Beregn initial billedstørrelse når komponentet monteres
-    this.calculateImageSize();
-    this.updateImage();
   }
 };
 </script>
@@ -120,6 +63,125 @@ export default {
   line-height: 1.6;
   margin: 1em 0;
   color: #666666;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.animated-button {
+  flex: 1; /* Giver knapperne ligelig plads */
+  margin: 0 5px; /* Afstand mellem knapperne */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button1:hover {
+  transform: scale(1.05);
+}
+
+.button2 {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  overflow: hidden; /* Added overflow hidden */
+  transition: all 0.3s ease;
+}
+
+.button2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(10% 0, 70% 0, 90% 100%, 30% 100%);
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: all 300ms ease;
+}
+
+.button2:hover::after {
+  left: 100%;
+}
+
+.button2:hover {
+  transform: scale(1.1);
+  background-color: #f0f0f0;
+}
+
+.button3.bounce {
+  animation: bounce 1s;
+}
+
+.button4 {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  --angle: 0deg; /* Initial angle */
+}
+
+.button4::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 4px solid transparent; /* Initially transparent */
+  pointer-events: none;
+}
+
+.button4:hover {
+  transform: scale(1.2);
+  animation: rotate-gradient 2s linear infinite;
+}
+
+.button4:hover::before {
+  border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+  animation: rotate 2s linear infinite;
+}
+
+
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes bounce {
+  0%, 20%, 80%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-40px);
+  }
+  60% {
+    transform: translateY(-50px);
+  }
+  
+  90% {
+    transform: translateY(-10px);
+  }
 }
 
 .nav-button {
