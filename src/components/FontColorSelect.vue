@@ -2,7 +2,7 @@
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til skrifttype valg -->
     <v-card 
-      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" 
+      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-0 bg-transparent" 
       max-width="600" 
       title="Vælg tekstfarve" 
       text="Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.">
@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       colorOptions: [
-        '#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD',
-        '#33DBFF', '#3375FF', '#3357FF', '#5733FF', '#BD33FF', '#FF33DB'
+      '#3AA3EA', '#F142DA', '#95BE87', '#4E2ADF', '#000000', '#FFFFFF',
+        '#E22828', '#B3D08D', '#E59C9D', '#D9D9D9', '#E2EC24', '#732A75'
       ],
       selectedIndex: 0,
       angleStep: 360 / 12,

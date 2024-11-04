@@ -39,8 +39,8 @@ export default {
     return {
       color: '#ffffff',
       colorOptions: [
-        '#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD',
-        '#33DBFF', '#3375FF', '#3357FF', '#5733FF', '#BD33FF', '#FF33DB'
+        '#3AA3EA', '#F142DA', '#95BE87', '#4E2ADF', '#000000', '#FFFFFF',
+        '#E22828', '#B3D08D', '#E59C9D', '#D9D9D9', '#E2EC24', '#732A75'
       ],
       selectedIndex: 0,
       angleStep: 360 / 12,
