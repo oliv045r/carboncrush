@@ -11,7 +11,7 @@ import GameInformation from '@/views/GameInformation.vue';
 import FeedbackImage from '@/components/feedback/FeedbackImage.vue';
 import ScoreDisplay from '@/components/ScoreDisplay.vue'; // Ensure this component exists
 import EndGame from '@/views/EndGame.vue';
-import AnimationSelect from '../views/AnimationSelect.vue'; // Ny import til Animation
+import AnimationSelect from '@/views/AnimationSelect.vue'; // Ny import til Animation
 import ImageQuality from '../views/ImageQuality.vue'; // Ny import til ImageQuality
 import FontColorSelect from '../views/FontColorSelect.vue'; // Korriger sti til FontColorSelect
 import FontSelect from '../views/FontSelect.vue'; // Korriger sti til FontdSelect
