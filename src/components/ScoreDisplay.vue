@@ -1,70 +1,77 @@
 <template>
-  <v-container class="score-ring-container" fluid>
+  <div class="text-center score-container">
+    <!-- Button to show the final score, only visible if showButton is true -->
+    <v-btn v-if="showButton" @click="showScore" color="primary" class="mb-4">
+      Vis resultat
+    </v-btn>
+    
+    <!-- Progress circular display for the score -->
     <v-progress-circular
-      :value="displayedScore"
+      v-if="value"
+      :model-value="value"
       :size="200"
       :width="15"
       color="blue"
-      rotate="90"
-      class="progress-circle"
     >
-      <template v-slot:default="{ value }">
-        <div class="score-text">{{ Math.round(value) }}%</div>
-      </template>
+      <div class="score-text">{{ Math.round(value) }}%</div>
     </v-progress-circular>
-  </v-container>
+
+    <!-- Placeholder for consistent layout -->
+    <div v-if="!value" class="placeholder"></div>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      score: 80, // Static score
-      displayedScore: 0, // Score that will be animated
-      duration: 2000, // Total duration of the animation in milliseconds
+      showButton: true,      // Controls visibility of the button
+      interval: null,        // Interval ID for clearing
+      value: 0,              // Starting score value
+      targetScore: 80,       // Final target score
+      increment: 2,          // Increment step size
+      intervalTime: 80,     // Milliseconds between each step
     };
   },
   methods: {
-    animateScore() {
-      const start = performance.now(); // Capture the start time
-      const animate = (currentTime) => {
-        const elapsed = currentTime - start; // Calculate how much time has passed
-        const progress = Math.min(elapsed / this.duration, 1); // Normalize to 0-1
-
-        // Easing function to slow down the animation as it approaches the target
-        this.displayedScore = Math.round(this.easeOutCubic(progress) * this.score);
-
-        // Continue the animation until it reaches the end
-        if (progress < 1) {
-          requestAnimationFrame(animate);
+    // Method to show the score and emit event
+    showScore() {
+      this.showButton = false; // Hide the button
+      this.startAnimation();   // Start the animation
+      this.$emit('score-shown'); // Emit event to update text in EndGame.vue
+    },
+    // Method to handle the score animation
+    startAnimation() {
+      this.value = 0; // Reset the score value
+      this.interval = setInterval(() => {
+        if (this.value < this.targetScore) {
+          this.value += this.increment; // Increment score
         } else {
-          // Ensure the score is exactly what it should be when done
-          this.displayedScore = this.score;
+          clearInterval(this.interval); // Stop the interval
+          this.value = this.targetScore; // Ensure it ends at target
         }
-      };
-      requestAnimationFrame(animate); // Start the animation
+      }, this.intervalTime);
     },
-    easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3); // Easing function
-    },
-  },
-  mounted() {
-    this.animateScore(); // Trigger the animation when the component mounts
   },
 };
 </script>
 
 <style scoped>
-.score-ring-container {
+.score-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Center vertically */
+  flex-direction: column; /* Arrange items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
 }
 
 .score-text {
-  font-size: 2rem;
+  font-size: 2rem; /* Style for the score text */
   font-weight: bold;
   position: absolute; /* Center the score text over the progress ring */
+}
+
+/* Placeholder to maintain layout consistency */
+.placeholder {
+  height: 200px; /* Set the same height as the progress circular */
 }
 </style>

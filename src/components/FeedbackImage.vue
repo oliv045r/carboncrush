@@ -2,7 +2,7 @@
   <div class="container">
     <!-- Tekstsektion med fade-in-effekt -->
     <v-container :class="{ 'fade-in': textVisible }" class="text-container">
-      <h1 class="title">De er alle gode valg, men ...</h1>
+      <h1 class="title">De er alle gode valg, men</h1>
       <p>
         Når du vælger billedformat, skal du tænke over både kvalitet og filstørrelse – lidt som at
         finde den perfekte balance mellem stil og komfort. Klassiske formater som JPG og PNG klarer sig fint, men de
