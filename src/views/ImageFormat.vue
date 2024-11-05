@@ -1,12 +1,12 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info sektion -->
-    <div class="info-section">
-      <h1>Vælg dit billedformat</h1>
-      <p class="description">
-        Skal vi finde det bedste format til dine billeder? Udadtil har valget af format ikke den store betydning - men for din side og dit energiforbrug kan det betyde en del.
-      </p>
-    </div>
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg dit billedformat</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Skal vi finde det bedste format til dine billeder? Udadtil har valget af format ikke den store betydning - men for din side og dit energiforbrug kan det betyde en del.
+    </v-card-text>
+    </v-card>
 
     <!-- Knapper til valg af billedformat -->
     <div class="format-options">

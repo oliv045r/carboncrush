@@ -1,15 +1,12 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <button class="nav-button left" @click="goBack">←</button>
-
     <!-- Info sektion -->
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg Animation</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Vælg en knap for at se forskellige hover-animationer. Den første knap har mindst animation, og den sidste knap har mest animation.    </v-card-text>
+    </v-card>
     <div class="info-section">
-      <h1>Vælg Animation</h1>
-      <p class="description">
-        Vælg en knap for at se forskellige hover-animationer. Den første knap har mindst animation, og den sidste knap har mest animation.
-      </p>
-
       <!-- Knapper med forskellige animationer -->
       <div class="button-container">
         <button class="animated-button button1">Knap 1</button>
@@ -18,9 +15,6 @@
         <button class="animated-button button4">Knap 4</button>
       </div>
     </div>
-
-    <!-- Gå frem pil -->
-    <button class="nav-button right" @click="goForward">→</button>
   </div>
 </template>
 
@@ -50,7 +44,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #333333;
 }
 
 .info-section {
@@ -62,7 +55,6 @@ export default {
   font-size: 1.1em;
   line-height: 1.6;
   margin: 1em 0;
-  color: #666666;
 }
 
 .button-container {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ScoreDisplay from './ScoreDisplay.vue';
+import ScoreDisplay from '../components/ScoreDisplay.vue';
 
 export default {
   components: {

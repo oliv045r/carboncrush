@@ -1,8 +1,13 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Info boks til baggrundsfarve valg -->
-
-    <v-card class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" max-width="600" title="Vælg baggrundsfarve" text="Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen."></v-card>
+    <!-- Info boks til skrifttype valg -->
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg tekstfarve</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
+    </v-card-text>
+    </v-card>
+    <v-icon class="pointer-arrow">mdi-arrow-down</v-icon>
 
     <!-- Circular color carousel -->
     <div
@@ -22,24 +27,24 @@
       ></div>
     </div>
 
-    <p>Valgt farve: {{ color }}</p>
+    <p class="text-subtitle-1 mt-n7">Valgt farve: {{ textColor }}</p>
+
   </div>
 </template>
 
 <script>
-import { VCard } from 'vuetify/lib/components'; // Import Vuetify button component
-import { mapActions } from 'vuex';
+import { VCard } from 'vuetify/lib/components';
+import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'BackgroundSelect',
+  name: 'FontColorSelect',
   components: {
-    VCard, // Register Vuetify button component
+    VCard,
   },
   data() {
     return {
-      color: '#ffffff',
       colorOptions: [
-        '#3AA3EA', '#F142DA', '#95BE87', '#4E2ADF', '#000000', '#FFFFFF',
+      '#3AA3EA', '#F142DA', '#95BE87', '#4E2ADF', '#000000', '#FFFFFF',
         '#E22828', '#B3D08D', '#E59C9D', '#D9D9D9', '#E2EC24', '#732A75'
       ],
       selectedIndex: 0,
@@ -50,16 +55,15 @@ export default {
       currentAngle: 0,
     };
   },
+  computed: {
+    ...mapState(['textColor']),
+  },
   methods: {
-    ...mapActions(['updateBackgroundColor']),
-    changeBackgroundColor(color) {
-      this.updateBackgroundColor(color);
-    },
+    ...mapActions(['updateTextColor']),
     rotateToColor(index) {
       this.selectedIndex = index;
       this.rotationAngle = -this.selectedIndex * this.angleStep;
-      this.color = this.colorOptions[this.selectedIndex];
-      this.changeBackgroundColor(this.color); // Call changeBackgroundColor
+      this.updateTextColor(this.colorOptions[this.selectedIndex]);
     },
     darkenColor(hex, percent = 20) {
       hex = hex.replace('#', '');
@@ -92,10 +96,10 @@ export default {
       return Math.atan2(y, x) * (180 / Math.PI);
     },
     goBack() {
-      this.$router.push('/');
+      this.$router.push('/font-select');
     },
     goForward() {
-      this.$router.push('/font-select');
+      this.$router.push('/font-color-select');
     }
   }
 };
@@ -113,7 +117,7 @@ export default {
 .carousel {
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,11 +137,16 @@ export default {
 .nav-button {
   background-color: transparent;
   border: none;
+  color: #ffffff;
   font-size: 2rem;
   cursor: pointer;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.pointer-arrow {
+  margin-bottom: -40px;
 }
 
 .left {
