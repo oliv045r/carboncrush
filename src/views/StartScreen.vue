@@ -30,6 +30,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .start-screen {
   display: flex;
   align-items: center;

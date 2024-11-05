@@ -1,20 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import StartScreen from '@/components/StartScreen.vue';
-import BackgroundSelect from '@/components/BackgroundSelect.vue';
-import ImageFormat from '@/components/ImageFormat.vue';
-import IconFormat from '@/components/IconFormat.vue';
-import FeedbackIcon from '@/components/FeedbackIcon.vue';
-import FeedbackTemplate from '@/components/FeedbackTemplate.vue';
-import FeedbackIconBad from '@/components/FeedbackIconBad.vue';
-import AppHeader from '@/components/TopNav.vue';
-import GameInformation from '@/components/GameInformation.vue';
-import FeedbackImage from '@/components/FeedbackImage.vue';
+import StartScreen from '@/views/StartScreen.vue';
+import BackgroundSelect from '@/views/BackgroundSelect.vue';
+import ImageFormat from '@/views/ImageFormat.vue';
+import IconFormat from '@/views/IconFormat.vue';
+import FeedbackIcon from '@/components/feedback/FeedbackIcon.vue';
+import FeedbackTemplate from '@/components/feedback/FeedbackTemplate.vue';
+import FeedbackIconBad from '@/components/feedback/FeedbackIconBad.vue';
+import AppHeader from '@/components/navigation/TopNav.vue';
+import GameInformation from '@/views/GameInformation.vue';
+import FeedbackImage from '@/components/feedback/FeedbackImage.vue';
 import ScoreDisplay from '@/components/ScoreDisplay.vue'; // Ensure this component exists
-import EndGame from '@/components/EndGame.vue';
-import AnimationSelect from '../components/AnimationSelect.vue'; // Ny import til Animation
-import ImageQuality from '../components/ImageQuality.vue'; // Ny import til ImageQuality
-import FontColorSelect from '../components/FontColorSelect.vue'; // Korriger sti til FontColorSelect
-import FontSelect from '../components/FontSelect.vue'; // Korriger sti til FontdSelect
+import EndGame from '@/views/EndGame.vue';
+import AnimationSelect from '@/views/AnimationSelect.vue'; // Ny import til Animation
+import ImageQuality from '../views/ImageQuality.vue'; // Ny import til ImageQuality
+import FontColorSelect from '../views/FontColorSelect.vue'; // Korriger sti til FontColorSelect
+import FontSelect from '../views/FontSelect.vue'; // Korriger sti til FontdSelect
+import FeedbackBackground from '../components/feedback/FeedbackBackground.vue'; // Korriger sti til FeedbackBackground
+import FeedbackFont from '@/components/feedback/FeedbackFont.vue';
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+import ArticleLibrary from '@/views/ArticleLibrary.vue';
+import ArticleSingle from '@/components/articles/ArticleSingle.vue';
 
 
 
@@ -54,7 +59,23 @@ const routes = [
     path: '/feedback-icon',
     name: 'FeedbackIcon',
     component: FeedbackIcon,
+  },  
+  {
+    path: '/feedback-pop',
+    name: 'FeedbackPop',
+    component: FeedbackPop,
+  }, 
+  {
+    path: '/feedback-Background',
+    name: 'FeedbackBackground',
+    component: FeedbackBackground,
   },
+  {
+    path: '/feedback-font',
+    name: 'FeedbackFont',
+    component: FeedbackFont,
+  },
+  
   {
     path: '/feedback-icon-bad',
     name: 'FeedbackIconBad',
@@ -74,6 +95,16 @@ const routes = [
     path: '/info',
     name: 'GameInformation',
     component: GameInformation,
+  },
+  {
+    path: '/article-library',
+    name: 'ArticleLibrary',
+    component: ArticleLibrary,
+  },
+  {
+    path: '/article-single',
+    name: 'ArticleSingle',
+    component: ArticleSingle,
   },
   {
     path: '/feedback-image',

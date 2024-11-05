@@ -16,22 +16,56 @@
               class="main-fab"
             ></v-fab>
           </template>
+          <v-tooltip text="Tilbage til start">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              key="1"
+              icon="mdi-home"
+              v-bind="props"
+              @click="goToStartScreen"
+              class="speed-dial-btn1"
+            ></v-btn>
+          </template>
+        </v-tooltip>
   
-          <!-- Button to go to StartScreen -->
-          <v-btn
-            key="1"
-            icon="mdi-home"
-            @click="goToStartScreen"
-            class="speed-dial-btn1"
-          ></v-btn>
-  
-          <!-- Button to go to GameInformation -->
-          <v-btn
-            key="2"
-            icon="mdi-information"
-            @click="goToGameInformation"
-            class="speed-dial-btn2"
-          ></v-btn>
+        <!-- Button to go to GameInformation with Tooltip -->
+        <v-tooltip text="Hjælp til spillet">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              key="2"
+              icon="mdi-information"
+              v-bind="props"
+              @click="goToGameInformation"
+              class="speed-dial-btn2"
+            ></v-btn>
+          </template>
+        </v-tooltip>
+        
+                <!-- Button to go to articles-->
+                <v-tooltip text="Læs artiklerne">
+        <template v-slot:activator="{ props }">
+        <v-btn
+        key="3"
+        icon="mdi-library"
+        v-bind="props"
+        @click="goToArticleLibrary"
+        class="speed-dial-btn2"
+        ></v-btn>
+        </template>
+        </v-tooltip>
+        <!-- Button to go to reset game and return to start-->
+        <v-tooltip text="Genstart / Nulstil valg">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              key="3"
+              icon="mdi-reload"
+              v-bind="props"
+              @click="resetLocalStorage"
+              class="speed-dial-btn2"
+            ></v-btn>
+          </template>
+        </v-tooltip>
+        
         </v-speed-dial>
       </v-container>
     </div>
@@ -54,8 +88,22 @@
       goToGameInformation() {
         this.$router.push('/info'); // Navigate to the GameInformation route
       },
+      goToArticleLibrary() {
+        this.$router.push('/article-library'); // Navigate to the GameInformation route
+      },
+      resetLocalStorage() {
+      // Clear specific items from local storage
+      localStorage.removeItem('backgroundColor');
+      localStorage.removeItem('selectedFont');
+      localStorage.removeItem('textColor');
+
+      // Navigate to the start screen and refresh the page
+      this.$router.push('/').then(() => {
+        location.reload(); // Refresh the page
+      });
     },
-  };
+  },
+};
   </script>
   
   <style scoped>
@@ -65,7 +113,6 @@
     top: 20px; /* Distance from the top of the viewport */
     left: 20px; /* Distance from the left of the viewport */
     max-width: 30px; /* Set a maximum width for the header */
-    padding: 10px; /* Padding for the header */
     z-index: 1000; /* Ensure the header is above other content */
   }
   
@@ -79,7 +126,7 @@
     margin-top: 30px; /* Spacing between buttons */
   }
 
-  .speed-dial-btn1, .speed-dial-btn2 {
+  .speed-dial-btn1, .speed-dial-btn2, .speed-dial-btn3 {
     background-color: #f5f5f5; /* Light background for buttons */
     border-radius: 50%; /* Rounded buttons */
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */

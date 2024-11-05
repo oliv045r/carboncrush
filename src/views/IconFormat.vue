@@ -3,9 +3,9 @@
     <v-container class="background-select">
       <!-- Info sektion -->
       <div class="info-section text-center">
-        <h1>Vælg billedformat</h1>
+        <h1>Vælg ikonformat</h1>
         <p class="description">
-          Vælg det billedformat, der bedst passer til dine behov for bæredygtighed og læsbarhed. Hvert format har unikke
+          Vælg det ikonformat, der bedst passer til dine behov for bæredygtighed og læsbarhed. Hvert format har unikke
           egenskaber, der kan påvirke indlæsningstid, billedkvalitet og energiforbrug.
         </p>
       </div>
