@@ -102,9 +102,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: #333333;
-}
+  justify-content: center;}
 
 .info-section {
   text-align: center;
@@ -115,7 +113,6 @@ export default {
   font-size: 1.1em;
   line-height: 1.6;
   margin: 1em 0;
-  color: #666666;
 }
 
 .nav-button {

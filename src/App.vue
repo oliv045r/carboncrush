@@ -7,15 +7,15 @@
           <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
         </div>
       </transition>
-      <BottomNav /> <!-- Add BottomNav component here -->
+      <BottomNav class="bottomnav"/> <!-- Add BottomNav component here -->
     </v-container>
   </v-app>
 </template>
 
 <script>
-import BottomNav from '@/components/BottomNav.vue'; // Import BottomNav component
+import BottomNav from '@/components/navigation/BottomNav.vue'; // Import BottomNav component
 import { mapState } from 'vuex';
-import TopNav from './components/TopNav.vue';
+import TopNav from './components/navigation/TopNav.vue';
 
 export default {
   name: 'App',

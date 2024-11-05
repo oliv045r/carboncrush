@@ -1,10 +1,13 @@
 <template>
   <v-bottom-navigation
+  class="elevation-4 rounded-xl"
     v-model="active"
     color="primary"
     app
+    v-if="!isStartScreen"
+    :model-value="progress"
   >
-    <v-btn @click="goBack" icon>
+    <v-btn :class="{ hidden: currentPage === 1 }" @click="goBack" icon>
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
     <span>{{ currentPage }} / {{ totalPages }}</span>
@@ -12,6 +15,8 @@
       <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </v-bottom-navigation>
+  <v-progress-linear class="position-fixed	bottom-0" height="8" :model-value="progress"></v-progress-linear>
+
 </template>
 
 <script>
@@ -28,20 +33,13 @@ export default {
     return {
       active: null,
       routes: [
-        { name: 'Home', path: '/' },
         { name: 'Background Select', path: '/background-select' },
-        { name: 'Feedback Background', path: '/feedback-background' },
         { name: 'Font Select', path: '/font-select' },
-        { name: 'Feedback Font', path: '/feedback-font' },
-
         { name: 'Font Color Select', path: '/font-color-select' },
         { name: 'Image Format', path: '/image-format' },
-        { name: 'Feedback Image', path: '/feedback-image' },
         { name: 'Image Quality', path: '/image-quality' },
         { name: 'Animation Select', path: '/animation-select' },
         { name: 'Icon Format', path: '/icon-format' },
-        { name: 'Feedback Icon', path: '/feedback-icon' },
-        { name: 'Feedback Icon Bad', path: '/feedback-icon-bad' },
         { name: 'End Game', path: '/end-game' },
 
 
@@ -51,12 +49,18 @@ export default {
     };
   },
   computed: {
+    isStartScreen() {
+      return this.$route.path === '/';
+    },
     currentPage() {
       const route = this.$route;
       return this.routes.findIndex(r => r.path === route.path) + 1;
     },
     totalPages() {
       return this.routes.length;
+    },    
+    progress() {
+      return (this.currentPage / this.totalPages) * 100;
     },
   },
   methods: {
@@ -79,11 +83,14 @@ export default {
 <style scoped>
 .v-bottom-navigation {
   position: fixed;
-  bottom: 1rem;
-  left: calc(50% - 10rem) !important;
+  bottom: 2rem !important;
+  left: calc(50% - 7.5rem) !important;
   width: 15rem !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.hidden {
+  visibility: hidden;
 }
 </style>
