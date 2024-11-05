@@ -1,8 +1,5 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
-    <!-- Gå tilbage pil -->
-    <button class="nav-button left" @click="goBack">←</button>
-
     <!-- Info sektion -->
     <div class="info-section">
       <h1>Vælg Animation</h1>
@@ -18,9 +15,6 @@
         <button class="animated-button button4">Knap 4</button>
       </div>
     </div>
-
-    <!-- Gå frem pil -->
-    <button class="nav-button right" @click="goForward">→</button>
   </div>
 </template>
 

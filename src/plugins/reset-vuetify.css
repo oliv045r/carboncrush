@@ -1,4 +1,5 @@
 /* reset-vuetify.css */
-.v-application--wrap, .v-container, .v-card, .v-btn, .v-carousel, .v-carousel-item {
+.v-application--wrap, .v-container, .v-card, .v-btn, .v-carousel, .v-carousel-item, .v-card-title, .v-card-text {
   color: inherit !important;
+  font-family: inherit !important;
 }

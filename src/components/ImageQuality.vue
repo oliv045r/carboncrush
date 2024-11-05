@@ -1,12 +1,13 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info sektion -->
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg Billedkvalitet</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Nu skal der vælges billedkvalitet. Dette valg er afgørende for både billedets udseende, ydeevne og dets indflydelse på bæredygtigheden af dit design. Højere billedkvalitet giver skarpere billeder, men kræver mere databehandling og længere indlæsningstid, hvilket kan øge energiforbruget. Lavere billedkvalitet reducerer belastningen på systemet og kan forbedre brugeroplevelsen på langsommere forbindelser, samtidig med at det mindsker miljøpåvirkningen.
+    </v-card-text>
+    </v-card>
     <div class="info-section">
-      <h1>Vælg Billedkvalitet</h1>
-      <p class="description">
-        Nu skal der vælges billedkvalitet. Dette valg er afgørende for både billedets udseende, ydeevne og dets indflydelse på bæredygtigheden af dit design. Højere billedkvalitet giver skarpere billeder, men kræver mere databehandling og længere indlæsningstid, hvilket kan øge energiforbruget. Lavere billedkvalitet reducerer belastningen på systemet og kan forbedre brugeroplevelsen på langsommere forbindelser, samtidig med at det mindsker miljøpåvirkningen.
-      </p>
-
       <!-- Billedkvalitet slider -->
       <div>
         <label for="qualitySlider">Billedkvalitet: {{ quality }}%</label>

@@ -30,7 +30,10 @@ export default {
       routes: [
         { name: 'Home', path: '/' },
         { name: 'Background Select', path: '/background-select' },
+        { name: 'Feedback Background', path: '/feedback-background' },
         { name: 'Font Select', path: '/font-select' },
+        { name: 'Feedback Font', path: '/feedback-font' },
+
         { name: 'Font Color Select', path: '/font-color-select' },
         { name: 'Image Format', path: '/image-format' },
         { name: 'Feedback Image', path: '/feedback-image' },

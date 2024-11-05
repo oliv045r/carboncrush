@@ -2,7 +2,12 @@
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til baggrundsfarve valg -->
 
-    <v-card class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-4 bg-grey" max-width="600" title="Vælg baggrundsfarve" text="Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen."></v-card>
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg baggrundsfarve</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Tid til at vælge baggrundsfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
+    </v-card-text>
+    </v-card>
 
     <!-- Circular color carousel -->
     <div
@@ -21,8 +26,8 @@
         @click="rotateToColor(index)"
       ></div>
     </div>
+    <p class="mt-n7 text-subtitle-1">Valgt farve: {{ color }}</p>
 
-    <p>Valgt farve: {{ color }}</p>
   </div>
 </template>
 
@@ -113,7 +118,7 @@ export default {
 .carousel {
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;

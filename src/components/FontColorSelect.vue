@@ -1,11 +1,11 @@
 <template>
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til skrifttype valg -->
-    <v-card 
-      class="mx-auto mb-15 px-10 py-10 rounded-lg elevation-0 bg-transparent" 
-      max-width="600" 
-      title="Vælg tekstfarve" 
-      text="Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.">
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg tekstfarve</v-card-title>
+    <v-card-text class="text-subtitle-1">
+      Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
+    </v-card-text>
     </v-card>
 
     <!-- Circular color carousel -->
@@ -26,7 +26,7 @@
       ></div>
     </div>
 
-    <p>Valgt farve: {{ textColor }}</p>
+    <p class="text-subtitle-1 mt-n7">Valgt farve: {{ textColor }}</p>
 
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
 .carousel {
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;

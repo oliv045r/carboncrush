@@ -15,6 +15,8 @@ import AnimationSelect from '../components/AnimationSelect.vue'; // Ny import ti
 import ImageQuality from '../components/ImageQuality.vue'; // Ny import til ImageQuality
 import FontColorSelect from '../components/FontColorSelect.vue'; // Korriger sti til FontColorSelect
 import FontSelect from '../components/FontSelect.vue'; // Korriger sti til FontdSelect
+import FeedbackBackground from '../components/FeedbackBackground.vue'; // Korriger sti til FeedbackBackground
+import FeedbackFont from '@/components/FeedbackFont.vue';
 
 
 
@@ -54,7 +56,18 @@ const routes = [
     path: '/feedback-icon',
     name: 'FeedbackIcon',
     component: FeedbackIcon,
+  },  
+  {
+    path: '/feedback-Background',
+    name: 'FeedbackBackground',
+    component: FeedbackBackground,
   },
+  {
+    path: '/feedback-font',
+    name: 'FeedbackFont',
+    component: FeedbackFont,
+  },
+  
   {
     path: '/feedback-icon-bad',
     name: 'FeedbackIconBad',

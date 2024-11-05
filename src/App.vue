@@ -37,6 +37,10 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Notable&display=swap');
+
+
 #app {
   width: 100vw !important;
 }
