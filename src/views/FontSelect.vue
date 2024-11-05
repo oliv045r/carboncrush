@@ -23,10 +23,21 @@
         <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
       </template>
     </v-carousel>
+    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+
   </div>
-</template>
+  <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
+  </FeedbackPop>
+      </template>
 
 <script>
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 import { VBtn, VCard, VCarousel, VCarouselItem } from 'vuetify/lib/components'; // Import Vuetify button component
 import { mapActions, mapState } from 'vuex';
 
@@ -36,7 +47,8 @@ export default {
     VBtn,
     VCard,
     VCarousel,
-    VCarouselItem, // Register Vuetify button component
+    VCarouselItem,
+    FeedbackPop // Register Vuetify button component
   },
   data() {
     return {
@@ -53,6 +65,11 @@ export default {
         { name: 'Notable', font: 'Notable, system-ui' } // Add your custom font here
 
       ],
+      showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Ikke dårligt!', // Define the title for FeedbackPop
+      feedbackContent: '        Når du vælger en skrifttype, der er integreret i HTML, kan det have en positiv indvirkning på din hjemmesides ydeevne. Websikre skrifttyper, som Arial, Verdana eller Georgia, er generelt lettere at indlæse, da de er tilgængelige på de fleste enheder uden behov for ekstra filoverførsler. <br> <br> Dette sparer båndbredde og reducerer energiforbruget, når siden indlæses. <br> <br> Moderne skrifttyper, der skal downloades som webfonte, kan derimod øge belastningen på serveren og kræve mere tid og data at indlæse, hvilket kan føre til et højere CO2-aftryk. Dette gælder især for skrifttyper med mange vægte og stilarter, da hver variation kræver sin egen fil. <br> <br> Ved at vælge en simpel og effektiv skrifttype kan du dermed optimere din hjemmesides hastighed og bæredygtighed, hvilket i sidste ende hjælper med at reducere dens samlede CO2-aftryk. Gør dit valg med omtanke, og se, hvordan det kan gøre en forskel!', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/font_meme.webp') // Define the image URL for FeedbackPop
+
     };
   },
   computed: {
@@ -89,6 +106,7 @@ export default {
 <style scoped>
 .background-select {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

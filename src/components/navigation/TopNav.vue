@@ -40,8 +40,21 @@
             ></v-btn>
           </template>
         </v-tooltip>
-                    <!-- Button to go to GameInformation -->
-                    <v-tooltip text="Genstart / Nulstil valg">
+        
+                <!-- Button to go to articles-->
+                <v-tooltip text="Læs artiklerne">
+        <template v-slot:activator="{ props }">
+        <v-btn
+        key="3"
+        icon="mdi-library"
+        v-bind="props"
+        @click="goToArticleLibrary"
+        class="speed-dial-btn2"
+        ></v-btn>
+        </template>
+        </v-tooltip>
+        <!-- Button to go to reset game and return to start-->
+        <v-tooltip text="Genstart / Nulstil valg">
           <template v-slot:activator="{ props }">
             <v-btn
               key="3"
@@ -52,20 +65,7 @@
             ></v-btn>
           </template>
         </v-tooltip>
-
-                            <!-- Button to go to reset game and return to start-->
-                            <v-tooltip text="Læs ">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              key="3"
-              icon="mdi-reload"
-              v-bind="props"
-              @click="resetLocalStorage"
-              class="speed-dial-btn2"
-            ></v-btn>
-          </template>
-        </v-tooltip>
-
+        
         </v-speed-dial>
       </v-container>
     </div>
@@ -87,6 +87,9 @@
       },
       goToGameInformation() {
         this.$router.push('/info'); // Navigate to the GameInformation route
+      },
+      goToArticleLibrary() {
+        this.$router.push('/article-library'); // Navigate to the GameInformation route
       },
       resetLocalStorage() {
       // Clear specific items from local storage

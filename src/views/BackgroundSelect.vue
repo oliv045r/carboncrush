@@ -31,24 +31,20 @@
     <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
   </div>
     <!-- FeedbackPop as a popup -->
-    <v-sheet
-      v-if="showFeedbackPopup"
-      class="popup-sheet position-absolute elevation-4 rounded-lg overflow-hidden"
-      max-width="800"
-      transition="dialog-bottom-transition"
-      variant="flat"
-      color="white"
-    >
-      <FeedbackPop @close="showFeedbackPopup = false">
 
-
+      <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
       </FeedbackPop>
-    </v-sheet>
 </template>
 
 <script>
 import { VCard, VBtn } from 'vuetify/lib/components'; // Import Vuetify button component
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 
 export default {
@@ -70,18 +66,34 @@ export default {
       startAngle: 0,
       currentAngle: 0,
       showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Godt valg!', // Define the title for FeedbackPop
+      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/bg meme.png') // Define the image URL for FeedbackPop
     };
   },
+  computed: {
+    ...mapState(['fontColorSelectionReached']),
+  },
   methods: {
-    ...mapActions(['updateBackgroundColor']),
+    ...mapActions(['updateBackgroundColor', 'updateTextColor']),
     changeBackgroundColor(color) {
       this.updateBackgroundColor(color);
+    },
+    changeTextColor(color) {
+      this.updateTextColor(color);
     },
     rotateToColor(index) {
       this.selectedIndex = index;
       this.rotationAngle = -this.selectedIndex * this.angleStep;
       this.color = this.colorOptions[this.selectedIndex];
       this.changeBackgroundColor(this.color); // Call changeBackgroundColor
+
+      // Set text color to white if black background is chosen and font color selection page is not reached
+      if (this.color === '#000000' && !this.fontColorSelectionReached) {
+        this.changeTextColor('#FFFFFF');
+      } else if (!this.fontColorSelectionReached) {
+        this.changeTextColor('#000000');
+      }
     },
     darkenColor(hex, percent = 20) {
       hex = hex.replace('#', '');

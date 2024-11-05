@@ -4,7 +4,7 @@
     v-model="active"
     color="primary"
     app
-    v-if="!isStartScreen"
+    v-if="isNavigationRoute"
     :model-value="progress"
   >
     <v-btn :class="{ hidden: currentPage === 1 }" @click="goBack" icon>
@@ -49,8 +49,8 @@ export default {
     };
   },
   computed: {
-    isStartScreen() {
-      return this.$route.path === '/';
+    isNavigationRoute() {
+      return this.routes.some(route => route.path === this.$route.path);
     },
     currentPage() {
       const route = this.$route;

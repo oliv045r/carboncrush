@@ -1,19 +1,11 @@
 <template>
-  <div class="container px-10 py-10" :style="containerStyles">
+  <div class="popup-container px-10 py-10" :style="containerStyles">
     <!-- Tekstsektion med fade-in-effekt -->
-    <v-container :class="{ 'fade-in': textVisible }" class="text-container">
-      <h1 class="title">Interessant valg, men ...</h1>
-      <p>
-        Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg.
-        <br> <br>
-        På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget.      </p>
-    </v-container>
-
-    <!-- GIF display section -->
-    <div class="gif-container" v-if="textVisible">
-      <img src="@/images/king-of-the-hill-jpeg.gif" alt="King Of The Hill Jpeg GIF" class="gif-image" />
-    </div>
-  
+      <h1 class="title">{{title}}</h1>
+      <p class="w-50"  v-html="content"></p>
+      <div class="img-container">
+        <img class="feedback-img" :src="imageUrl" alt="">
+      </div>
   </div>
 </template>
 
@@ -22,6 +14,21 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'FeedbackPop',
+  props: {
+        title: {
+            type: String,
+            required: true
+        },
+        content: {
+            type: String,
+            required: true
+        },
+        imageUrl: {
+      type: String,
+      required: true
+    }
+      }
+    ,
   data() {
     return {
       textVisible: false, // Controls when the text and GIF should fade in
@@ -41,18 +48,21 @@ export default {
       };
     },
   },
+  
 };
 </script>
 
 <style scoped>
-/* Container styling */
-.container {
+.popup-container {
+  position: absolute;
+  left: calc(10vw);
+  height: 800px;
+  top: calc(50vh - 400px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;}
+  width: 80vw;}
 
 /* Initial hidden state */
 .text-container {
@@ -69,12 +79,12 @@ export default {
 }
 
 /* GIF styling */
-.gif-container {
+.img-container {
   margin-top: 30px;
   text-align: center;
 }
 
-.gif-image {
+.feedback-img {
   max-width: 50%; /* Responsive image */
   height: auto; /* Maintain aspect ratio */
 }
