@@ -28,18 +28,29 @@
     </div>
 
     <p class="text-subtitle-1 mt-n7">Valgt farve: {{ textColor }}</p>
+    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+
 
   </div>
+  <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
+  </FeedbackPop>
 </template>
 
 <script>
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 import { VCard } from 'vuetify/lib/components';
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'FontColorSelect',
   components: {
-    VCard,
+    VCard, FeedbackPop,
   },
   data() {
     return {
@@ -53,6 +64,10 @@ export default {
       dragging: false,
       startAngle: 0,
       currentAngle: 0,
+      showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Interessant valg!', // Define the title for FeedbackPop
+      feedbackContent: 'Når du vælger fontfarve, er det vigtigt at tage hensyn til både læsbarhed og tilgængelighed. Den rette farve kan gøre en stor forskel i brugeroplevelsen, uanset hvilken baggrundsfarve der er valgt. <br> <br> For at sikre optimal læsbarhed er det vigtigt at skabe en god kontrast mellem tekst og baggrund. En høj kontrast, såsom mørk tekst på en lys baggrund, forbedrer læsbarheden for de fleste brugere, herunder dem med synsnedsættelser. Det anbefales at følge retningslinjerne for kontrastforhold, der hjælper med at sikre, at dit indhold er tilgængeligt for alle. <br> <br> Det er også vigtigt at overveje, at lysere farver typisk kræver mere energi at vise på skærme, især på OLED-enheder. Derfor kan det være en god idé at vælge mørkere farver, da de kan spare energi og reducere dit hjemmesides CO2-aftryk.<br> <br> Husk, at tilgængelighed ikke kun handler om visuel læsbarhed; det handler også om at skabe en oplevelse, hvor alle kan interagere med dit indhold effektivt. Ved at vælge en fontfarve, der både er visuelt tiltalende og energieffektiv, kan du forbedre din hjemmesides ydeevne og samtidig sikre, at den er tilgængelig for alle brugere. Gør dit valg med omtanke!', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/font_meme.webp') // Define the image URL for FeedbackPop
     };
   },
   computed: {

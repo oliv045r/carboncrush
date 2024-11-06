@@ -31,12 +31,25 @@
         @load="handleImageLoad"
       />
     </div>
+    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
     </div>
+    <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
+  </FeedbackPop>
 </template>
 
 <script>
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 export default {
   name: 'BackgroundSelect',
+  components: {
+    FeedbackPop,
+  },
   data() {
     return {
       formats: [
@@ -46,7 +59,11 @@ export default {
         { type: 'avif', label: 'AVIF', src: require('@/images/dog_jpg.jpg') },
       ],
       selectedFormat: { type: 'jpeg', label: 'JPEG', src: require('@/images/dog_jpg.jpg') },
-      isFading: false
+      isFading: false,
+      showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Den her er svær...', // Define the title for FeedbackPop
+      feedbackContent: 'Når du vælger billedformat til din hjemmeside, er det vigtigt at tænke på kvalitet og filstørrelse. Formater som JPEG og PNG er almindeligt anvendte, men nyere formater som WEBP og AVIF tilbyder bedre kompression og kvalitet. <br> <br> JPEG er ideelt til fotografier og giver en god balance mellem størrelse og kvalitet, mens PNG er bedre til billeder med gennemsigtighed. WEBP og AVIF kan reducere filstørrelserne betydeligt, hvilket forbedrer indlæsningstiderne og sparer båndbredde. <br> <br>Det rigtige valg kan også påvirke tilgængeligheden, da hurtigere indlæsning giver en bedre brugeroplevelse. Vær opmærksom på, hvordan dit valg kan optimere både ydeevne og bæredygtighed. Gør dit valg med omtanke!', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/king-of-the-hill-jpeg.gif') // Define the image URL for FeedbackPop
     };
   },
   computed: {

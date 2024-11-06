@@ -15,11 +15,34 @@
         <button class="animated-button button4">Knap 4</button>
       </div>
     </div>
+    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+
   </div>
+  <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
+  </FeedbackPop>
 </template>
 
 <script>
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+
 export default {
+  components: {
+    FeedbackPop,
+  },
+  data() {
+    return {
+      showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Spændende!', // Define the title for FeedbackPop
+      feedbackContent: 'Når du vælger mængden af animationer til din hjemmeside, er det vigtigt at overveje både visuel indvirkning og ydeevne. Flere animationer kan forbedre det visuelle udtryk, men de kan også belaste systemet. <br> <br> At finde den rette balance er afgørende, da for mange animationer kan forlænge indlæsningstiderne og øge energiforbruget. Ved at vælge en passende mængde animationer kan du sikre hurtigere indlæsning, hvilket forbedrer brugeroplevelsen og sparer båndbredde. <br> <br> Husk, at dit valg af animationsmængde kan have indflydelse på både ydeevne og bæredygtighed. Tænk over det, når du designer din hjemmeside!', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/font_meme.webp') // Define the image URL for FeedbackPop
+    };
+  },
   methods: {
     goBack() {
       this.$router.push('/');

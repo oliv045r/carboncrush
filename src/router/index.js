@@ -18,6 +18,8 @@ import FontSelect from '../views/FontSelect.vue'; // Korriger sti til FontdSelec
 import FeedbackBackground from '../components/feedback/FeedbackBackground.vue'; // Korriger sti til FeedbackBackground
 import FeedbackFont from '@/components/feedback/FeedbackFont.vue';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
+import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
 import ArticleLibrary from '@/views/ArticleLibrary.vue';
 import ArticleSingle from '@/components/articles/ArticleSingle.vue';
 
@@ -64,6 +66,16 @@ const routes = [
     path: '/feedback-pop',
     name: 'FeedbackPop',
     component: FeedbackPop,
+  }, 
+  {
+    path: '/feedback-pop-icon',
+    name: 'FeedbackPopIcon',
+    component: FeedbackPopIcon,
+  }, 
+  {
+    path: '/feedback-pop-icon-bad',
+    name: 'FeedbackPopIconBad',
+    component: FeedbackPopIconBad,
   }, 
   {
     path: '/feedback-Background',
