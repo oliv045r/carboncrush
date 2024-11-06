@@ -15,7 +15,7 @@
       <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </v-bottom-navigation>
-  <v-progress-linear class="position-fixed bottom-0" height="8" :model-value="progress"></v-progress-linear>
+  <v-progress-linear class="nav-progress position-fixed" :height="18" :model-value="progress"></v-progress-linear>
 </template>
 
 <script>
@@ -93,5 +93,10 @@ export default {
 }
 .hidden {
   visibility: hidden;
+}
+
+.nav-progress {
+  top: unset !important;
+  bottom: 0;
 }
 </style>

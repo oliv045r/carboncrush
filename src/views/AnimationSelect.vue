@@ -11,11 +11,11 @@
       <div class="button-container">
         <button class="animated-button button1">Knap 1</button>
         <button class="animated-button button2">Knap 2</button>
-        <button class="animated-button button3" @click="bounceButton">Knap 3</button>
+        <button class="animated-button button3" @mouseover="bounceButton">Knap 3</button>
         <button class="animated-button button4">Knap 4</button>
       </div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+    <v-btn class="mt-10" @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
 
   </div>
   <FeedbackPop 
@@ -69,6 +69,7 @@ export default {
 <style scoped>
 .background-select {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -194,14 +195,14 @@ export default {
     transform: translateY(0);
   }
   30% {
-    transform: translateY(-40px);
+    transform: translateY(-20px);
   }
   60% {
-    transform: translateY(-50px);
+    transform: translateY(-25px);
   }
   
   90% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 }
 

@@ -87,7 +87,6 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  color: #ffffff;
   text-align: center;
 }
 
@@ -124,7 +123,6 @@ export default {
 .score-text {
   font-size: 2rem;
   font-weight: bold;
-  color: #ffffff;
 }
 
 /* Placeholder til layout */
