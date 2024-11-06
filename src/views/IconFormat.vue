@@ -24,7 +24,7 @@
         :class="{ fade: isFading }" @load="handleImageLoad" max-width="600" max-height="400" contain />
 
     </v-container>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
 
     <!-- Conditional Feedback Components -->
     <FeedbackPopIcon 
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
 import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
 
@@ -63,6 +65,8 @@ export default {
     };
   },
   computed: {
+    ...mapState(['showNextButton']),
+
     selectedImage() {
       return this.selectedFormat.src;
     },
@@ -74,6 +78,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+
     selectFormat(format) {
       this.isFading = true;
       setTimeout(() => {

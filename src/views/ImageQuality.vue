@@ -25,7 +25,7 @@
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
 
   </div>
   <FeedbackPop 
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 
 export default {
@@ -58,7 +59,12 @@ export default {
       feedbackImageUrl: require('@/images/king-of-the-hill-jpeg.gif') // Define the image URL for FeedbackPop
     };
   },
+  computed: {
+    ...mapState(['showNextButton']),
+  },
   methods: {
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+
     goBack() {
       this.$router.push('/');
     },

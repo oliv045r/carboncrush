@@ -28,7 +28,7 @@
     </div>
 
     <p class="text-subtitle-1 mt-n7">Valgt farve: {{ textColor }}</p>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
 
 
   </div>
@@ -74,7 +74,7 @@ export default {
     ...mapState(['textColor']),
   },
   methods: {
-    ...mapActions(['updateTextColor']),
+    ...mapActions(['updateTextColor', 'updateShowNextButton']),
     rotateToColor(index) {
       this.selectedIndex = index;
       this.rotationAngle = -this.selectedIndex * this.angleStep;
@@ -123,6 +123,7 @@ export default {
 <style scoped>
 .background-select {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

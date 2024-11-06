@@ -28,7 +28,7 @@
       ></div>
     </div>
     <p class="mt-n7 text-subtitle-1">Valgt farve: {{ color }}</p>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
   </div>
     <!-- FeedbackPop as a popup -->
 
@@ -75,7 +75,7 @@ export default {
     ...mapState(['fontColorSelectionReached']),
   },
   methods: {
-    ...mapActions(['updateBackgroundColor', 'updateTextColor']),
+    ...mapActions(['updateBackgroundColor', 'updateTextColor', 'updateShowNextButton']),
     changeBackgroundColor(color) {
       this.updateBackgroundColor(color);
     },

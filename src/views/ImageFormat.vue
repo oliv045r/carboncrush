@@ -31,7 +31,7 @@
         @load="handleImageLoad"
       />
     </div>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
     </div>
     <FeedbackPop 
       v-if="showFeedbackPopup" 
@@ -45,6 +45,8 @@
 
 <script>
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'BackgroundSelect',
   components: {
@@ -67,11 +69,15 @@ export default {
     };
   },
   computed: {
+    ...mapState('ShowNextButton', ['showNextButton']),
+
     selectedImage() {
       return this.selectedFormat.src;
-    }
+    },
   },
   methods: {
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+
     selectFormat(format) {
       this.isFading = true;
       setTimeout(() => {
