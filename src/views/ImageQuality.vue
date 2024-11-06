@@ -56,7 +56,7 @@ export default {
       showFeedbackPopup: false, // Control the visibility of the popup
       feedbackTitle: 'Okay!', // Define the title for FeedbackPop
       feedbackContent: 'Når du vælger billedkvalitet til din hjemmeside, er det vigtigt at overveje både kvalitet og filstørrelse. Højere billedkvalitet kan forbedre det visuelle indtryk, men det kan også øge filstørrelsen. <br> <br> At finde den rette balance er afgørende, da større billeder kan forlænge indlæsningstiderne og øge energiforbruget. Ved at vælge en passende billedkvalitet kan du sikre hurtigere indlæsning, hvilket forbedrer brugeroplevelsen og samtidig sparer båndbredde. <br> <br>Husk, at dit valg af billedkvalitet kan have indflydelse på både ydeevne og bæredygtighed. Tænk over det, når du designer din hjemmeside!', // Define the content for FeedbackPop
-      feedbackImageUrl: require('@/images/king-of-the-hill-jpeg.gif') // Define the image URL for FeedbackPop
+      feedbackImageUrl: require('@/images/QualityMeme.jpg') // Define the image URL for FeedbackPop
     };
   },
   computed: {
