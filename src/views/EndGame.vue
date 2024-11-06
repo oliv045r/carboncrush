@@ -87,7 +87,6 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  color: #ffffff;
   text-align: center;
 }
 
@@ -109,10 +108,10 @@ export default {
 .result-button {
   font-size: 1.2rem;
   padding: 10px 20px;
-  color: #424242;
   font-weight: bold;
   transition: background-color 0.3s ease;
   animation: bounceIn 1.5s ease;
+  color: none !important;
 }
 
 
@@ -124,7 +123,6 @@ export default {
 .score-text {
   font-size: 2rem;
   font-weight: bold;
-  color: #ffffff;
 }
 
 /* Placeholder til layout */
@@ -139,6 +137,7 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
 
 /* Animationer */
 @keyframes fadeIn {
