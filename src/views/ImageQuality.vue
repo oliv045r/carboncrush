@@ -25,11 +25,27 @@
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+
   </div>
+  <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+      >
+  </FeedbackPop>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+
 export default {
+  components: {
+    FeedbackPop,
+  },
   data() {
     return {
       quality: 80, // 80% billedkvalitet
@@ -37,9 +53,18 @@ export default {
       canvasWidth: 500, // Standard billedbredde
       canvasHeight: 333, // Standard billedhøjde
       imageSize: 0, // Vil blive beregnet dynamisk
+      showFeedbackPopup: false, // Control the visibility of the popup
+      feedbackTitle: 'Okay!', // Define the title for FeedbackPop
+      feedbackContent: 'Når du vælger billedkvalitet til din hjemmeside, er det vigtigt at overveje både kvalitet og filstørrelse. Højere billedkvalitet kan forbedre det visuelle indtryk, men det kan også øge filstørrelsen. <br> <br> At finde den rette balance er afgørende, da større billeder kan forlænge indlæsningstiderne og øge energiforbruget. Ved at vælge en passende billedkvalitet kan du sikre hurtigere indlæsning, hvilket forbedrer brugeroplevelsen og samtidig sparer båndbredde. <br> <br>Husk, at dit valg af billedkvalitet kan have indflydelse på både ydeevne og bæredygtighed. Tænk over det, når du designer din hjemmeside!', // Define the content for FeedbackPop
+      feedbackImageUrl: require('@/images/QualityMeme.jpg') // Define the image URL for FeedbackPop
     };
   },
+  computed: {
+    ...mapState(['showNextButton']),
+  },
   methods: {
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+
     goBack() {
       this.$router.push('/');
     },
@@ -99,6 +124,7 @@ export default {
 
 .background-select {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

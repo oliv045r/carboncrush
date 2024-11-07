@@ -10,17 +10,16 @@
     <v-btn :class="{ hidden: currentPage === 1 }" @click="goBack" icon>
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-    <span>{{ currentPage }} / {{ totalPages }}</span>
-    <v-btn @click="goForward" icon>
+    <v-btn :class="{ hidden: !showNextButton }" @click="goForward" icon>
       <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
   </v-bottom-navigation>
-  <v-progress-linear class="position-fixed	bottom-0" height="8" :model-value="progress"></v-progress-linear>
-
+  <v-progress-linear class="nav-progress position-fixed" :height="18" :model-value="progress"></v-progress-linear>
 </template>
 
 <script>
 import { VBottomNavigation, VBtn, VIcon } from 'vuetify/lib/components';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'BottomNav',
@@ -41,14 +40,12 @@ export default {
         { name: 'Animation Select', path: '/animation-select' },
         { name: 'Icon Format', path: '/icon-format' },
         { name: 'End Game', path: '/end-game' },
-
-
-
         // Add more routes as needed
       ],
     };
   },
   computed: {
+    ...mapState(['showNextButton']),
     isNavigationRoute() {
       return this.routes.some(route => route.path === this.$route.path);
     },
@@ -58,21 +55,24 @@ export default {
     },
     totalPages() {
       return this.routes.length;
-    },    
+    },
     progress() {
       return (this.currentPage / this.totalPages) * 100;
     },
   },
   methods: {
+    ...mapActions(['resetShowNextButton']),
     goBack() {
       const currentIndex = this.currentPage - 1;
       if (currentIndex > 0) {
+        this.resetShowNextButton(); // Reset the state
         this.$router.push(this.routes[currentIndex - 1].path);
       }
     },
     goForward() {
       const currentIndex = this.currentPage - 1;
       if (currentIndex < this.totalPages - 1) {
+        this.resetShowNextButton(); // Reset the state
         this.$router.push(this.routes[currentIndex + 1].path);
       }
     },
@@ -92,5 +92,10 @@ export default {
 }
 .hidden {
   visibility: hidden;
+}
+
+.nav-progress {
+  top: unset !important;
+  bottom: 0;
 }
 </style>

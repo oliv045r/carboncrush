@@ -24,13 +24,34 @@
         :class="{ fade: isFading }" @load="handleImageLoad" max-width="600" max-height="400" contain />
 
     </v-container>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+
+    <!-- Conditional Feedback Components -->
+    <FeedbackPopIcon 
+    class="feedback-pop-icon"
+      v-if="showFeedbackPopup && isSvgOrPng" 
+      @close="showFeedbackPopup = false" 
+    />
+    <FeedbackPopIconBad 
+     class="feedback-pop-icon"
+      v-if="showFeedbackPopup && isJpg" 
+      @close="showFeedbackPopup = false" 
+    />
   </div>
 </template>
 
 <script>
-// Import the AppHeader component at the top
+import { mapActions, mapState } from 'vuex';
+
+import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
+import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
+
 export default {
-  name: 'BackgroundSelect',
+  name: 'IconFormat',
+  components: {
+    FeedbackPopIcon,
+    FeedbackPopIconBad,
+  },
   data() {
     return {
       formats: [
@@ -39,15 +60,26 @@ export default {
         { type: 'svg', label: 'SVG', icon: require('@/images/icon.svg'), src: require('@/images/icon.svg') },
       ],
       selectedFormat: { type: 'jpg', label: 'JPG', src: require('@/images/icon.jpg') },
-      isFading: false
+      isFading: false,
+      showFeedbackPopup: false, // Control the visibility of the popup
     };
   },
   computed: {
+    ...mapState(['showNextButton']),
+
     selectedImage() {
       return this.selectedFormat.src;
-    }
+    },
+    isSvgOrPng() {
+      return this.selectedFormat.type === 'svg' || this.selectedFormat.type === 'png';
+    },
+    isJpg() {
+      return this.selectedFormat.type === 'jpg';
+    },
   },
   methods: {
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+
     selectFormat(format) {
       this.isFading = true;
       setTimeout(() => {
@@ -74,8 +106,16 @@ export default {
 </script>
 
 <style scoped>
+.feedback-pop-icon {
+  position: absolute;
+  top: 0;
+  width: 80vw;
+  left: 10vw;
+}
+
 .background-select {
   height: 100vh;
+  width: 100vw !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,6 +208,7 @@ export default {
 
 .background-select {
   height: auto;
+  width: 100vw;
   /* or any other desired height, e.g., 50vh, 500px, etc. */
 }
 

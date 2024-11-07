@@ -12,31 +12,34 @@
 
     <!-- Circular color carousel -->
     <div
-      class="carousel"
-      :style="{ transform: `rotate(${rotationAngle}deg)` }"
-      @mousedown="startDrag"
-      @mouseup="endDrag"
-      @mousemove="onDrag"
-      @mouseleave="endDrag"
+    class="carousel"
+    :style="{ transform: `rotate(${rotationAngle}deg)` }"
+    @mousedown="startDrag"
+    @mouseup="endDrag"
+    @mousemove="onDrag"
+    @mouseleave="endDrag"
     >
-      <div
-        v-for="(colorOption, index) in colorOptions"
-        :key="index"
-        :style="{ backgroundColor: colorOption, transform: `rotate(${index * angleStep}deg) translateY(-150px)` }"
-        class="color-swatch"
-        @click="rotateToColor(index)"
-      ></div>
-    </div>
-    <p class="mt-n7 text-subtitle-1">Valgt farve: {{ color }}</p>
-    <v-btn @click="showFeedbackPopup = true" color="primary">Next</v-btn>
+    <div
+    v-for="(colorOption, index) in colorOptions"
+    :key="index"
+    :style="{ backgroundColor: colorOption.color, transform: `rotate(${index * angleStep}deg) translateY(-150px)` }"
+    class="color-swatch"
+    @click="rotateToColor(index)"
+    >
   </div>
-    <!-- FeedbackPop as a popup -->
+</div>
+<div class="chosen-color">
+  <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
+</div>
+<v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+</div>
+<!-- FeedbackPop as a popup -->
 
-      <FeedbackPop 
-      v-if="showFeedbackPopup" 
-      @close="showFeedbackPopup = false" 
-      :title="feedbackTitle"
-      :content="feedbackContent"
+<FeedbackPop 
+v-if="showFeedbackPopup" 
+@close="showFeedbackPopup = false" 
+:title="feedbackTitle"
+:content="feedbackContent"
       :imageUrl="feedbackImageUrl"
       >
       </FeedbackPop>
@@ -56,8 +59,18 @@ export default {
     return {
       color: '#ffffff',
       colorOptions: [
-        '#3AA3EA', '#F142DA', '#95BE87', '#4E2ADF', '#000000', '#FFFFFF',
-        '#E22828', '#B3D08D', '#E59C9D', '#D9D9D9', '#E2EC24', '#732A75'
+        { name: 'Blå', color: '#3AA3EA' },
+        { name: 'Pink', color: '#F142DA' },
+        { name: 'Grøn', color: '#95BE87' },
+        { name: 'Lilla', color: '#4E2ADF' },
+        { name: 'Sort', color: '#000000' },
+        { name: 'Hvid', color: '#FFFFFF' },
+        { name: 'Rød', color: '#E22828' },
+        { name: 'Lysegrøn', color: '#B3D08D' },
+        { name: 'Lyserød', color: '#E59C9D' },
+        { name: 'Grå', color: '#D9D9D9' },
+        { name: 'Gul', color: '#E2EC24' },
+        { name: 'Mørk lilla', color: '#732A75' }
       ],
       selectedIndex: 0,
       angleStep: 360 / 12,
@@ -67,15 +80,18 @@ export default {
       currentAngle: 0,
       showFeedbackPopup: false, // Control the visibility of the popup
       feedbackTitle: 'Godt valg!', // Define the title for FeedbackPop
-      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Define the content for FeedbackPop
+      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br> <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Define the content for FeedbackPop
       feedbackImageUrl: require('@/images/bg meme.png') // Define the image URL for FeedbackPop
     };
   },
   computed: {
     ...mapState(['fontColorSelectionReached']),
+    colorName() {
+      return this.colorOptions[this.selectedIndex].name;
+    }
   },
   methods: {
-    ...mapActions(['updateBackgroundColor', 'updateTextColor']),
+    ...mapActions(['updateBackgroundColor', 'updateTextColor', 'updateShowNextButton']),
     changeBackgroundColor(color) {
       this.updateBackgroundColor(color);
     },
@@ -85,7 +101,7 @@ export default {
     rotateToColor(index) {
       this.selectedIndex = index;
       this.rotationAngle = -this.selectedIndex * this.angleStep;
-      this.color = this.colorOptions[this.selectedIndex];
+      this.color = this.colorOptions[this.selectedIndex].color;
       this.changeBackgroundColor(this.color); // Call changeBackgroundColor
 
       // Set text color to white if black background is chosen and font color selection page is not reached
@@ -170,9 +186,14 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid white;
   cursor: pointer;
   transition: transform 0.5s;
+  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.2);
+}
+
+.chosen-color{ 
+  position: absolute;
+  padding-top: 12rem;
 }
 
 .nav-button {
