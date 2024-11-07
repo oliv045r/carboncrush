@@ -96,7 +96,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateTextColor']),
+    ...mapActions(['updateTextColor', 'updateShowNextButton']),
     changeTextColor(color) {
       this.updateTextColor(color);
     },
