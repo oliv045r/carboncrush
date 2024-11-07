@@ -3,16 +3,42 @@
     <!-- Info sektion -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
       <v-card-title class="text-h5 font-weight-bold">Vælg Animation</v-card-title>
-    <v-card-text class="text-subtitle-1">
-      Vælg en knap for at se forskellige hover-animationer. Den første knap har mindst animation, og den sidste knap har mest animation.    </v-card-text>
+      <v-card-text class="text-subtitle-1">
+        Vælg en knap for at se forskellige hover-animationer. Den første knap har mindst animation, og den sidste knap har mest animation.
+      </v-card-text>
     </v-card>
     <div class="info-section">
       <!-- Knapper med forskellige animationer -->
       <div class="button-container">
-        <button class="animated-button button1">Knap 1</button>
-        <button class="animated-button button2">Knap 2</button>
-        <button class="animated-button button3" @mouseover="bounceButton">Knap 3</button>
-        <button class="animated-button button4">Knap 4</button>
+        <button
+          class="animated-button button1"
+          :class="{ active: activeButton === 'button1' }"
+          @click="setActiveButton('button1')"
+        >
+          Knap 1
+        </button>
+        <button
+          class="animated-button button2"
+          :class="{ active: activeButton === 'button2' }"
+          @click="setActiveButton('button2')"
+        >
+          Knap 2
+        </button>
+        <button
+          class="animated-button button3"
+          :class="{ active: activeButton === 'button3' }"
+          @click="setActiveButton('button3')"
+          @mouseover="bounceButton"
+        >
+          Knap 3
+        </button>
+        <button
+          class="animated-button button4"
+          :class="{ active: activeButton === 'button4' }"
+          @click="setActiveButton('button4')"
+        >
+          Knap 4
+        </button>
       </div>
     </div>
     <v-btn class="mt-10" @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
@@ -41,7 +67,8 @@ export default {
       showFeedbackPopup: false, // Control the visibility of the popup
       feedbackTitle: 'Spændende!', // Define the title for FeedbackPop
       feedbackContent: 'Når du vælger mængden af animationer til din hjemmeside, er det vigtigt at overveje både visuel indvirkning og ydeevne. Flere animationer kan forbedre det visuelle udtryk, men de kan også belaste systemet. <br> <br> At finde den rette balance er afgørende, da for mange animationer kan forlænge indlæsningstiderne og øge energiforbruget. Ved at vælge en passende mængde animationer kan du sikre hurtigere indlæsning, hvilket forbedrer brugeroplevelsen og sparer båndbredde. <br> <br> Husk, at dit valg af animationsmængde kan have indflydelse på både ydeevne og bæredygtighed. Tænk over det, når du designer din hjemmeside!', // Define the content for FeedbackPop
-      feedbackImageUrl: require('@/images/AnimationMeme.jpg') // Define the image URL for FeedbackPop
+      feedbackImageUrl: require('@/images/AnimationMeme.jpg'), // Define the image URL for FeedbackPop
+      activeButton: null, // Track the active button
     };
   },
   computed: {
@@ -61,7 +88,10 @@ export default {
       button.classList.remove('bounce'); // Reset animation
       void button.offsetWidth; // Trigger reflow to restart animation
       button.classList.add('bounce');
-    }
+    },
+    setActiveButton(button) {
+      this.activeButton = button;
+    },
   }
 };
 </script>
@@ -94,7 +124,6 @@ export default {
 }
 
 .animated-button {
-  flex: 1; /* Giver knapperne ligelig plads */
   margin: 0 5px; /* Afstand mellem knapperne */
   padding: 10px 20px;
   font-size: 16px;
@@ -103,6 +132,10 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.animated-button.active {
+  background-color: #db0e0e; /* Change to your desired active color */
 }
 
 .button1:hover {
@@ -138,7 +171,6 @@ export default {
 
 .button2:hover {
   transform: scale(1.1);
-  background-color: #f0f0f0;
 }
 
 .button3.bounce {
