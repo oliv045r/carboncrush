@@ -10,7 +10,6 @@
     <v-btn :class="{ hidden: currentPage === 1 }" @click="goBack" icon>
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-    <span>{{ currentPage }} / {{ totalPages }}</span>
     <v-btn :class="{ hidden: !showNextButton }" @click="goForward" icon>
       <v-icon>mdi-arrow-right</v-icon>
     </v-btn>
