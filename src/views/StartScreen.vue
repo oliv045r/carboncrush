@@ -3,7 +3,12 @@
     <div class="content">
       <h1>{{ title }}</h1>
       <p class="description">{{ description }}</p>
-      <button @click="startGame">Start Game</button>
+
+      <!-- Start spillet og Sådan spiller du knapper -->
+      <div class="button-container">
+        <button @click="startGame" class="start-btn">Start spillet</button>
+        <button @click="HowTo" class="howto-btn">Sådan spiller du</button>
+      </div>
     </div>
   </div>
 </template>
@@ -24,14 +29,15 @@ export default {
   methods: {
     startGame() {
       this.$router.push('/background-select'); // Naviger til BackgroundSelect
+    },
+    HowTo() {
+      this.$router.push('/info'); // Naviger til BackgroundSelect
     }
   }
 };
 </script>
 
 <style scoped>
-
-
 .start-screen {
   display: flex;
   align-items: center;
@@ -45,6 +51,7 @@ export default {
 .content {
   max-width: 800px;
   padding: 20px;
+  width: 100%;
 }
 
 h1 {
@@ -62,9 +69,15 @@ h1 {
   text-align: center;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Giver lidt mellemrum mellem knapperne */
+  margin-top: 30px;
+}
+
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
   background-color: #61dafb;
   border: none;
@@ -72,9 +85,29 @@ button {
   cursor: pointer;
   color: #282c34;
   transition: background-color 0.3s ease;
+  width: 200px; /* Sætter en ensartet bredde på knapperne */
+  margin: 0 auto; /* Centrerer knapperne horisontalt */
 }
 
 button:hover {
+  background-color: #21a1f1;
+}
+
+/* Specifik styling for de to knapper */
+.start-btn {
+  background-color: #61dafb;
+}
+
+.start-btn:hover {
+  background-color: #21a1f1;
+}
+
+.howto-btn {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.howto-btn:hover {
   background-color: #21a1f1;
 }
 </style>
