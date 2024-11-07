@@ -1,32 +1,37 @@
 <template>
   <div class="container" :style="containerStyles">
-    <div class="wave-container" v-if="!loadingFinished">
+    <!-- Bølgeanimation af ikoner som vises inden resten af indholdet -->
+    <div class="wave-container" v-if="!loadingFinished"> 
+      <!-- Er med til at sikre at ikonerne kun vises indtil loadingFinished bliver true -->
       <img
-        v-for="(icon, index) in icons"
+        v-for="(icon, index) in Array(6)"  
         :key="index"
         :src="require(`@/images/broken_heart.png`)"
-        alt="Wave Icon"
+        alt="hjerte ikon"
         class="wave-icon"
-        :style="{ animationDelay: `${index * 0.1}s` }"
-      />
+        :style="{ animationDelay: `${index * 0.1}s` }" 
+      /> <!-- Dette delay er med til at give bølge effekten -->
     </div>
+
+    <!-- Denne container får også v-if loadingFinished da den skal vises når animationen er færdig med at loade ind. fadeIn sker når textVisible er true hvilket gør den fader gradvist ind -->
     <v-container v-if="loadingFinished" :class="{ fadeIn: textVisible }" class="text-container">
       <h1 class="title">JPG + Ikoner = 💔</h1>
-<p>
-  Når du vælger ikonformat til din hjemmeside, er JPG ikke ligefrem en vinder. Det understøtter ikke gennemsigtighed, hvilket kan gøre dine grafiske elementer mindre elegante.
-  <br /><br />
-  Derudover er JPG ofte større i filstørrelse, hvilket betyder langsommere indlæsningstider og mere energiforbrug. Det er ikke bare dårligt for din side – det er også skidt for miljøet!
-  <br /><br />
-  Overvej i stedet PNG eller SVG: PNG giver skarpe detaljer med transparens, mens SVG er vektorbaseret og skaleres uden kvalitetstab. Gør dit valg med omtanke!
-</p>
+      <p>
+        Når du vælger ikonformat til din hjemmeside, er JPG ikke ligefrem en vinder. Det understøtter ikke gennemsigtighed, hvilket kan gøre dine grafiske elementer mindre elegante.
+        <br /><br />
+        Derudover er JPG ofte større i filstørrelse, hvilket betyder langsommere indlæsningstider og mere energiforbrug. Det er ikke bare dårligt for din side – det er også skidt for miljøet!
+        <br /><br />
+        Overvej i stedet PNG eller SVG: PNG giver skarpe detaljer med transparens, mens SVG er vektorbaseret og skaleres uden kvalitetstab. Gør dit valg med omtanke!
+      </p>
 
+      <!-- Samme fade in effekt er givet til de fire ikoner i bunden -->
       <div class="icon-row" v-if="textVisible">
         <img
-          v-for="(icon, index) in iconSet"
+          v-for="(icon, index) in iconSet" 
           :key="index"
-          :src="require(`@/images/${icon.src}`)"
+          :src="require(`@/images/${icon.src}`)" 
           :alt="icon.alt"
-          class="additional-icon"
+          class="additional-icon" 
           :style="{ animationDelay: `${index * 0.2}s` }"
         />
       </div>
@@ -38,41 +43,40 @@
 import { mapState } from 'vuex';
 
 export default {
-    name: 'FeedbackPopIconBad',
-    components: {
-     // Register the component
+  name: 'FeedbackPopIconBad',
+  components: {
+    // Register the component
   },
   data() {
     return {
-      icons: Array(6).fill(0), // Initial wave icons
       iconSet: [
         { src: "home.jpg", alt: 'Icon by UIcons' },
         { src: "cart.jpg", alt: "Icon by UIcons" },
         { src: "calendar.jpg", alt: "Icon by UIcons" },
         { src: "likes.jpg", alt: "Icon by UIcons" }
-      ], // Different icons with alt text
-      loadingFinished: false, // Control when to show the text
-      textVisible: false, // Control when to fade in the text and icons
+      ], // Forskellige ikoner
+      loadingFinished: false, // Kontrollerer synligheden af ikonerne
+      textVisible: false, // Kontrollerer synligheden af teksten
     };
   },
   mounted() {
     setTimeout(() => {
-      this.loadingFinished = true; // Show text container
-      this.fadeInText(); // Call fade in text function
-    }, 2000); // Adjust time until text appears
+      this.loadingFinished = true; // Vis tekst efter hjerte ikonerne er færdige
+      this.fadeInText(); // Kalder metoden fadeInText
+    }, 2000); // Delay på 2 sekunder, så hjerte ikonerne kan nå at loade ind og forsvinde igen
   },
   methods: {
     fadeInText() {
       setTimeout(() => {
-        this.textVisible = true; // Fade in text after a slight delay
-      }, 300); // Delay for 300ms after the icons finish
+        this.textVisible = true; // Fade teksten ind efter hjerte ikonerne er færdige
+      }, 300); // Delay på 300ms for at give tid til at fade effekten kan nå at loade ind
     },
   },
   computed: {
-    ...mapState(['backgroundColor']), // Map the backgroundColor state from Vuex
+    ...mapState(['backgroundColor']), // Tager backgroundColor fra Vuex
     containerStyles() {
       return {
-        backgroundColor: this.backgroundColor, // Use the backgroundColor from Vuex
+        backgroundColor: this.backgroundColor, // Tag backgroundColor fra Vuex
       };
     },
   },
