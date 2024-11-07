@@ -12,30 +12,33 @@
 
       <!-- Formatknapper på en række -->
       <v-row justify="center" class="format-options">
-        <div v-for="format in formats" :key="format.type" class="format-button" @click="selectFormat(format)"
-          :class="{ active: selectedFormat.type === format.type }">
-          <img :src="format.icon" class="format-icon" />
-          <p class="format-label">{{ format.label }}</p>
+        <!-- Knapperne er dynamisk genereret fra formats-arrayet -->
+        <div
+          v-for="format in formats"
+          :key="format.type"
+          class="format-button"
+          @click="selectFormat(format)"
+          :class="{ active: selectedFormat.type === format.type }" 
+          :aria-label="`Vælg ${format.label} format`"
+        >
+          <img :src="format.icon" :alt="`${format.label} Icon`" class="format-icon" /> <!-- Ikonbillede for formatet -->
+          <p class="format-label">{{ format.label }}</p> <!-- Gør at det rigtige navn vises på hvert label -->
         </div>
       </v-row>
-
-      <!-- Eksempelbillede -->
-      <v-img :src="selectedImage" :alt="`Billede i ${selectedFormat.label}-format`" class="image-preview"
-        :class="{ fade: isFading }" @load="handleImageLoad" max-width="600" max-height="400" contain />
-
     </v-container>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+    
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Næste">Næste</v-btn>
 
-    <!-- Conditional Feedback Components -->
-    <FeedbackPopIcon 
-    class="feedback-pop-icon"
-      v-if="showFeedbackPopup && isSvgOrPng" 
-      @close="showFeedbackPopup = false" 
+    <!-- Conditional Feedback Components baseret på det valgte format -->
+    <FeedbackPopIcon
+      class="feedback-pop-icon"
+      v-if="showFeedbackPopup && isSvgOrPng"
+      @close="showFeedbackPopup = false"
     />
-    <FeedbackPopIconBad 
-     class="feedback-pop-icon"
-      v-if="showFeedbackPopup && isJpg" 
-      @close="showFeedbackPopup = false" 
+    <FeedbackPopIconBad
+      class="feedback-pop-icon"
+      v-if="showFeedbackPopup && isJpg"
+      @close="showFeedbackPopup = false"
     />
   </div>
 </template>
@@ -53,56 +56,36 @@ export default {
     FeedbackPopIconBad,
   },
   data() {
+    // Data for de forskellige formater som skal importeres
     return {
       formats: [
-        { type: 'jpg', label: 'JPG', icon: require('@/images/icon.jpg'), src: require('@/images/icon.jpg') },
-        { type: 'png', label: 'PNG', icon: require('@/images/icon.png'), src: require('@/images/icon.png') },
-        { type: 'svg', label: 'SVG', icon: require('@/images/icon.svg'), src: require('@/images/icon.svg') },
+        { type: 'jpg', label: 'JPG', icon: require('@/images/icon.jpg'), alt: 'JPG ikon af ledning' },
+        { type: 'png', label: 'PNG', icon: require('@/images/icon.png'), alt: 'PNG ikon af ledning' },
+        { type: 'svg', label: 'SVG', icon: require('@/images/icon.svg'), alt: 'SVG ikon af ledning'},
       ],
-      selectedFormat: { type: 'jpg', label: 'JPG', src: require('@/images/icon.jpg') },
-      isFading: false,
-      showFeedbackPopup: false, // Control the visibility of the popup
+      selectedFormat: { type: 'jpg', label: 'JPG' }, // Holder styr på hvilket format der er valgt
+      showFeedbackPopup: false, // Synlighed af feedback-pop-up'en
     };
   },
   computed: {
     ...mapState(['showNextButton']),
-
-    selectedImage() {
-      return this.selectedFormat.src;
-    },
     isSvgOrPng() {
+      // Tjekker om det valgte format er SVG eller PNG for at vise den passende feedback-popup
       return this.selectedFormat.type === 'svg' || this.selectedFormat.type === 'png';
     },
     isJpg() {
+      // Tjekker om det valgte format er JPG for at vise den passende feedback-popup
       return this.selectedFormat.type === 'jpg';
     },
   },
   methods: {
     ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
-
     selectFormat(format) {
-      this.isFading = true;
-      setTimeout(() => {
-        this.selectedFormat = format;
-        this.isFading = false;
-      }, 300);
+      // Sætter det valgte format, når der klikkes på et ikon. Dette har betydning for hvilken feedbackside der bliver vist når man klikker
+      this.selectedFormat = format;
     },
-    handleImageLoad() {
-      this.isFading = false;
-    },
-    goBack() {
-      this.$router.push('/');
-    },
-    goForward() {
-      // Check the selected format and navigate based on it
-      if (this.selectedFormat.type === 'jpg') {
-        this.$router.push('/feedback-icon-wrong'); // Route for JPG format
-      } else {
-        this.$router.push('/feedback-icon'); // Route for PNG, SVG, etc.
-      }
-    },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -138,18 +121,16 @@ export default {
 
 .format-options {
   margin-top: 20px;
+  margin-bottom: 30px;
   display: flex;
   gap: 30px;
-  /* Øget afstand mellem knapper */
   width: 100%;
   max-width: 800px;
-  /* Begrænser samlet bredde */
   justify-content: center;
 }
 
 .format-button {
   flex: 1;
-  /* Knapperne fylder hele rækken */
   padding: 20px;
   cursor: pointer;
   border: 2px solid #ddd;
@@ -157,16 +138,16 @@ export default {
   text-align: center;
   transition: background-color 0.2s ease, transform 0.2s ease;
   max-width: 220px;
-  /* Sætter maks bredde pr. knap */
   min-width: 150px;
-  /* Sætter minimum bredde */
 }
 
+/* Hover effekt for at give en visuel indikation af klikbare elementer */
 .format-button:hover {
   background-color: #e3f2fd;
   transform: scale(1.05);
 }
 
+/* Active klasse for at fremhæve det valgte format */
 .format-button.active {
   background-color: #6fa3ef;
   color: white;
@@ -183,18 +164,6 @@ export default {
   font-size: 1.2em;
 }
 
-.image-preview {
-  margin-top: 20px;
-  max-width: 600px;
-  text-align: center;
-  border-radius: 8px;
-  transition: opacity 0.3s ease;
-}
-
-.image-preview.fade {
-  opacity: 0;
-}
-
 .nav-button {
   background-color: transparent;
   border: none;
@@ -209,7 +178,6 @@ export default {
 .background-select {
   height: auto;
   width: 100vw;
-  /* or any other desired height, e.g., 50vh, 500px, etc. */
 }
 
 .left {
