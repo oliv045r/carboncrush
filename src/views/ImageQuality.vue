@@ -3,9 +3,8 @@
     <!-- Info sektion -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
       <v-card-title class="text-h5 font-weight-bold">Vælg Billedkvalitet</v-card-title>
-    <v-card-text class="text-subtitle-1">
-      Nu skal der vælges billedkvalitet. Dette valg er afgørende for både billedets udseende, ydeevne og dets indflydelse på bæredygtigheden af dit design. Højere billedkvalitet giver skarpere billeder, men kræver mere databehandling og længere indlæsningstid, hvilket kan øge energiforbruget. Lavere billedkvalitet reducerer belastningen på systemet og kan forbedre brugeroplevelsen på langsommere forbindelser, samtidig med at det mindsker miljøpåvirkningen.
-    </v-card-text>
+      <v-card-text class="text-subtitle-1">
+        Vælg billedkvalitet. Høj kvalitet giver skarpere billeder, men øger indlæsningstid og energiforbrug. Lav kvalitet reducerer belastningen, forbedrer ydeevnen og mindsker miljøpåvirkningen.</v-card-text>
     </v-card>
     <div class="info-section">
       <!-- Billedkvalitet slider -->
@@ -18,14 +17,15 @@
           max="100"
           v-model="quality"
           @input="updateImage"
+          aria-label="Billedkvalitet slider"
         />
         <br />
         <!-- Dynamisk billede -->
-        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
+        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight" aria-label="Dynamisk billede"></canvas>
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Next button">Next</v-btn>
 
   </div>
   <FeedbackPop 
@@ -34,6 +34,7 @@
       :title="feedbackTitle"
       :content="feedbackContent"
       :imageUrl="feedbackImageUrl"
+      aria-label="Feedback popup"
       >
   </FeedbackPop>
 </template>
@@ -48,15 +49,15 @@ export default {
   },
   data() {
     return {
-      quality: 80, // 80% billedkvalitet
-      imageSrc: require('@/images/dog_webp.webp'),
+      quality: 80, // Standard billedkvalitet sat til 80%
+      imageSrc: require('@/images/dog_webp.webp'), // Kilde til billedet
       canvasWidth: 500, // Standard billedbredde
       canvasHeight: 333, // Standard billedhøjde
       imageSize: 0, // Vil blive beregnet dynamisk
-      showFeedbackPopup: false, // Control the visibility of the popup
-      feedbackTitle: 'Okay!', // Define the title for FeedbackPop
-      feedbackContent: 'Når du vælger billedkvalitet til din hjemmeside, er det vigtigt at overveje både kvalitet og filstørrelse. Højere billedkvalitet kan forbedre det visuelle indtryk, men det kan også øge filstørrelsen. <br> <br> At finde den rette balance er afgørende, da større billeder kan forlænge indlæsningstiderne og øge energiforbruget. Ved at vælge en passende billedkvalitet kan du sikre hurtigere indlæsning, hvilket forbedrer brugeroplevelsen og samtidig sparer båndbredde. <br> <br>Husk, at dit valg af billedkvalitet kan have indflydelse på både ydeevne og bæredygtighed. Tænk over det, når du designer din hjemmeside!', // Define the content for FeedbackPop
-      feedbackImageUrl: require('@/images/QualityMeme.jpg') // Define the image URL for FeedbackPop
+      showFeedbackPopup: false, // Kontroller synligheden af popup
+      feedbackTitle: 'Okay!', // Definer titlen for FeedbackPop
+      feedbackContent: 'Når du vælger billedkvalitet, overvej både kvalitet og filstørrelse. Højere kvalitet forbedrer udseendet, men øger filstørrelsen.  For hurtigere indlæsning og bedre ydeevne bør billeder ikke overstige 500 KB. Små billeder kan ofte have lavere opløsning uden tab af kvalitet.  Dit valg påvirker både ydeevne og bæredygtighed – husk det, når du designer!', // Definer indholdet for FeedbackPop
+      feedbackImageUrl: require('@/images/QualityMeme.jpg') // Definer billed-URL for FeedbackPop
     };
   },
   computed: {
@@ -82,23 +83,23 @@ export default {
         let scaledWidth, scaledHeight;
 
         if (aspectRatio > 1) {
-          // Landscape
+          // Landskab
           scaledWidth = (this.quality / 100) * this.canvasWidth;
           scaledHeight = scaledWidth / aspectRatio;
         } else {
-          // Portrait or square
+          // Portræt eller kvadrat
           scaledHeight = (this.quality / 100) * this.canvasHeight;
           scaledWidth = scaledHeight * aspectRatio;
         }
 
-        // Draw the image at a lower resolution
+        // Tegn billedet i en lavere opløsning
         const offscreenCanvas = document.createElement('canvas');
         offscreenCanvas.width = scaledWidth;
         offscreenCanvas.height = scaledHeight;
         const offscreenCtx = offscreenCanvas.getContext('2d');
         offscreenCtx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 
-        // Scale the image back up to the canvas size
+        // Skaler billedet op til canvas størrelse
         ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         ctx.imageSmoothingEnabled = false;
         ctx.drawImage(offscreenCanvas, 0, 0, scaledWidth, scaledHeight, 0, 0, this.canvasWidth, this.canvasHeight);
@@ -107,8 +108,8 @@ export default {
       };
     },
     calculateImageSize() {
-      // Her laver vi en simpel beregning af billedstørrelsen i KB baseret på kvaliteten
-      const baseSize = 500; // Antag at billedet på 100% kvalitet er 500 KB
+      // Beregning af billedstørrelse i KB baseret på kvalitet
+      const baseSize = 500; // Antag at billedet ved 100% kvalitet er 500 KB
       this.imageSize = Math.round((this.quality / 100) * baseSize);
     }
   },
@@ -121,14 +122,14 @@ export default {
 </script>
 
 <style scoped>
-
 .background-select {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;}
+  justify-content: center;
+}
 
 .info-section {
   text-align: center;
