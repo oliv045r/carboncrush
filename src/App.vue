@@ -63,4 +63,16 @@ export default {
 h1.title {
   font-size: 50px; /* Sæt skriftstørrelse for titler */
 }
+
+h5 {
+  font-size: 40px !important;
+}
+
+.v-card-text {
+  font-size: 18px !important;
+}
+
+p {
+  font-size: 18px !important;
+}
 </style>

@@ -2,8 +2,8 @@
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info sektion -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h5 font-weight-bold">Vælg Billedkvalitet</v-card-title>
-      <v-card-text class="text-subtitle-1">
+      <v-card-title class="text-h4 font-weight-bold">Vælg billedkvalitet</v-card-title>
+      <v-card-text class="text-subtitle-">
         Vælg billedkvalitet. Høj kvalitet giver skarpere billeder, men øger indlæsningstid og energiforbrug. Lav kvalitet reducerer belastningen, forbedrer ydeevnen og mindsker miljøpåvirkningen.</v-card-text>
     </v-card>
     <div class="info-section">
@@ -57,7 +57,7 @@ export default {
       showFeedbackPopup: false, // Kontroller synligheden af popup
       feedbackTitle: 'Okay!', // Definer titlen for FeedbackPop
       feedbackContent: 'Når du vælger billedkvalitet, overvej både kvalitet og filstørrelse. Højere kvalitet forbedrer udseendet, men øger filstørrelsen.  For hurtigere indlæsning og bedre ydeevne bør billeder ikke overstige 500 KB. Små billeder kan ofte have lavere opløsning uden tab af kvalitet.  Dit valg påvirker både ydeevne og bæredygtighed – husk det, når du designer!', // Definer indholdet for FeedbackPop
-      feedbackImageUrl: require('@/images/QualityMeme.jpg') // Definer billed-URL for FeedbackPop
+      feedbackImageUrl: require('@/images/QualityMeme2.png') // Definer billed-URL for FeedbackPop
     };
   },
   computed: {

@@ -2,8 +2,8 @@
   <div :style="{ fontFamily: selectedFont, color: textColor }" class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til baggrundsfarve valg -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h5 font-weight-bold">Vælg skrifttype</v-card-title>
-      <v-card-text class="text-subtitle-1">
+      <v-card-title class="text-h4 font-weight-bold">Vælg skrifttype</v-card-title>
+      <v-card-text class="text-subtitle-">
         Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
         <br> <br>
         Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.
@@ -65,8 +65,8 @@ export default {
       ],
       showFeedbackPopup: false, // Kontroller synligheden af popup
       feedbackTitle: 'Ikke dårligt!', // Titel for FeedbackPop
-      feedbackContent: 'Når du vælger en skrifttype, der er integreret i HTML, kan det have en positiv indvirkning på din hjemmesides ydeevne. Websikre skrifttyper, som Arial, Verdana eller Georgia, er generelt lettere at indlæse, da de er tilgængelige på de fleste enheder uden behov for ekstra filoverførsler. <br> <br> Dette sparer båndbredde og reducerer energiforbruget, når siden indlæses. <br> <br> Moderne skrifttyper, der skal downloades som webfonte, kan derimod øge belastningen på serveren og kræve mere tid og data at indlæse, hvilket kan føre til et højere CO2-aftryk. Dette gælder især for skrifttyper med mange vægte og stilarter, da hver variation kræver sin egen fil. <br> <br> Ved at vælge en simpel og effektiv skrifttype kan du dermed optimere din hjemmesides hastighed og bæredygtighed, hvilket i sidste ende hjælper med at reducere dens samlede CO2-aftryk. Gør dit valg med omtanke, og se, hvordan det kan gøre en forskel!', // Indhold for FeedbackPop
-      feedbackImageUrl: require('@/images/font_meme.webp') // Billede-URL for FeedbackPop
+      feedbackContent: 'Når du vælger en skrifttype, der er indbygget i HTML, sparer du båndbredde. Websikre skrifttyper som Arial og Verdana er hurtigere at indlæse, da de er tilgængelige på de fleste enheder uden ekstra filoverførsler. <br> <br> Moderne skrifttyper, der kræver eksternt download, kan øge serverbelastningen og bruge mere tid og data, hvilket medfører et højere CO2-aftryk. Skrifttyper med mange vægte og stilarter kræver ekstra filer, som belaster indlæsningstiden. Ved at vælge en enkel skrifttype kan du optimere din hjemmesides hastighed og bæredygtighed, og dermed reducere CO2-aftrykket.', // Indhold for FeedbackPop
+      feedbackImageUrl: require('@/images/font_meme2.png') // Billede-URL for FeedbackPop
     };
   },
   computed: {

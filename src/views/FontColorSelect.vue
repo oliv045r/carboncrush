@@ -2,8 +2,8 @@
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til skrifttype valg -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h5 font-weight-bold">Vælg tekstfarve</v-card-title>
-      <v-card-text class="text-subtitle-1">
+      <v-card-title class="text-h4 font-weight-bold">Vælg tekstfarve</v-card-title>
+      <v-card-text class="text-subtitle-">
         Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
       </v-card-text>
     </v-card>
@@ -81,7 +81,7 @@ export default {
       currentAngle: 0, // Aktuel vinkel under træk
       showFeedbackPopup: false, // Kontroller synligheden af popup
       feedbackTitle: 'Godt valg!', // Titel for FeedbackPop
-      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br> <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Indhold for FeedbackPop
+      feedbackContent: 'Mørke farver som sort bruger mindre energi på de fleste skærme, især OLED, hvor hver pixel selv udsender lys. Når en pixel viser sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm. <br> <br> Denne forskel er især tydelig ved høj lysstyrke og længere skærmtider, f.eks. når en hjemmeside er åben længe. Ved at vælge en mørkere baggrund kan du derfor spare energi og reducere CO2-udslippet, især på OLED-enheder, der bliver mere udbredte. Mørkt design kan dermed også forlænge batterilevetiden på mobile enheder.', // Indhold for FeedbackPop
       feedbackImageUrl: require('@/images/bg meme.png') // Billede-URL for FeedbackPop
     };
   },

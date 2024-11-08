@@ -3,7 +3,7 @@
     <!-- Info sektion -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
       <v-card-title class="text-h5 font-weight-bold">Vælg dit billedformat</v-card-title>
-      <v-card-text class="text-subtitle-1">
+      <v-card-text class="text-subtitle-">
         Skal vi finde det bedste format til dine billeder? Udadtil har valget af format ikke den store betydning - men
         for din side og dit energiforbrug kan det betyde en del.
       </v-card-text>
@@ -55,7 +55,7 @@ export default {
       isFading: false, //Gør at fade ind effekten som udgangspunkt ikke vises
       showFeedbackPopup: false, // Control the visibility of the popup
       feedbackTitle: 'Den her er svær...', // Define the title for FeedbackPop
-      feedbackContent: 'Når du vælger billedformat til din hjemmeside, er det vigtigt at tænke på kvalitet og filstørrelse. Formater som JPEG og PNG er almindeligt anvendte, men nyere formater som WEBP og AVIF tilbyder bedre kompression og kvalitet. <br> <br> JPEG er ideelt til fotografier og giver en god balance mellem størrelse og kvalitet, mens PNG er bedre til billeder med gennemsigtighed. WEBP og AVIF kan reducere filstørrelserne betydeligt, hvilket forbedrer indlæsningstiderne og sparer båndbredde. <br> <br>Det rigtige valg kan også påvirke tilgængeligheden, da hurtigere indlæsning giver en bedre brugeroplevelse. Vær opmærksom på, hvordan dit valg kan optimere både ydeevne og bæredygtighed. Gør dit valg med omtanke!', // Define the content for FeedbackPop
+      feedbackContent: 'Når du vælger billedformat til din hjemmeside, skal du tænke på kvalitet og filstørrelse. JPEG er godt til fotografier med en balance mellem størrelse og kvalitet, mens PNG er bedre til billeder med gennemsigtighed. <br> <br>WEBP og AVIF giver bedre kompression, hvilket reducerer filstørrelser og forbedrer indlæsningstider. Det kan forbedre brugeroplevelsen og spare båndbredde. Husk, at det rigtige format kan optimere både ydeevne og bæredygtighed. Vælg med omtanke for at sikre en hurtig og effektiv hjemmeside. ', // Define the content for FeedbackPop
       feedbackImageUrl: require('@/images/king-of-the-hill-jpeg.gif') // Define the image URL for FeedbackPop
     };
   },
