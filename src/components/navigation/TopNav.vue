@@ -4,9 +4,7 @@
       <!-- Vi har placeret den i en v-container for at sikre responsitivt og at den forbliver i top-left hjørne-->
       <v-speed-dial v-model="fab" location="bottom left" transition="fade-transition" open-on-hover>
         <template v-slot:activator="{ props: activatorProps }">
-          <!-- v-slot:activator er en måde at "låne" nogle specielle indstillinger (props) til en knap,
-          så knappen fungerer korrekt med en funktion som f.eks. en menu, der åbner, når du klikker på den.
-          activatorProps er bare navnet på de indstillinger, som knappen får-->
+          <!-- v-slot:activator er en måde at "låne" nogle specielle indstillinger (props) til en knap -->
           <v-fab v-bind="activatorProps" size="large" color="primary" icon="mdi-menu" class="main-fab"></v-fab>
         </template>
         <v-tooltip text="Tilbage til start">

@@ -23,7 +23,7 @@
     </v-btn>
 
     <!-- Circulær progress bar, som viser score -->
-    <v-progress-circular v-if="value" :model-value="value" :size="200" :width="15" class="score-circle">
+    <v-progress-circular v-if="value" :model-value="value" :size="200" :width="15" class="score-circle"> <!--v-if bestemmer om componenten skal loades, og den skal have en værdi over 0 for at vises-->
       <div class="score-text">{{ Math.round(value) }}%</div>
     </v-progress-circular>
 

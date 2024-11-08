@@ -15,9 +15,9 @@
         <!-- Knapperne er dynamisk genereret fra formats-arrayet -->
         <div
           v-for="format in formats"
-          :key="format.type"
-          class="format-button"
-          @click="selectFormat(format)"
+          :key="format.type" 
+          class="format-button" 
+          @click="selectFormat(format)" 
           :class="{ active: selectedFormat.type === format.type }" 
           :aria-label="`Vælg ${format.label} format`"
         >
