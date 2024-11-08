@@ -1,9 +1,9 @@
 <template>
   <div :style="{ fontFamily: selectedFont, color: textColor }" class="background-select animate__animated animate__fadeIn">
     <!-- Info boks til baggrundsfarve valg -->
-    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h4 font-weight-bold">Vælg skrifttype</v-card-title>
-      <v-card-text class="text-subtitle-">
+    <v-card class="card-intro mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
+      <v-card-title class="text-h5 font-weight-bold">Vælg skrifttype</v-card-title>
+      <v-card-text class="text-subtitle-1">
         Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
         <br> <br>
         Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.
@@ -24,7 +24,7 @@
         <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
       </template>
     </v-carousel>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Next</v-btn>
   </div>
   <FeedbackPop 
     v-if="showFeedbackPopup" 
@@ -101,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+.card-intro {
+  height: 500px;
+}
+
 .background-select {
   height: 100vh;
   width: 100vw;

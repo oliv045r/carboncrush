@@ -47,9 +47,10 @@
             showFeedbackPopup = true;
             updateShowNextButton(true);
          "
-         color="primary"
+         color=""
          aria-label="Næste"
          >Næste</v-btn
+
       >
    </div>
    <FeedbackPop

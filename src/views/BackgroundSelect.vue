@@ -33,7 +33,7 @@
       <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
     </div>
     <!-- Knap til at vise feedback popup -->
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Næste</v-btn>
   </div>
   <!-- FeedbackPop som en popup -->
   <FeedbackPop 

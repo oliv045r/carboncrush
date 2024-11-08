@@ -27,7 +27,7 @@
       </v-row>
     </v-container>
     
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Næste">Næste</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Næste">Fortsæt</v-btn>
 
     <!-- Conditional Feedback Components baseret på det valgte format -->
     <FeedbackPopIcon
@@ -97,6 +97,7 @@ export default {
 }
 
 .background-select {
+  margin-top: 15rem;
   height: 100vh;
   width: 100vw !important;
   display: flex;

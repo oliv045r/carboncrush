@@ -25,7 +25,7 @@
         @load="handleImageLoad" />
       <!--load event der fjerner fade ind effekten når billedet er helt indlæst-->
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Næste</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="">Næste</v-btn>
   </div>
   <FeedbackPop v-if="showFeedbackPopup" @close="showFeedbackPopup = false" :title="feedbackTitle"
     :content="feedbackContent" :imageUrl="feedbackImageUrl">
@@ -86,6 +86,7 @@ export default {
 <style scoped>
 .background-select {
   width: 100vw;
+  margin-top: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -25,7 +25,7 @@
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Next button">Næste</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Next button">Næste</v-btn>
 
   </div>
   <FeedbackPop 
