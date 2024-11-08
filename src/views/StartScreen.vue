@@ -85,7 +85,7 @@ button {
   cursor: pointer;
   color: #282c34;
   transition: background-color 0.3s ease;
-  width: 200px; /* Sætter en ensartet bredde på knapperne */
+  width: 250px; /* Sætter en ensartet bredde på knapperne */
   margin: 0 auto; /* Centrerer knapperne horisontalt */
 }
 
