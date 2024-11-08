@@ -35,7 +35,7 @@
         class="howto-btn"
         :class="{ visible: showRestartButton }"  
       >
-        Start forfra
+        Tilbage til start
       </v-btn>
     </transition>
 
