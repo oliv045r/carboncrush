@@ -1,7 +1,7 @@
 <template>
   <v-app id="app" :style="appStyles">
     <v-container class="app-container">
-    <TopNav />
+      <TopNav /> <!-- Top navigation component -->
       <transition name="fade" mode="out-in">
         <div>
           <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
@@ -20,16 +20,16 @@ import TopNav from './components/navigation/TopNav.vue';
 export default {
   name: 'App',
   components: {
-    BottomNav,
-    TopNav, // Register BottomNav component
+    BottomNav, // Registrer BottomNav komponent
+    TopNav, // Registrer TopNav komponent
   },
   computed: {
-    ...mapState(['backgroundColor', 'selectedFont', 'textColor']),
+    ...mapState(['backgroundColor', 'selectedFont', 'textColor']), // Hent state fra Vuex
     appStyles() {
       return {
-        backgroundColor: this.backgroundColor,
-        fontFamily: this.selectedFont,
-        color: `${this.textColor} !important`
+        backgroundColor: this.backgroundColor, // Sæt baggrundsfarve
+        fontFamily: this.selectedFont, // Sæt skrifttype
+        color: `${this.textColor} !important` // Sæt tekstfarve
       };
     }
   },
@@ -37,31 +37,30 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Notable&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap'); /* Importer skrifttype */
+@import url('https://fonts.googleapis.com/css2?family=Notable&display=swap'); /* Importer skrifttype */
 
 #app {
-  width: 100vw !important;
+  width: 100vw !important; /* Sæt bredde til 100% af viewport bredde */
 }
 
 .app-container {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0 !important; /* Fjern margin */
+  padding: 0 !important; /* Fjern padding */
 }
 
 .router-container {
-  width: 100vw;
+  width: 100vw; /* Sæt bredde til 100% af viewport bredde */
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif; /* Standard skrifttype */
+  -webkit-font-smoothing: antialiased; /* Glat tekst på WebKit-browsere */
+  -moz-osx-font-smoothing: grayscale; /* Glat tekst på OS X */
+  text-align: center; /* Centrer tekst */
 }
 
 h1.title {
-  font-size: 50px;
+  font-size: 50px; /* Sæt skriftstørrelse for titler */
 }
 </style>

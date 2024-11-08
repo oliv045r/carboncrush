@@ -3,16 +3,18 @@
     <!-- Info boks til skrifttype valg -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
       <v-card-title class="text-h5 font-weight-bold">Vælg tekstfarve</v-card-title>
-    <v-card-text class="text-subtitle-1">
-      Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
-    </v-card-text>
+      <v-card-text class="text-subtitle-1">
+        Tid til at vælge tekstfarven for din hjemmeside! Din farvebeslutning har faktisk betydning for bæredygtigheden: forskellige farver bruger forskellige mængder energi, når de vises på skærmen.
+      </v-card-text>
     </v-card>
     <v-icon class="pointer-arrow">mdi-arrow-down</v-icon>
 
-    <!-- Circular color carousel -->
+    <!-- Viser navnet på den valgte farve -->
     <div class="chosen-color">
-  <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
-</div>
+      <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
+    </div>
+
+    <!-- Cirkulær farvekarusel -->
     <div
       class="carousel"
       :style="{ transform: `rotate(${rotationAngle}deg)` }"
@@ -21,6 +23,7 @@
       @mousemove="onDrag"
       @mouseleave="endDrag"
     >
+      <!-- Farvevalg i karusellen -->
       <div
         v-for="(colorOption, index) in colorOptions"
         :key="index"
@@ -29,40 +32,32 @@
         @click="rotateToColor(index)"
       ></div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Next</v-btn>
 
-    <!-- FeedbackPop as a popup -->
-    <v-sheet
-      v-if="showFeedbackPopup"
-      class="popup-sheet"
-      max-width="600"
-      transition="dialog-bottom-transition"
-      variant="flat"
-      color="white"
-    >
-      <FeedbackPop
-        @close="showFeedbackPopup = false"
-        :title="feedbackTitle"
-        :content="feedbackContent"
-        :imageUrl="feedbackImageUrl"
-      ></FeedbackPop>
-    </v-sheet>
+  <!-- FeedbackPop som en popup -->
+  <FeedbackPop 
+    v-if="showFeedbackPopup" 
+    @close="showFeedbackPopup = false" 
+    :title="feedbackTitle"
+    :content="feedbackContent"
+    :imageUrl="feedbackImageUrl"
+  ></FeedbackPop>
   </div>
 </template>
 
 <script>
-import { VCard, VBtn, VIcon, VSheet } from 'vuetify/lib/components'; // Import Vuetify components
+import { VCard, VBtn, VIcon } from 'vuetify/lib/components'; // Importer Vuetify komponenter
 import { mapActions, mapState } from 'vuex';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 
 export default {
   name: 'FontColorSelect',
   components: {
-    VCard, VBtn, VIcon, VSheet, FeedbackPop, // Register Vuetify components
+    VCard, VBtn, VIcon, FeedbackPop, // Registrer Vuetify komponenter
   },
   data() {
     return {
-      color: '#000000',
+      color: '#000000', // Standard tekstfarve
       colorOptions: [
         { name: 'Blå', color: '#3AA3EA' },
         { name: 'Pink', color: '#F142DA' },
@@ -77,60 +72,60 @@ export default {
         { name: 'Gul', color: '#E2EC24' },
         { name: 'Mørk lilla', color: '#732A75' }
       ],
-      selectedIndex: 0,
-      angleStep: 360 / 12,
-      rotationAngle: 0,
-      dragging: false,
-      startAngle: 0,
-      currentAngle: 0,
-      showFeedbackPopup: false, // Control the visibility of the popup
-      feedbackTitle: 'Godt valg!', // Define the title for FeedbackPop
-      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br> <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Define the content for FeedbackPop
-      feedbackImageUrl: require('@/images/bg meme.png') // Define the image URL for FeedbackPop
+      selectedIndex: 0, // Indeks for valgt farve
+      angleStep: 360 / 12, // Vinkeltrin for karusellen
+      rotationAngle: 0, // Aktuel rotationsvinkel
+      dragging: false, // Om brugeren trækker i karusellen
+      startAngle: 0, // Startvinkel for træk
+      currentAngle: 0, // Aktuel vinkel under træk
+      showFeedbackPopup: false, // Kontroller synligheden af popup
+      feedbackTitle: 'Godt valg!', // Titel for FeedbackPop
+      feedbackContent: 'Mørkere farver som sort bruger typisk mindre energi på de fleste skærme, hvilket gør dem til et grønnere valg. <br> <br> På mange skærmtyper, især OLED (Organic Light Emitting Diode) skærme, bruger mørkere farver mindre energi, fordi hver pixel selv udsender lys. Når en pixel skal vise sort, er den i princippet slukket eller reduceret til minimal lysstyrke, hvilket reducerer energiforbruget. <br> <br> Lyse farver, som hvid, kræver derimod, at skærmens pixels lyser kraftigere, hvilket øger strømforbruget. Denne forskel er særligt mærkbar ved høje lysstyrkeniveauer og længere skærmtider – for eksempel ved hjemmesider, der vises i længere tid. <br> <br> Ved at vælge en mørkere baggrund kan du altså spare energi og reducere din hjemmesides CO2-aftryk en smule – især på enheder med OLED-skærme, som bliver mere og mere almindelige.', // Indhold for FeedbackPop
+      feedbackImageUrl: require('@/images/bg meme.png') // Billede-URL for FeedbackPop
     };
   },
   computed: {
     ...mapState(['fontColorSelectionReached']),
     colorName() {
-      return this.colorOptions[this.selectedIndex].name;
+      return this.colorOptions[this.selectedIndex].name; // Navn på valgt farve
     }
   },
   methods: {
     ...mapActions(['updateTextColor', 'updateShowNextButton']),
     changeTextColor(color) {
-      this.updateTextColor(color);
+      this.updateTextColor(color); // Opdater tekstfarve i Vuex
     },
     rotateToColor(index) {
-      this.selectedIndex = index;
-      this.rotationAngle = -this.selectedIndex * this.angleStep;
-      this.color = this.colorOptions[this.selectedIndex].color;
-      this.changeTextColor(this.color); // Call changeTextColor
+      this.selectedIndex = index; // Opdater valgt indeks
+      this.rotationAngle = -this.selectedIndex * this.angleStep; // Beregn rotationsvinkel
+      this.color = this.colorOptions[this.selectedIndex].color; // Opdater valgt farve
+      this.changeTextColor(this.color); // Opdater tekstfarve
     },
     startDrag(event) {
-      this.dragging = true;
-      this.startAngle = this.getMouseAngle(event);
-      this.currentAngle = this.rotationAngle;
+      this.dragging = true; // Start træk
+      this.startAngle = this.getMouseAngle(event); // Startvinkel for træk
+      this.currentAngle = this.rotationAngle; // Aktuel vinkel under træk
     },
     onDrag(event) {
       if (!this.dragging) return;
       const angle = this.getMouseAngle(event);
       const deltaAngle = angle - this.startAngle;
-      this.rotationAngle = this.currentAngle + deltaAngle;
+      this.rotationAngle = this.currentAngle + deltaAngle; // Opdater rotationsvinkel under træk
     },
     endDrag() {
-      this.dragging = false;
+      this.dragging = false; // Stop træk
     },
     getMouseAngle(event) {
       const rect = event.target.getBoundingClientRect();
       const x = event.clientX - (rect.left + rect.width / 2);
       const y = event.clientY - (rect.top + rect.height / 2);
-      return Math.atan2(y, x) * (180 / Math.PI);
+      return Math.atan2(y, x) * (180 / Math.PI); // Beregn musevinkel
     },
     goBack() {
-      this.$router.push('/font-select');
+      this.$router.push('/font-select'); // Naviger tilbage til skrifttypevalg
     },
     goForward() {
-      this.$router.push('/font-color-select');
+      this.$router.push('/font-color-select'); // Naviger frem til tekstfarvevalg
     }
   },
 };
@@ -153,7 +148,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.5s ease; /* Smooth transition */
+  transition: transform 0.5s ease; /* Glidende overgang */
 }
 
 .color-swatch {
@@ -184,13 +179,5 @@ export default {
 
 .pointer-arrow {
   margin-bottom: -40px;
-}
-
-.left {
-  left: 20px;
-}
-
-.right {
-  right: 20px;
 }
 </style>
