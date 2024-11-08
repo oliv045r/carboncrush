@@ -60,11 +60,11 @@ export default {
     return {
       color: '#000000', // Standard tekstfarve
       colorOptions: [
+        { name: 'Sort', color: '#000000' },
         { name: 'Blå', color: '#3AA3EA' },
         { name: 'Pink', color: '#F142DA' },
         { name: 'Grøn', color: '#95BE87' },
         { name: 'Lilla', color: '#4E2ADF' },
-        { name: 'Sort', color: '#000000' },
         { name: 'Hvid', color: '#FFFFFF' },
         { name: 'Rød', color: '#E22828' },
         { name: 'Lysegrøn', color: '#B3D08D' },

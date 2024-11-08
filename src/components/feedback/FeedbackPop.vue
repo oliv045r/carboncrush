@@ -4,7 +4,7 @@
       <h1 class="title">{{title}}</h1>
       <p v-html="content"></p>
       <div class="img-container">
-        <img class="feedback-img" :src="imageUrl" alt="sjovt meme vedrørende spørgsmålet">
+        <img class="feedback-img rounded-lg" :src="imageUrl" alt="sjovt meme vedrørende spørgsmålet">
       </div>
   </div>
 </template>

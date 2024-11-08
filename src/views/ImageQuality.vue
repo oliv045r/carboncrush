@@ -21,7 +21,7 @@
         />
         <br />
         <!-- Dynamisk billede -->
-        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight" aria-label="Dynamisk billede"></canvas>
+        <canvas class="rounded-lg" ref="canvas" :width="canvasWidth" :height="canvasHeight" aria-label="Dynamisk billede"></canvas>
         <p>Hukommelsesforbrug: {{ imageSize }} KB</p>
       </div>
     </div>
