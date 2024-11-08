@@ -49,7 +49,7 @@
          "
          color="primary"
          aria-label="Næste"
-         >Next</v-btn
+         >Næste</v-btn
       >
    </div>
    <FeedbackPop

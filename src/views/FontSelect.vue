@@ -24,7 +24,7 @@
         <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
       </template>
     </v-carousel>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
   </div>
   <FeedbackPop 
     v-if="showFeedbackPopup" 

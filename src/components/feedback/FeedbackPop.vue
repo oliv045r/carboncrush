@@ -2,7 +2,7 @@
   <div class="popup-container px-10 py-10" :style="containerStyles">
     <!-- Tekstsektion med fade-in-effekt -->
       <h1 class="title">{{title}}</h1>
-      <p class="w-50"  v-html="content"></p>
+      <p v-html="content"></p>
       <div class="img-container">
         <img class="feedback-img" :src="imageUrl" alt="sjovt meme vedrørende spørgsmålet">
       </div>
@@ -73,6 +73,10 @@ export default {
   max-width: 700px;
 }
 
+p {
+  width: 65%;
+}
+
 /* Class that triggers fade-in effect */
 .fade-in {
   opacity: 1; /* Fades to full opacity */
@@ -85,7 +89,7 @@ export default {
 }
 
 .feedback-img {
-  max-width: 50%; /* Responsive image */
+  max-width: 60%; /* Responsive image */
   height: auto; /* Maintain aspect ratio */
 }
 </style>

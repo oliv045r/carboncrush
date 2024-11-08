@@ -33,7 +33,7 @@
         @click="rotateToColor(index)"
       ></div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
 
   <!-- FeedbackPop som en popup -->
   <FeedbackPop 
