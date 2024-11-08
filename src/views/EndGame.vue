@@ -17,8 +17,6 @@
       </div>
     </transition>
 
-    <!--i dette tilfælde styrer v-if synligheden af de forskellige elementer, som skifter dynamisk baseret på spillets status og interaktioner.-->
-
     <!-- Vis knappen 'Vis resultat', som forsvinder, når den klikkes på -->
     <v-btn v-if="showButton" @click="showScore" class="start-btn">
       Vis resultat
@@ -35,15 +33,13 @@
         v-if="showRestartButton" 
         @click="restartGame" 
         class="howto-btn"
-        :class="{ visible: showRestartButton }" 
+        :class="{ visible: showRestartButton }"  
       >
-      
         Tilbage til start
       </v-btn>
     </transition>
-    <!-- Dynamisk klassebinding, som viser knappen med en overgangseffekt --
-    
-    Placeholder til layout justering, som sørger for at teksten ikke hopper -->
+
+    <!-- Placeholder til layout justering, som sørger for at teksten ikke hopper -->
     <div v-if="!value" class="placeholder"></div>
   </div>
 </template>
