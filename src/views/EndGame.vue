@@ -95,7 +95,7 @@ export default {
 
     // Restart knappen: Naviger tilbage til startskærmen
     restartGame() {
-      this.$router.push('/'); // Naviger tilbage til startskærmen
+      this.$router.push('/'); 
     },
   },
 };
@@ -121,8 +121,8 @@ button, .v-btn {
   cursor: pointer;
   color: #282c34;
   transition: background-color 0.3s ease;
-  width: 200px; /* Ensartet bredde på knapperne */
-  margin: 10px auto; /* Centrerer knapperne */
+  width: 200px; 
+  margin: 10px auto; 
 }
 
 /* Hover-effekt for knapper */
@@ -163,13 +163,13 @@ button:hover, .v-btn:hover {
 }
 
 .howto-btn {
-  position: fixed; /* Fast position nederst på skærmen */
-  bottom: 100px; /* Placer knappen 30px fra bunden */
-  left: 50%; /* Centrer knappen horisontalt */
-  transform: translateX(-50%); /* Juster knappen til at være præcist centreret */
-  visibility: hidden; /* Skjul knappen først */
-  opacity: 0; /* Skjul knappen først */
-  transition: opacity 1s ease, visibility 1s ease; /* Overgangseffekter for synliggørelse */
+  position: fixed; 
+  bottom: 100px;
+  left: 50%; 
+  transform: translateX(-50%); 
+  visibility: hidden;
+  opacity: 0;  /* Gør knappen usynlig */
+  transition: opacity 1s ease, visibility 1s ease; 
 }
 
 .howto-btn.visible {
