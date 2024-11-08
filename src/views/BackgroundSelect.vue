@@ -33,7 +33,7 @@
       <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
     </div>
     <!-- Knap til at vise feedback popup -->
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
   </div>
   <!-- FeedbackPop som en popup -->
   <FeedbackPop 
@@ -80,7 +80,7 @@ export default {
       currentAngle: 0, // Aktuel vinkel under træk
       showFeedbackPopup: false, // Kontroller synligheden af popup
       feedbackTitle: 'Godt valg!', // Titel for FeedbackPop
-      feedbackContent: 'Mørke farver som sort bruger mindre energi på de fleste skærme, især OLED, hvor hver pixel selv udsender lys. Når en pixel viser sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm. <br> <br> Denne forskel er især tydelig ved høj lysstyrke og længere skærmtider, f.eks. når en hjemmeside er åben længe. Ved at vælge en mørkere baggrund kan du derfor spare energi og reducere CO2-udslippet, især på OLED-enheder, der bliver mere udbredte. Mørkt design kan dermed også forlænge batterilevetiden på mobile enheder. ', // Indhold for FeedbackPop
+      feedbackContent: 'Mørke farver som sort bruger mindre energi på de fleste skærme, især OLED-skærme. Når en pixel viser sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm. <br> <br> Denne forskel er tydeligere ved høj lysstyrke og længere skærmtider. Ved at vælge en mørkere baggrund kan du derfor spare energi, især på OLED-enheder, der bliver mere udbredte. Mørkt design kan dermed også forlænge batterilevetiden på mobile enheder. ', // Indhold for FeedbackPop
       feedbackImageUrl: require('@/images/bg meme.png') // Billede-URL for FeedbackPop
     };
   },
@@ -215,4 +215,5 @@ export default {
 .right {
   right: 20px;
 }
+
 </style>

@@ -2,7 +2,7 @@
   <div class="background-select animate__animated animate__fadeIn">
     <!-- Info sektion -->
     <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h5 font-weight-bold">Vælg dit billedformat</v-card-title>
+      <v-card-title class="text-h4 font-weight-bold">Vælg dit billedformat</v-card-title>
       <v-card-text class="text-subtitle-">
         Skal vi finde det bedste format til dine billeder? Udadtil har valget af format ikke den store betydning - men
         for din side og dit energiforbrug kan det betyde en del.
@@ -25,7 +25,7 @@
         @load="handleImageLoad" />
       <!--load event der fjerner fade ind effekten når billedet er helt indlæst-->
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Next</v-btn>
+    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="primary">Næste</v-btn>
   </div>
   <FeedbackPop v-if="showFeedbackPopup" @close="showFeedbackPopup = false" :title="feedbackTitle"
     :content="feedbackContent" :imageUrl="feedbackImageUrl">
@@ -85,7 +85,6 @@ export default {
 
 <style scoped>
 .background-select {
-  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -119,7 +118,7 @@ export default {
 
 .image-preview {
   margin-top: 20px;
-  max-width: 600px;
+  max-width: 550px;
   text-align: center;
 }
 
