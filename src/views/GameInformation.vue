@@ -1,62 +1,68 @@
 <!-- src/components/GameInformation.vue -->
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12" class="text-center">
-        <h1>Spilinformation</h1>
-        <p>
-          Velkommen til Carbon Crush! Denne side giver dig alle de oplysninger, du har brug for at komme i gang.
-          Udforsk tips, gameplay-mekanik og ofte stillede spørgsmål for at forbedre din oplevelse.
-        </p>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="12" md="6">
-        <v-card class="mb-4">
-          <v-card-title>Sådan Spiller Du</v-card-title>
-          <v-card-text>
-            I Carbon Crush er dit mål at reducere CO₂-udledninger ved at træffe strategiske valg.
-            Når du navigerer gennem forskellige niveauer, vil du møde udfordringer, der kræver, at du tænker bæredygtigt.
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="6">
-        <v-card class="mb-4">
-          <v-card-title>Spiltips</v-card-title>
-          <v-card-text>
-            
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="12">
-        <v-card class="mb-4">
-          <v-card-title>Ofte Stillede Spørgsmål (FAQs)</v-card-title>
-          <v-card-text>
-            <strong>Spørgsmål:</strong> Kan jeg spille niveauer igen for at forbedre min score?<br>
-            <strong>Svar:</strong> Ja! Spil ethvert niveau igen for at sigte efter en højere score eller bedre CO₂-vurdering.<br><br>
-            <strong>Spørgsmål:</strong> Er der en multiplayer-tilstand?<br>
-            <strong>Svar:</strong> Lige nu er Carbon Crush kun for én spiller, men vi planlægger måske at tilføje multiplayer-funktioner i fremtiden!
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-</template>
-
-<script>
-export default {
-  name: "GameInformation",
-};
-</script>
-
-<style scoped>
-h1 {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-</style>
+    <v-container>
+      <v-row>
+        <v-col cols="12" class="text-center">
+          <h1>Game Information</h1>
+          <p>
+            Welcome to Carbon Crush! This page provides all the information you need to get started.
+            Explore tips, gameplay mechanics, and FAQs to enhance your experience.
+          </p>
+        </v-col>
+      </v-row>
+  
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-card class="mb-4">
+            <v-card-title>How to Play</v-card-title>
+            <v-card-text>
+              In Carbon Crush, your goal is to reduce carbon emissions by making strategic choices.
+              As you navigate different levels, you’ll face challenges that require you to think
+              sustainably. Collect points, overcome obstacles, and aim for a low carbon footprint!
+            </v-card-text>
+          </v-card>
+        </v-col>
+  
+        <v-col cols="12" md="6">
+          <v-card class="mb-4">
+            <v-card-title>Game Tips</v-card-title>
+            <v-card-text>
+              - Look for hidden bonuses that reward low-energy actions.<br>
+              - Use resources wisely to avoid penalties.<br>
+              - Keep an eye on the energy meter and adjust strategies accordingly.
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+  
+      <v-row>
+        <v-col cols="12">
+          <v-card class="mb-4">
+            <v-card-title>FAQs</v-card-title>
+            <v-card-text>
+              <strong>Q:</strong> How do I earn points?<br>
+              <strong>A:</strong> Points are earned by completing tasks that reduce emissions.<br><br>
+              <strong>Q:</strong> Can I replay levels to improve my score?<br>
+              <strong>A:</strong> Yes! Replay any level to aim for a higher score or better carbon rating.<br><br>
+              <strong>Q:</strong> Is there a multiplayer mode?<br>
+              <strong>A:</strong> Currently, Carbon Crush is single-player, but we may add multiplayer features in the future!
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </template>
+  
+  <script>
+  export default {
+    name: "GameInformation",
+  };
+  </script>
+  
+  <style scoped>
+  h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+  }
+  </style>
+  
