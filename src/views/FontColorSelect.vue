@@ -29,6 +29,7 @@
         :key="index"
         :style="{ backgroundColor: colorOption.color, transform: `rotate(${index * angleStep}deg) translateY(-150px)` }"
         class="color-swatch"
+        :aria-label="`vælg ${colorOption.name} tekstfarve`"
         @click="rotateToColor(index)"
       ></div>
     </div>
@@ -156,9 +157,10 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid white;
   cursor: pointer;
   transition: transform 0.5s;
+  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.2);
+
 }
 
 .chosen-color{ 

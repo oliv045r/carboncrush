@@ -24,6 +24,7 @@
         :key="index"
         :style="{ backgroundColor: colorOption.color, transform: `rotate(${index * angleStep}deg) translateY(-150px)` }"
         class="color-swatch"
+        :aria-label="`vælg ${colorOption.name} baggrundsfarve`"
         @click="rotateToColor(index)"
       ></div>
     </div>
