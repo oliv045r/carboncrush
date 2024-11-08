@@ -4,8 +4,8 @@
       <v-card
          class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent"
          max-width="600">
-         <v-card-title class="text-h5 font-weight-bold">Vælg Animationsgrad</v-card-title>
-         <v-card-text class="text-subtitle-1"> Hold musen over knapperne for at se de forskellige animationer. Den første knap har den mindst iøjnefaldende animation, mens den sidste knap har den mest markante animation. </v-card-text>
+         <v-card-title class="text-h4 font-weight-bold">Vælg animationsgrad</v-card-title>
+         <v-card-text> Hold musen over knapperne for at se de forskellige animationer. Den første knap har den mindst iøjnefaldende animation, mens den sidste knap har den mest markante animation. </v-card-text>
       </v-card>
       <div class="info-section">
          <!-- Knapper med forskellige animationer -->
@@ -75,7 +75,7 @@ export default {
          feedbackTitle: "Spændende!", // Titel til FeedbackPop
          feedbackContent:
             "Når du vælger animationer til din hjemmeside, er det vigtigt at balancere visuel effekt og ydeevne. Flere animationer kan se godt ud, men kan også belaste systemet og øge indlæsningstiden. For mange animationer kan påvirke både ydeevne og bæredygtighed, så vælg en passende mængde for en bedre brugeroplevelse og mindre energiforbrug.", // Indhold til FeedbackPop
-         feedbackImageUrl: require("@/images/AnimationMeme.jpg"), // Billede URL til FeedbackPop
+         feedbackImageUrl: require("@/images/AnimationMeme3.png"), // Billede URL til FeedbackPop
          activeButton: null, // Sporer den aktive knap
       };
    },

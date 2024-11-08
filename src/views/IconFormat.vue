@@ -116,7 +116,6 @@ export default {
   font-size: 1.1em;
   line-height: 1.6;
   margin: 1em 0;
-  color: #666666;
 }
 
 .format-options {
