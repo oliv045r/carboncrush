@@ -97,7 +97,7 @@ export default {
 }
 
 .background-select {
-  margin-top: 15rem;
+  margin-top: 10px;
   height: 100vh;
   width: 100vw !important;
   display: flex;

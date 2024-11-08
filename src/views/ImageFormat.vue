@@ -85,8 +85,8 @@ export default {
 
 <style scoped>
 .background-select {
+  margin-top: 10px;
   width: 100vw;
-  margin-top: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
