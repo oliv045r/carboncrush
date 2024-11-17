@@ -1,57 +1,68 @@
 <template>
-  <div :style="{ fontFamily: selectedFont, color: textColor }" class="background-select animate__animated animate__fadeIn">
-    <!-- Info boks til baggrundsfarve valg -->
-    <v-card class="card-intro mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="600">
-      <v-card-title class="text-h5 font-weight-bold">Vælg skrifttype</v-card-title>
-      <v-card-text class="text-subtitle-1">
-        Nu er det tid til at vælge skrifttypen til din hjemmeside! Her kan du designe et flot udseende, mens du samtidig tager hensyn til miljøet. Forskellige skrifttyper kræver forskellig mængde data at indlæse, og dit valg kan derfor have en effekt på din hjemmesides CO2-aftryk.
-        <br> <br>
-        Nogle skrifttyper er lettere og kræver mindre energi at indlæse, mens mere detaljerede og dekorative skrifttyper kan være tungere og dermed mindre bæredygtige.
+  <div class="font-select-container">
+    <!-- Progress Bar Component -->
+    <BarometerBar :score="score" />
+
+    <!-- Overskrift -->
+    <v-card class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent" max-width="800">
+      <v-card-title class="text-h4 font-weight-bold text-center">Vælg skrifttype</v-card-title>
+      <v-card-text class="text-subtitle-1 text-center">
+        Tid til at vælge skrifttype! Der er frit valg, men husk - det kan have indflydelse på hvor meget energi din side bruger.
       </v-card-text>
     </v-card>
 
-    <!-- Font carousel -->
-    <v-carousel v-model="currentFontIndex" hide-delimiters>
-      <template v-slot:prev>
-        <v-btn class="custom-prev-btn" icon @click="goBackwardFont">←</v-btn>
-      </template>
-      <v-carousel-item v-for="(font, index) in fonts" :key="index">
-        <div :style="{ fontFamily: font.font, color: textColor }" class="font-preview">
-          {{ font.name }} - The quick brown fox jumps over the lazy dog.
-        </div>
-      </v-carousel-item>
-      <template v-slot:next>
-        <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
-      </template>
-    </v-carousel>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Next</v-btn>
+    <!-- Skrifttypevisning -->
+    <div class="font-preview-wrapper">
+      <v-btn class="arrow-btn left" icon @click="goBackwardFont">←</v-btn>
+      <div class="font-preview-box">
+        <p class="font-preview" :style="{ fontFamily: fonts[currentFontIndex].font }">
+          {{ fonts[currentFontIndex].name }} - The quick brown fox jumps over the lazy dog.
+        </p>
+      </div>
+      <v-btn class="arrow-btn right" icon @click="goForwardFont">→</v-btn>
+    </div>
+
+    <!-- DummyContent flyvende panel -->
+    <DummyContent
+      :fontFamily="selectedFont"
+      title="Font Selection Panel"
+      subtitle="Learn how different fonts impact your website's carbon footprint"
+      date="20. november 2024"
+      :imageSrc="imageSrc"
+      imageAlt="Font Selection"
+      :content="[ 
+        'Fonts can play a big role in the sustainability of a website.',
+        'Some fonts are more data-intensive to load, which can impact the energy usage of a website.',
+        'Selecting the right fonts can therefore reduce the carbon footprint of a website.'
+      ]"
+      footer="Written by: Sustainability Design Team"
+    />
   </div>
-  <FeedbackPop 
-    v-if="showFeedbackPopup" 
-    @close="showFeedbackPopup = false" 
-    :title="feedbackTitle"
-    :content="feedbackContent"
-    :imageUrl="feedbackImageUrl"
-  />
 </template>
 
 <script>
-import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
-import { VBtn, VCard, VCarousel, VCarouselItem } from 'vuetify/lib/components'; // Import Vuetify button component
+import { VBtn, VCard } from 'vuetify/lib/components';
 import { mapActions, mapState } from 'vuex';
+import DummyContent from '@/components/dummypage/DummyContent.vue';
+import BarometerBar from '@/components/BarometerBar.vue'; // Importer progress bar-komponenten
+import axios from 'axios';
+
+// Brug import eller require til at hente billedet korrekt
+const imagePath = require('@/images/font_meme2.png');
 
 export default {
   name: 'FontSelect',
   components: {
     VBtn,
     VCard,
-    VCarousel,
-    VCarouselItem,
-    FeedbackPop // Register Vuetify button component
+    DummyContent,
+    BarometerBar,
   },
   data() {
     return {
-      currentFontIndex: 0, // Aktuel skrifttypeindeks
+      currentFontIndex: 0,
+      imageSrc: imagePath, // Brug stien til billedet som en del af data
+      score: 0, // Initial score, som opdateres fra backend
       fonts: [
         { name: 'Arial', font: 'Arial, sans-serif' },
         { name: 'Courier New', font: 'Courier New, monospace' },
@@ -60,86 +71,142 @@ export default {
         { name: 'Tahoma', font: 'Tahoma, sans-serif' },
         { name: 'Trebuchet MS', font: 'Trebuchet MS, sans-serif' },
         { name: 'Comic Sans MS', font: 'Comic Sans MS, cursive, sans-serif' },
-        { name: 'Rubik Wet Paint', font: 'Rubik Wet Paint, system-ui' }, // Tilføj din egen skrifttype her
-        { name: 'Notable', font: 'Notable, system-ui' } // Tilføj din egen skrifttype her
+        { name: 'Rubik Wet Paint', font: 'Rubik Wet Paint, system-ui' },
+        { name: 'Roboto', font: 'Roboto, sans-serif' },
       ],
-      showFeedbackPopup: false, // Kontroller synligheden af popup
-      feedbackTitle: 'Ikke dårligt!', // Titel for FeedbackPop
-      feedbackContent: 'Når du vælger en skrifttype, der er indbygget i HTML, sparer du båndbredde. Websikre skrifttyper som Arial og Verdana er hurtigere at indlæse, da de er tilgængelige på de fleste enheder uden ekstra filoverførsler. <br> <br> Moderne skrifttyper, der kræver eksternt download, kan øge serverbelastningen og bruge mere tid og data, hvilket medfører et højere CO2-aftryk. Skrifttyper med mange vægte og stilarter kræver ekstra filer, som belaster indlæsningstiden. Ved at vælge en enkel skrifttype kan du optimere din hjemmesides hastighed og bæredygtighed, og dermed reducere CO2-aftrykket.', // Indhold for FeedbackPop
-      feedbackImageUrl: require('@/images/font_meme2.png') // Billede-URL for FeedbackPop
+      selectedBackgroundColor: '', // Baggrundsfarve valgt i tidligere skærm
     };
   },
   computed: {
-    ...mapState(['selectedFont', 'textColor']), // Hent valgt skrifttype og tekstfarve fra Vuex
+    ...mapState(['textColor']),
+    selectedFont() {
+      return this.fonts[this.currentFontIndex].font; // Returner den aktuelt valgte skrifttype
+    },
   },
   methods: {
-    ...mapActions(['updateSelectedFont', 'updateShowNextButton']), // Kortlæg Vuex handlinger
-    goBack() {
-      this.$router.push('/background-select'); // Naviger tilbage til baggrundsvalg
-    },
-    goForward() {
-      this.$router.push('/font-color-select'); // Naviger frem til tekstfarvevalg
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+    goBackwardFont() {
+      this.currentFontIndex =
+        (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
+      this.updateQuizBackend(); // Opdaterer scoren, når skrifttypen ændres
     },
     goForwardFont() {
-      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length; // Gå til næste skrifttype
-      this.updateSelectedFont(this.fonts[this.currentFontIndex].font); // Opdater valgt skrifttype i Vuex
+      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
+      this.updateQuizBackend(); // Opdaterer scoren, når skrifttypen ændres
     },
-    goBackwardFont() {
-      this.currentFontIndex = (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length; // Gå til forrige skrifttype
-      this.updateSelectedFont(this.fonts[this.currentFontIndex].font); // Opdater valgt skrifttype i Vuex
+    async updateQuizBackend() {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          console.error('Bruger-ID ikke fundet. Brugeren skal registreres først.');
+          return;
+        }
+
+        const selectedFont = this.fonts[this.currentFontIndex].name;
+        const selectedColor = this.selectedBackgroundColor;
+
+        // Send data til backend for at opdatere brugerens quiz-svar
+        const response = await axios.post('http://localhost:3000/api/quiz', {
+          userId: userId,
+          font_type: selectedFont,
+          background_color: selectedColor, // Send baggrundsfarven også
+        });
+
+        if (response.data && response.data.score !== undefined) {
+          this.score = response.data.score;
+        } else {
+          console.error('Backend returnerede ingen score');
+        }
+      } catch (error) {
+        console.error('Fejl ved opdatering af quiz:', error);
+      }
+    },
+    async loadUserScore() {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          console.error('Bruger-ID ikke fundet. Brugeren skal registreres først.');
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:3000/api/users/${userId}`);
+        if (response.data && response.data.total_score !== undefined) {
+          this.score = response.data.total_score;
+        } else {
+          console.error('Kunne ikke hente brugerens score');
+        }
+      } catch (error) {
+        console.error('Fejl ved hentning af brugerens score:', error);
+      }
     },
   },
-  watch: {
-    currentFontIndex(newIndex) {
-      this.updateSelectedFont(this.fonts[newIndex].font); // Opdater valgt skrifttype i Vuex, når currentFontIndex ændres
-    },
-  },
-  mounted() {
-    this.currentFontIndex = this.fonts.findIndex(font => font.font === this.selectedFont); // Sæt currentFontIndex til den valgte skrifttype ved montering
+  async mounted() {
+    await this.loadUserScore(); // Hent scoren når komponenten er monteret
+    this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
   },
 };
 </script>
 
 <style scoped>
-.card-intro {
-  height: 500px;
-}
-
-.background-select {
-  height: 100vh;
+/* CSS for font select container and preview styling */
+.font-select-container {
   width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.v-carousel {
-  height: 5rem !important;
-  padding: 0;
-  width: 60%;
+.font-preview-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  height: 150px;
+}
+
+.arrow-btn {
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.arrow-btn:hover {
+  transform: scale(1.1);
+}
+
+.font-preview-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
 }
 
 .font-preview {
-  color: inherit !important;
-  font-size: 24px;
-  text-align: center;
-  padding: 20px;
-}
-
-.font-selector .v-select__selections {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.custom-prev-btn {
-  background-color: #fff;
-  color: #000;
-}
-
-.custom-next-btn {
-  background-color: #fff;
-  color: #000;
+  font-size: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
 }
 </style>

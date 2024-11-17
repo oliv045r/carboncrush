@@ -25,35 +25,36 @@
           <p class="format-label">{{ format.label }}</p> <!-- Gør at det rigtige navn vises på hvert label -->
         </div>
       </v-row>
-    </v-container>
-    
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Næste">Fortsæt</v-btn>
 
-    <!-- Conditional Feedback Components baseret på det valgte format -->
-    <FeedbackPopIcon
-      class="feedback-pop-icon"
-      v-if="showFeedbackPopup && isSvgOrPng"
-      @close="showFeedbackPopup = false"
-    />
-    <FeedbackPopIconBad
-      class="feedback-pop-icon"
-      v-if="showFeedbackPopup && isJpg"
-      @close="showFeedbackPopup = false"
-    />
+      <!-- DummyContent flyvende panel -->
+      <DummyContent
+        title="Vælg ikonformat"
+        subtitle="Hvordan kan dit valg af ikonformat påvirke ydeevne og bæredygtighed?"
+        date="20. november 2024"
+        :imageSrc="feedbackImageUrl"
+        imageAlt="Ikon format valg"
+        :content="[ 
+          'Ikonformater kan have stor betydning for en hjemmesides energieffektivitet og indlæsningstid.',
+          'Formater som SVG er ofte mindre og mere effektive, især for enkle ikoner, mens PNG og JPG kan være mere egnede til mere komplekse billeder.',
+          'Ved at vælge det rette format kan du gøre din hjemmeside hurtigere og mere energieffektiv.'
+        ]"
+        footer="Skrevet af: Design og Bæredygtighed Teamet"
+      />
+
+      <!-- Conditional Feedback Components baseret på det valgte format -->
+    </v-container>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 
-import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
-import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
+import DummyContent from '@/components/dummypage/DummyContent.vue';
 
 export default {
   name: 'IconFormat',
   components: {
-    FeedbackPopIcon,
-    FeedbackPopIconBad,
+    DummyContent,
   },
   data() {
     // Data for de forskellige formater som skal importeres

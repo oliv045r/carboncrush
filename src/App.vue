@@ -1,44 +1,45 @@
 <template>
   <v-app id="app" :style="appStyles">
     <v-container class="app-container">
-      <TopNav /> <!-- Top navigation component -->
+      <TopNav />
       <transition name="fade" mode="out-in">
         <div>
-          <router-view class="router-container"></router-view> <!-- Brug router-view til at vise ruterne -->
+          <router-view class="router-container"></router-view>
         </div>
       </transition>
-      <BottomNav class="bottomnav"/> <!-- Add BottomNav component here -->
+      <BottomNav />
     </v-container>
   </v-app>
 </template>
 
 <script>
-import BottomNav from '@/components/navigation/BottomNav.vue'; // Import BottomNav component
+import BottomNav from '@/components/navigation/BottomNav.vue';
 import { mapState } from 'vuex';
 import TopNav from './components/navigation/TopNav.vue';
 
 export default {
   name: 'App',
   components: {
-    BottomNav, // Registrer BottomNav komponent
-    TopNav, // Registrer TopNav komponent
+    BottomNav,
+    TopNav,
   },
   computed: {
-    ...mapState(['backgroundColor', 'selectedFont', 'textColor']), // Hent state fra Vuex
+    ...mapState(['backgroundColor', 'selectedFont', 'textColor']),
     appStyles() {
       return {
-        backgroundColor: this.backgroundColor, // Sæt baggrundsfarve
-        fontFamily: this.selectedFont, // Sæt skrifttype
-        color: `${this.textColor} !important` // Sæt tekstfarve
+        backgroundColor: this.backgroundColor,
+        fontFamily: this.selectedFont,  // Brug skrifttypen fra Vuex
+        color: `${this.textColor} !important`,  // Brug tekstfarven fra Vuex
       };
-    }
+    },
   },
 };
 </script>
 
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap'); /* Importer skrifttype */
-@import url('https://fonts.googleapis.com/css2?family=Notable&display=swap'); /* Importer skrifttype */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 #app {
   width: 100vw !important; /* Sæt bredde til 100% af viewport bredde */
@@ -54,7 +55,6 @@ export default {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif; /* Standard skrifttype */
   -webkit-font-smoothing: antialiased; /* Glat tekst på WebKit-browsere */
   -moz-osx-font-smoothing: grayscale; /* Glat tekst på OS X */
   text-align: center; /* Centrer tekst */

@@ -5,7 +5,7 @@
          class="mx-auto px-10 py-10 rounded-lg elevation-0 bg-transparent"
          max-width="600">
          <v-card-title class="text-h4 font-weight-bold">Vælg animationsgrad</v-card-title>
-         <v-card-text> Hold musen over knapperne for at se de forskellige animationer. Den første knap har den mindst iøjnefaldende animation, mens den sidste knap har den mest markante animation. </v-card-text>
+         <v-card-text> Hold musen over knapperne for at se de forskellige animationer. Animationer kan være sjove, men også brug en del plads og energi! </v-card-text>
       </v-card>
       <div class="info-section">
          <!-- Knapper med forskellige animationer -->
@@ -41,34 +41,33 @@
             </button>
          </div>
       </div>
-      <v-btn
-         class="mt-10"
-         @click="
-            showFeedbackPopup = true;
-            updateShowNextButton(true);
-         "
-         color=""
-         aria-label="Næste"
-         >Næste</v-btn
 
-      >
+      <!-- DummyContent flyvende panel -->
+      <DummyContent
+         :fontFamily="'selectedFont'"
+         title="Vælg animationsgrad"
+         subtitle="Hvordan påvirker animationsmængden ydeevnen på din hjemmeside?"
+         date="20. november 2024"
+         :imageSrc="feedbackImageUrl"
+         imageAlt="Animation valg"
+         :content="[ 
+           'Animationsniveauet kan have stor betydning for din hjemmesides ydeevne og energieffektivitet.',
+           'Jo flere og mere komplekse animationer, des mere kraft kræver de, hvilket påvirker sideindlæsningstiderne.',
+           'Overvej at begrænse antallet og kompleksiteten af animationer for at sikre, at din hjemmeside er hurtigere og mere bæredygtig.'
+         ]"
+         footer="Skrevet af: Design og Bæredygtighed Teamet"
+      />
+
    </div>
-   <FeedbackPop
-      v-if="showFeedbackPopup"
-      @close="showFeedbackPopup = false"
-      :title="feedbackTitle"
-      :content="feedbackContent"
-      :imageUrl="feedbackImageUrl">
-   </FeedbackPop>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import FeedbackPop from "@/components/feedback/FeedbackPop.vue";
+import DummyContent from "@/components/dummypage/DummyContent.vue";
 
 export default {
    components: {
-      FeedbackPop,
+      DummyContent,
    },
    data() {
       return {
@@ -85,7 +84,6 @@ export default {
    },
    methods: {
       ...mapActions(["updateSelectedFont", "updateShowNextButton"]),
-
       goBack() {
          this.$router.push("/"); // Navigerer tilbage til hovedsiden
       },
@@ -118,12 +116,6 @@ export default {
 .info-section {
    text-align: center;
    max-width: 600px;
-}
-
-.description {
-   font-size: 1.1em;
-   line-height: 1.6;
-   margin: 1em 0;
 }
 
 .button-container {
@@ -242,28 +234,8 @@ export default {
    60% {
       transform: translateY(-25px);
    }
-
    90% {
       transform: translateY(-5px);
    }
-}
-
-.nav-button {
-   background-color: transparent;
-   border: none;
-   color: #333333;
-   font-size: 2rem;
-   cursor: pointer;
-   position: absolute;
-   top: 50%;
-   transform: translateY(-50%);
-}
-
-.left {
-   left: 20px;
-}
-
-.right {
-   right: 20px;
 }
 </style>
