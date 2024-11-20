@@ -22,6 +22,7 @@
             </template>
             <template v-slot:[`item.actions`]="{ item }">
               <v-btn small color="primary" @click="editUser(item)">Redigér</v-btn>
+              <v-btn small color="info" @click="openUserChoicesModal(item)">Se Valg</v-btn>
               <v-btn small color="error" @click="deleteUser(item.id)">Slet</v-btn>
             </template>
           </v-data-table>
@@ -30,13 +31,56 @@
         <!-- Leaderboard Sektion -->
         <v-tab-item>
           <h2>Leaderboard</h2>
-          <v-data-table :headers="leaderboardHeaders" :items="leaderboard" class="elevation-1" :sort-by="['total_score']" sort-desc>
-          </v-data-table>
+          <v-data-table
+            :headers="leaderboardHeaders"
+            :items="leaderboard"
+            class="elevation-1"
+            :sort-by="['total_score']"
+            sort-desc
+          ></v-data-table>
         </v-tab-item>
       </v-tabs-items>
   
-      <!-- Modals til CRUD -->
-      <AddEditUserModal v-if="showUserModal" @close="closeUserModal" @save="saveUser" :user="selectedUser" />
+      <!-- Modals -->
+      <AddEditUserModal
+        v-if="showUserModal"
+        :isOpen="showUserModal"
+        @update:isOpen="showUserModal = $event"
+        @save="saveUser"
+        :user="selectedUser"
+      />
+  
+      <v-dialog v-model="showUserChoicesModal" max-width="800px">
+  <v-card>
+    <v-card-title>
+      Valg for {{ selectedUser?.username || 'ukendt bruger' }}
+    </v-card-title>
+    <v-card-text>
+      <template v-if="userChoices.length">
+        <v-list>
+          <v-list-item v-for="choice in userChoices" :key="choice.id">
+            <v-list-item-content>
+              <v-list-item-title>
+                Spørgsmål: {{ choice.question?.question_text || 'ukendt spørgsmål' }}
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                Valg: {{ choice.option?.option_text || 'ukendt valg' }} 
+                ({{ choice.option?.points || 0 }} point)
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
+      <template v-else>
+        <p>Ingen valg fundet for denne bruger.</p>
+      </template>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" text @click="showUserChoicesModal = false">Luk</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
     </div>
   </template>
   
@@ -54,12 +98,13 @@
         activeTab: 0, // Aktiv tab
         users: [], // Liste over brugere
         leaderboard: [], // Liste over leaderboard data
+        userChoices: [], // Liste over brugerens valg
         showUserModal: false, // Modal tilføj/redigér bruger
-        selectedUser: null, // Bruger der redigeres
+        showUserChoicesModal: false, // Modal til at vise brugerens valg
+        selectedUser: null, // Bruger der redigeres eller ses
         userHeaders: [
           { text: "ID", value: "id" },
           { text: "Brugernavn", value: "username" },
-          { text: "Email", value: "email" },
           { text: "Handlinger", value: "actions", sortable: false },
         ],
         leaderboardHeaders: [
@@ -70,7 +115,6 @@
       };
     },
     methods: {
-      // Hent brugere
       async fetchUsers() {
         try {
           const response = await axios.get("http://localhost:3000/api/users");
@@ -79,16 +123,36 @@
           console.error("Fejl ved hentning af brugere:", error.message);
         }
       },
-      // Hent leaderboard
       async fetchLeaderboard() {
         try {
-          const response = await axios.get("http://localhost:3000/api/leaderboard");
-          this.leaderboard = response.data;
+          const response = await axios.get("http://localhost:3000/api/scores/leaderboard");
+          this.leaderboard = response.data.map((item, index) => ({
+            ...item,
+            rank: index + 1,
+          }));
         } catch (error) {
           console.error("Fejl ved hentning af leaderboard:", error.message);
         }
       },
-      // Tilføj eller redigér en bruger
+      async fetchUserChoices(user) {
+  try {
+    // Opdater API-stien til at matche backend
+    const response = await axios.get(`http://localhost:3000/userAnswer/users/${user.id}`);
+    this.userChoices = response.data; // Sæt de hentede data i `userChoices`
+    this.selectedUser = user; // Gem den valgte bruger
+    this.showUserChoicesModal = true; // Åbn modal
+  } catch (error) {
+    console.error('Fejl ved hentning af brugerens valg:', error.message);
+    this.userChoices = []; // Ryd data, hvis der opstår en fejl
+    this.showUserChoicesModal = false; // Luk modal, hvis der er fejl
+  }
+}
+,
+      openUserChoicesModal(user) {
+        this.selectedUser = user;
+        this.fetchUserChoices(user);
+        this.showUserChoicesModal = true;
+      },
       async saveUser(user) {
         try {
           if (user.id) {
@@ -101,7 +165,6 @@
           console.error("Fejl ved gemning af bruger:", error.message);
         }
       },
-      // Slet en bruger
       async deleteUser(userId) {
         try {
           await axios.delete(`http://localhost:3000/api/users/${userId}`);
@@ -110,17 +173,14 @@
           console.error("Fejl ved sletning af bruger:", error.message);
         }
       },
-      // Åbn modal for at redigere en bruger
       editUser(user) {
         this.selectedUser = { ...user };
         this.showUserModal = true;
       },
-      // Åbn modal for at tilføje en ny bruger
       openAddUserModal() {
         this.selectedUser = null;
         this.showUserModal = true;
       },
-      // Luk modal
       closeUserModal() {
         this.showUserModal = false;
         this.fetchUsers();

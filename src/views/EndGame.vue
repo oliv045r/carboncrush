@@ -59,29 +59,29 @@ export default {
   },
   methods: {
     async fetchAndShowScore() {
-      try {
-        this.showButton = false;
+  try {
+    this.showButton = false;
 
-        const userId = localStorage.getItem("user_id");
-        if (!userId) {
-          alert("Bruger ikke fundet!");
-          return;
-        }
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      alert("Bruger ikke fundet!");
+      return;
+    }
 
-        const response = await axios.get(
-          `http://localhost:3000/api/sustainability/calculate-sustainability/${userId}`
-        );
-        this.targetScore = Math.round(response.data.sustainabilityPercentage);
+    const response = await axios.get(
+      `http://localhost:3000/api/sustainability/calculate-sustainability/${userId}`
+    );
+    this.targetScore = Math.round(response.data.sustainabilityPercentage);
 
-        this.startAnimation();
-        setTimeout(() => {
-          this.showInitialMessage = false;
-        }, 4000);
-      } catch (error) {
-        console.error("Fejl ved hentning af score:", error.response || error.message);
-        alert("Kunne ikke hente bæredygtighedsprocent. Prøv igen senere.");
-      }
-    },
+    this.startAnimation();
+    setTimeout(() => {
+      this.showInitialMessage = false;
+    }, 4000);
+  } catch (error) {
+    console.error("Fejl ved hentning af score:", error.response || error.message);
+    alert("Kunne ikke hente bæredygtighedsprocent. Prøv igen senere.");
+  }
+},
     startAnimation() {
       this.value = 0;
       this.interval = setInterval(() => {

@@ -184,6 +184,7 @@ h1 {
   border: none;
   border-radius: 4px;
   width: 100%;
+  color: white;
   max-width: 400px;
   margin: 0 auto;
   display: block;
