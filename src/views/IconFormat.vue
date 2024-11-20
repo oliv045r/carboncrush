@@ -15,19 +15,19 @@
         <!-- Knapperne er dynamisk genereret fra formats-arrayet -->
         <div
           v-for="format in formats"
-          :key="format.type" 
-          class="format-button" 
-          @click="selectFormat(format)" 
-          :class="{ active: selectedFormat.type === format.type }" 
+          :key="format.type"
+          class="format-button"
+          @click="selectFormat(format)"
+          :class="{ active: selectedFormat.type === format.type }"
           :aria-label="`Vælg ${format.label} format`"
         >
-          <img :src="format.icon" :alt="`${format.label} Icon`" class="format-icon" /> <!-- Ikonbillede for formatet -->
-          <p class="format-label">{{ format.label }}</p> <!-- Gør at det rigtige navn vises på hvert label -->
+          <img :src="format.icon" :alt="`${format.label} Icon`" class="format-icon" />
+          <p class="format-label">{{ format.label }}</p>
         </div>
       </v-row>
     </v-container>
-    
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Næste">Fortsæt</v-btn>
+
+    <v-btn @click="saveIconFormatSelection" color="primary" aria-label="Gem og fortsæt">Gem og fortsæt</v-btn>
 
     <!-- Conditional Feedback Components baseret på det valgte format -->
     <FeedbackPopIcon
@@ -44,45 +44,77 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-
-import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
-import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
+import { mapActions, mapState } from "vuex";
+import axios from "axios";
+import FeedbackPopIcon from "@/components/feedback/FeedbackPopIcon.vue";
+import FeedbackPopIconBad from "@/components/feedback/FeedbackPopIconBad.vue";
 
 export default {
-  name: 'IconFormat',
+  name: "IconFormat",
   components: {
     FeedbackPopIcon,
     FeedbackPopIconBad,
   },
   data() {
-    // Data for de forskellige formater som skal importeres
     return {
       formats: [
-        { type: 'jpg', label: 'JPG', icon: require('@/images/icon.jpg'), alt: 'JPG ikon af ledning' },
-        { type: 'png', label: 'PNG', icon: require('@/images/icon.png'), alt: 'PNG ikon af ledning' },
-        { type: 'svg', label: 'SVG', icon: require('@/images/icon.svg'), alt: 'SVG ikon af ledning'},
+        { type: "jpg", label: "JPG", icon: require("@/images/icon.jpg") },
+        { type: "png", label: "PNG", icon: require("@/images/icon.png") },
+        { type: "svg", label: "SVG", icon: require("@/images/icon.svg") },
       ],
-      selectedFormat: { type: 'jpg', label: 'JPG' }, // Holder styr på hvilket format der er valgt
-      showFeedbackPopup: false, // Synlighed af feedback-pop-up'en
+      selectedFormat: { type: "jpg", label: "JPG" },
+      showFeedbackPopup: false,
     };
   },
   computed: {
-    ...mapState(['showNextButton']),
+    ...mapState(["showNextButton"]),
     isSvgOrPng() {
-      // Tjekker om det valgte format er SVG eller PNG for at vise den passende feedback-popup
-      return this.selectedFormat.type === 'svg' || this.selectedFormat.type === 'png';
+      return this.selectedFormat.type === "svg" || this.selectedFormat.type === "png";
     },
     isJpg() {
-      // Tjekker om det valgte format er JPG for at vise den passende feedback-popup
-      return this.selectedFormat.type === 'jpg';
+      return this.selectedFormat.type === "jpg";
     },
   },
   methods: {
-    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+    ...mapActions(["updateShowNextButton"]),
+
     selectFormat(format) {
-      // Sætter det valgte format, når der klikkes på et ikon. Dette har betydning for hvilken feedbackside der bliver vist når man klikker
       this.selectedFormat = format;
+    },
+
+    async saveIconFormatSelection() {
+      try {
+        const userId = localStorage.getItem("user_id");
+        if (!userId) {
+          alert("Bruger ikke fundet! Opret en bruger først.");
+          return;
+        }
+
+        const questionId = 7; // ID for spørgsmålet "Vælg ikonformat"
+        const optionId = this.getOptionId(this.selectedFormat.type);
+
+        const response = await axios.post("http://localhost:3000/userAnswer", {
+          user_id: userId,
+          question_id: questionId,
+          option_id: optionId,
+        });
+
+        console.log("Ikonformat gemt:", response.data);
+        alert("Dit valg er blevet gemt!");
+        this.$router.push("/end-game"); // Naviger til næste trin
+      } catch (error) {
+        console.error("Fejl ved gemning af ikonformat:", error.message);
+        alert("Der opstod en fejl. Prøv igen senere.");
+      }
+    },
+
+    getOptionId(formatType) {
+      const mapping = {
+        jpg: 48, // Option ID for JPG
+        png: 49, // Option ID for PNG
+        svg: 50, // Option ID for SVG
+      };
+      return mapping[formatType];
     },
   },
 };

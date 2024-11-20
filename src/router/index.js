@@ -16,6 +16,7 @@ import FeedbackPopIcon from '@/components/feedback/FeedbackPopIcon.vue';
 import FeedbackPopIconBad from '@/components/feedback/FeedbackPopIconBad.vue';
 import ArticleLibrary from '@/views/ArticleLibrary.vue';
 import ArticleSingle from '@/components/articles/ArticleSingle.vue';
+import Admin from '@/views/Admin.vue';
 
 
 
@@ -108,6 +109,11 @@ const routes = [
     path: '/animation-select', // Ny rute til Animation
     name: 'AnimationSelect',
     component: AnimationSelect
+  },
+  {
+    path: '/admin', // Ny rute til Animation
+    name: 'Admin',
+    component: Admin
   },
 ];
 

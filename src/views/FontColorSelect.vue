@@ -33,28 +33,34 @@
         @click="rotateToColor(index)"
       ></div>
     </div>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Næste</v-btn>
 
-  <!-- FeedbackPop som en popup -->
-  <FeedbackPop 
-    v-if="showFeedbackPopup" 
-    @close="showFeedbackPopup = false" 
-    :title="feedbackTitle"
-    :content="feedbackContent"
-    :imageUrl="feedbackImageUrl"
-  ></FeedbackPop>
+    <!-- Knappen til at gemme valget -->
+    <v-btn @click="saveFontColorSelection" color="" aria-label="Gå til næste trin">Gem og fortsæt</v-btn>
+
+    <!-- FeedbackPop som en popup -->
+    <FeedbackPop 
+      v-if="showFeedbackPopup" 
+      @close="showFeedbackPopup = false" 
+      :title="feedbackTitle"
+      :content="feedbackContent"
+      :imageUrl="feedbackImageUrl"
+    ></FeedbackPop>
   </div>
 </template>
 
 <script>
-import { VCard, VBtn, VIcon } from 'vuetify/lib/components'; // Importer Vuetify komponenter
+import { VCard, VBtn, VIcon } from 'vuetify/lib/components';
 import { mapActions, mapState } from 'vuex';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
+import axios from 'axios';
 
 export default {
   name: 'FontColorSelect',
   components: {
-    VCard, VBtn, VIcon, FeedbackPop, // Registrer Vuetify komponenter
+    VCard,
+    VBtn,
+    VIcon,
+    FeedbackPop,
   },
   data() {
     return {
@@ -71,63 +77,62 @@ export default {
         { name: 'Lyserød', color: '#E59C9D' },
         { name: 'Grå', color: '#D9D9D9' },
         { name: 'Gul', color: '#E2EC24' },
-        { name: 'Mørk lilla', color: '#732A75' }
+        { name: 'Mørk lilla', color: '#732A75' },
       ],
       selectedIndex: 0, // Indeks for valgt farve
       angleStep: 360 / 12, // Vinkeltrin for karusellen
       rotationAngle: 0, // Aktuel rotationsvinkel
       dragging: false, // Om brugeren trækker i karusellen
-      startAngle: 0, // Startvinkel for træk
-      currentAngle: 0, // Aktuel vinkel under træk
       showFeedbackPopup: false, // Kontroller synligheden af popup
       feedbackTitle: 'Godt valg!', // Titel for FeedbackPop
-      feedbackContent: 'Mørke farver bruger mindre energi på de fleste skærme, især OLED-skærme. Når en pixel er sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm. <br> <br> Denne forskel er tydeligere ved høj lysstyrke og længere skærmtid. Ved at vælge en mørk baggrund kan du derfor spare energi, især på OLED-enheder, der bliver mere udbredte. Mørkt design kan dermed også forlænge batterilevetiden på mobile enheder.', // Indhold for FeedbackPop
-      feedbackImageUrl: require('@/images/bg meme.png') // Billede-URL for FeedbackPop
+      feedbackContent: 'Mørke farver bruger mindre energi på de fleste skærme, især OLED-skærme. Når en pixel er sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm.', // Indhold for FeedbackPop
+      feedbackImageUrl: require('@/images/bg meme.png'), // Billede-URL for FeedbackPop
     };
   },
   computed: {
     ...mapState(['fontColorSelectionReached']),
     colorName() {
       return this.colorOptions[this.selectedIndex].name; // Navn på valgt farve
-    }
+    },
   },
   methods: {
-    ...mapActions(['updateTextColor', 'updateShowNextButton']),
-    changeTextColor(color) {
-      this.updateTextColor(color); // Opdater tekstfarve i Vuex
-    },
+    ...mapActions(['updateTextColor']),
     rotateToColor(index) {
       this.selectedIndex = index; // Opdater valgt indeks
       this.rotationAngle = -this.selectedIndex * this.angleStep; // Beregn rotationsvinkel
       this.color = this.colorOptions[this.selectedIndex].color; // Opdater valgt farve
-      this.changeTextColor(this.color); // Opdater tekstfarve
+      this.updateTextColor(this.color); // Opdater tekstfarve
     },
-    startDrag(event) {
+    startDrag() {
       this.dragging = true; // Start træk
-      this.startAngle = this.getMouseAngle(event); // Startvinkel for træk
-      this.currentAngle = this.rotationAngle; // Aktuel vinkel under træk
-    },
-    onDrag(event) {
-      if (!this.dragging) return;
-      const angle = this.getMouseAngle(event);
-      const deltaAngle = angle - this.startAngle;
-      this.rotationAngle = this.currentAngle + deltaAngle; // Opdater rotationsvinkel under træk
     },
     endDrag() {
       this.dragging = false; // Stop træk
     },
-    getMouseAngle(event) {
-      const rect = event.target.getBoundingClientRect();
-      const x = event.clientX - (rect.left + rect.width / 2);
-      const y = event.clientY - (rect.top + rect.height / 2);
-      return Math.atan2(y, x) * (180 / Math.PI); // Beregn musevinkel
+    async saveFontColorSelection() {
+      try {
+        const userId = localStorage.getItem('user_id');
+        if (!userId) {
+          alert('Bruger ikke fundet! Opret en bruger først.');
+          return;
+        }
+
+        const questionId = 3; // ID for spørgsmålet "Vælg tekstfarve"
+        const optionId = this.selectedIndex + 22; // Option ID begynder fra 22
+
+        await axios.post('http://localhost:3000/userAnswer', {
+          user_id: userId,
+          question_id: questionId,
+          option_id: optionId,
+        });
+
+        alert('Tekstfarve gemt succesfuldt!');
+        this.$router.push('/image-format'); // Naviger til næste trin
+      } catch (error) {
+        console.error('Fejl ved gemning af tekstfarve:', error.message);
+        alert('Der opstod en fejl. Prøv igen senere.');
+      }
     },
-    goBack() {
-      this.$router.push('/font-select'); // Naviger tilbage til skrifttypevalg
-    },
-    goForward() {
-      this.$router.push('/font-color-select'); // Naviger frem til tekstfarvevalg
-    }
   },
 };
 </script>

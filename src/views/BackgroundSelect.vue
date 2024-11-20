@@ -33,7 +33,7 @@
       <p class="text-subtitle-1">Valgt farve: <br> {{ colorName }}</p>
     </div>
     <!-- Knap til at vise feedback popup -->
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Næste</v-btn>
+    <v-btn @click="saveBackgroundSelection" color="primary" aria-label="Gå til næste trin">Næste</v-btn>
   </div>
   <!-- FeedbackPop som en popup -->
   <FeedbackPop 
@@ -46,92 +46,63 @@
 </template>
 
 <script>
-import { VCard, VBtn } from 'vuetify/lib/components'; // Importer Vuetify komponenter
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
+import axios from 'axios';
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 
 export default {
   name: 'BackgroundSelect',
   components: {
-    VCard, VBtn, FeedbackPop, // Registrer Vuetify komponenter
+    FeedbackPop,
   },
   data() {
     return {
-      color: '#ffffff', // Standard baggrundsfarve
-      colorOptions: [
-        { name: 'Hvid', color: '#FFFFFF' },
-        { name: 'Blå', color: '#3AA3EA' },
-        { name: 'Pink', color: '#F142DA' },
-        { name: 'Grøn', color: '#95BE87' },
-        { name: 'Lilla', color: '#4E2ADF' },
-        { name: 'Sort', color: '#000000' },
-        { name: 'Rød', color: '#E22828' },
-        { name: 'Lysegrøn', color: '#B3D08D' },
-        { name: 'Lyserød', color: '#E59C9D' },
-        { name: 'Grå', color: '#D9D9D9' },
-        { name: 'Gul', color: '#E2EC24' },
-        { name: 'Mørk lilla', color: '#732A75' }
-      ],
+      colorOptions: [], // Dynamiske farvevalg fra backend
       selectedIndex: 0, // Indeks for valgt farve
-      angleStep: 360 / 12, // Vinkeltrin for karusellen
-      rotationAngle: 0, // Aktuel rotationsvinkel
+      angleStep: 0, // Vinkeltrin, beregnes dynamisk
+      rotationAngle: 0, // Aktuel rotationsvinkel for karusellen
       dragging: false, // Om brugeren trækker i karusellen
       startAngle: 0, // Startvinkel for træk
       currentAngle: 0, // Aktuel vinkel under træk
-      showFeedbackPopup: false, // Kontroller synligheden af popup
-      feedbackTitle: 'Godt valg!', // Titel for FeedbackPop
-      feedbackContent: 'Mørke farver bruger mindre energi på de fleste skærme, især OLED-skærme. Når en pixel er sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm. <br> <br> Denne forskel er tydeligere ved høj lysstyrke og længere skærmtid. Ved at vælge en mørk baggrund kan du derfor spare energi, især på OLED-enheder, der bliver mere udbredte. Mørkt design kan dermed også forlænge batterilevetiden på mobile enheder. ', // Indhold for FeedbackPop
-      feedbackImageUrl: require('@/images/bg meme.png') // Billede-URL for FeedbackPop
+      showFeedbackPopup: false, // Popup synlighed
+      feedbackTitle: 'Godt valg!', // Titel for feedback
+      feedbackContent: 'Mørke farver bruger mindre energi på de fleste skærme, især OLED-skærme. Når en pixel er sort, er den næsten slukket, hvilket reducerer energiforbruget. Lyse farver som hvid kræver derimod, at pixels lyser kraftigere og dermed bruger mere strøm.',
+      feedbackImageUrl: require('@/images/bg meme.png'), // Feedback billede
     };
   },
   computed: {
-    ...mapState(['fontColorSelectionReached']),
     colorName() {
-      return this.colorOptions[this.selectedIndex].name; // Navn på valgt farve
-    }
+      return this.colorOptions[this.selectedIndex]?.option_text || ''; // Dynamisk navn for valgt farve
+    },
   },
   methods: {
-    ...mapActions(['updateBackgroundColor', 'updateTextColor', 'updateShowNextButton']),
-    changeBackgroundColor(color) {
-      this.updateBackgroundColor(color); // Opdater baggrundsfarve i Vuex
-    },
-    changeTextColor(color) {
-      this.updateTextColor(color); // Opdater tekstfarve i Vuex
-    },
-    rotateToColor(index) {
-      this.selectedIndex = index; // Opdater valgt indeks
-      this.rotationAngle = -this.selectedIndex * this.angleStep; // Beregn rotationsvinkel
-      this.color = this.colorOptions[this.selectedIndex].color; // Opdater valgt farve
-      this.changeBackgroundColor(this.color); // Opdater baggrundsfarve
-
-      // Sæt tekstfarve til hvid, hvis sort baggrund er valgt, og fontfarvevalgssiden ikke er nået
-      if (this.color === '#000000' && !this.fontColorSelectionReached) {
-        this.changeTextColor('#FFFFFF');
-      } else if (!this.fontColorSelectionReached) {
-        this.changeTextColor('#000000');
+    ...mapActions(['updateBackgroundColor']), // Vuex action til at opdatere baggrundsfarve
+    async fetchColors() {
+      try {
+        // Hent farvevalg fra backend
+        const response = await axios.get('http://localhost:3000/api/ui/background-colors');
+        this.colorOptions = response.data;
+        this.angleStep = 360 / this.colorOptions.length; // Dynamisk beregning af vinkeltrin
+      } catch (error) {
+        console.error('Fejl ved hentning af baggrundsfarver:', error.message);
+        alert('Kunne ikke hente farvevalg. Prøv igen senere.');
       }
     },
-    darkenColor(hex, percent = 20) {
-      // Mørkner en farve med en given procentdel
-      hex = hex.replace('#', '');
-      let r = parseInt(hex.substring(0, 2), 16);
-      let g = parseInt(hex.substring(2, 4), 16);
-      let b = parseInt(hex.substring(4, 6), 16);
-      r = Math.max(0, r - Math.round((percent / 100) * 255));
-      g = Math.max(0, g - Math.round((percent / 100) * 255));
-      b = Math.max(0, b - Math.round((percent / 100) * 255));
-      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    rotateToColor(index) {
+      this.selectedIndex = index; // Sæt valgt indeks
+      this.rotationAngle = -this.selectedIndex * this.angleStep; // Beregn rotationsvinkel
+      this.updateBackgroundColor(this.colorOptions[this.selectedIndex]?.color); // Opdater baggrundsfarve i Vuex
     },
     startDrag(event) {
       this.dragging = true; // Start træk
-      this.startAngle = this.getMouseAngle(event); // Startvinkel for træk
-      this.currentAngle = this.rotationAngle; // Aktuel vinkel under træk
+      this.startAngle = this.getMouseAngle(event); // Startvinkel
+      this.currentAngle = this.rotationAngle; // Aktuel vinkel
     },
     onDrag(event) {
       if (!this.dragging) return;
-      const angle = this.getMouseAngle(event);
-      const deltaAngle = angle - this.startAngle;
-      this.rotationAngle = this.currentAngle + deltaAngle; // Opdater rotationsvinkel under træk
+      const angle = this.getMouseAngle(event); // Beregn musevinkel
+      const deltaAngle = angle - this.startAngle; // Beregn ændring
+      this.rotationAngle = this.currentAngle + deltaAngle; // Opdater rotationsvinkel
     },
     endDrag() {
       this.dragging = false; // Stop træk
@@ -140,17 +111,40 @@ export default {
       const rect = event.target.getBoundingClientRect();
       const x = event.clientX - (rect.left + rect.width / 2);
       const y = event.clientY - (rect.top + rect.height / 2);
-      return Math.atan2(y, x) * (180 / Math.PI); // Beregn musevinkel
+      return Math.atan2(y, x) * (180 / Math.PI); // Konverter til grader
     },
-    goBack() {
-      this.$router.push('/'); // Naviger tilbage til startskærmen
+    async saveBackgroundSelection() {
+      try {
+        const userId = localStorage.getItem('user_id'); // Hent bruger-ID
+        if (!userId) {
+          alert('Bruger ikke fundet! Opret en bruger først.');
+          return;
+        }
+
+        const questionId = 1; // ID for spørgsmålet
+        const optionId = this.colorOptions[this.selectedIndex]?.id; // Dynamisk option ID
+
+        const response = await axios.post('http://localhost:3000/userAnswer', {
+          user_id: userId,
+          question_id: questionId,
+          option_id: optionId,
+        });
+
+        console.log('Baggrundsfarve gemt:', response.data);
+        alert('Dit valg er blevet gemt!');
+        this.$router.push('/font-select'); // Naviger til næste trin
+      } catch (error) {
+        console.error('Fejl ved gemning af baggrundsfarve:', error.message);
+        alert('Der opstod en fejl. Prøv igen senere.');
+      }
     },
-    goForward() {
-      this.$router.push('/font-select'); // Naviger frem til skrifttypevalg
-    }
-  }
+  },
+  mounted() {
+    this.fetchColors(); // Hent farvevalg når komponenten loades
+  },
 };
 </script>
+
 
 <style scoped>
 /* Feedback pop up */

@@ -24,7 +24,7 @@
         <v-btn class="custom-next-btn" icon @click="goForwardFont">→</v-btn>
       </template>
     </v-carousel>
-    <v-btn @click="showFeedbackPopup = true; updateShowNextButton(true)" color="" aria-label="Gå til næste trin">Next</v-btn>
+    <v-btn @click="saveFontSelection" color="primary" aria-label="Gå til næste trin">Next</v-btn>
   </div>
   <FeedbackPop 
     v-if="showFeedbackPopup" 
@@ -39,6 +39,7 @@
 import FeedbackPop from '@/components/feedback/FeedbackPop.vue';
 import { VBtn, VCard, VCarousel, VCarouselItem } from 'vuetify/lib/components'; // Import Vuetify button component
 import { mapActions, mapState } from 'vuex';
+import axios from 'axios'; // Import Axios for HTTP requests
 
 export default {
   name: 'FontSelect',
@@ -47,58 +48,72 @@ export default {
     VCard,
     VCarousel,
     VCarouselItem,
-    FeedbackPop // Register Vuetify button component
+    FeedbackPop // Register FeedbackPop component
   },
   data() {
     return {
       currentFontIndex: 0, // Aktuel skrifttypeindeks
       fonts: [
-        { name: 'Arial', font: 'Arial, sans-serif' },
-        { name: 'Courier New', font: 'Courier New, monospace' },
-        { name: 'Georgia', font: 'Georgia, serif' },
-        { name: 'Times New Roman', font: 'Times New Roman, serif' },
-        { name: 'Tahoma', font: 'Tahoma, sans-serif' },
-        { name: 'Trebuchet MS', font: 'Trebuchet MS, sans-serif' },
-        { name: 'Comic Sans MS', font: 'Comic Sans MS, cursive, sans-serif' },
-        { name: 'Rubik Wet Paint', font: 'Rubik Wet Paint, system-ui' }, // Tilføj din egen skrifttype her
-        { name: 'Notable', font: 'Notable, system-ui' } // Tilføj din egen skrifttype her
+        { id: 13, name: 'Arial', font: 'Arial, sans-serif' },
+        { id: 14, name: 'Courier New', font: 'Courier New, monospace' },
+        { id: 15, name: 'Georgia', font: 'Georgia, serif' },
+        { id: 16, name: 'Times New Roman', font: 'Times New Roman, serif' },
+        { id: 17, name: 'Tahoma', font: 'Tahoma, sans-serif' },
+        { id: 18, name: 'Trebuchet MS', font: 'Trebuchet MS, sans-serif' },
+        { id: 19, name: 'Comic Sans MS', font: 'Comic Sans MS, cursive, sans-serif' },
+        { id: 20, name: 'Rubik Wet Paint', font: 'Rubik Wet Paint, system-ui' },
+        { id: 21, name: 'Roboto', font: 'Roboto, sans-serif' }
       ],
-      showFeedbackPopup: false, // Kontroller synligheden af popup
-      feedbackTitle: 'Ikke dårligt!', // Titel for FeedbackPop
-      feedbackContent: 'Når du vælger en skrifttype, der er indbygget i HTML, sparer du båndbredde. Websikre skrifttyper som Arial og Verdana er hurtigere at indlæse, da de er tilgængelige på de fleste enheder uden ekstra filoverførsler. <br> <br> Moderne skrifttyper, der kræver eksternt download, kan øge serverbelastningen og bruge mere tid og data, hvilket medfører et højere CO2-aftryk. Skrifttyper med mange vægte og stilarter kræver ekstra filer, som belaster indlæsningstiden. Ved at vælge en enkel skrifttype kan du optimere din hjemmesides hastighed og bæredygtighed, og dermed reducere CO2-aftrykket.', // Indhold for FeedbackPop
-      feedbackImageUrl: require('@/images/font_meme2.png') // Billede-URL for FeedbackPop
+      showFeedbackPopup: false,
+      feedbackTitle: 'Ikke dårligt!',
+      feedbackContent: 'Når du vælger en skrifttype, der er indbygget i HTML, sparer du båndbredde...',
+      feedbackImageUrl: require('@/images/font_meme2.png') // Path to feedback image
     };
   },
   computed: {
-    ...mapState(['selectedFont', 'textColor']), // Hent valgt skrifttype og tekstfarve fra Vuex
+    ...mapState(['selectedFont', 'textColor']),
   },
   methods: {
-    ...mapActions(['updateSelectedFont', 'updateShowNextButton']), // Kortlæg Vuex handlinger
-    goBack() {
-      this.$router.push('/background-select'); // Naviger tilbage til baggrundsvalg
-    },
-    goForward() {
-      this.$router.push('/font-color-select'); // Naviger frem til tekstfarvevalg
+    ...mapActions(['updateSelectedFont', 'updateShowNextButton']),
+    async saveFontSelection() {
+      try {
+        const userId = localStorage.getItem('user_id');
+        if (!userId) {
+          alert('Bruger ikke fundet! Opret en bruger først.');
+          return;
+        }
+
+        const selectedFont = this.fonts[this.currentFontIndex];
+
+        // Send POST-anmodning til backend
+        const response = await axios.post('http://localhost:3000/userAnswer', {
+          user_id: userId,
+          question_id: 2, // ID'et for "Vælg skrifttype"
+          option_id: selectedFont.id, // ID'et for den valgte skrifttype
+        });
+
+        console.log('Skrifttype gemt:', response.data);
+        alert('Skrifttypevalg gemt succesfuldt!');
+
+        // Naviger til næste trin
+        this.$router.push('/font-color-select');
+      } catch (error) {
+        console.error('Fejl ved gemning af skrifttypevalg:', error.message);
+        alert('Der opstod en fejl. Prøv igen senere.');
+      }
     },
     goForwardFont() {
-      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length; // Gå til næste skrifttype
-      this.updateSelectedFont(this.fonts[this.currentFontIndex].font); // Opdater valgt skrifttype i Vuex
+      this.currentFontIndex = (this.currentFontIndex + 1) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
     },
     goBackwardFont() {
-      this.currentFontIndex = (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length; // Gå til forrige skrifttype
-      this.updateSelectedFont(this.fonts[this.currentFontIndex].font); // Opdater valgt skrifttype i Vuex
+      this.currentFontIndex = (this.currentFontIndex - 1 + this.fonts.length) % this.fonts.length;
+      this.updateSelectedFont(this.fonts[this.currentFontIndex].font);
     },
-  },
-  watch: {
-    currentFontIndex(newIndex) {
-      this.updateSelectedFont(this.fonts[newIndex].font); // Opdater valgt skrifttype i Vuex, når currentFontIndex ændres
-    },
-  },
-  mounted() {
-    this.currentFontIndex = this.fonts.findIndex(font => font.font === this.selectedFont); // Sæt currentFontIndex til den valgte skrifttype ved montering
   },
 };
 </script>
+
 
 <style scoped>
 .card-intro {

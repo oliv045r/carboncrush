@@ -13,21 +13,21 @@
             <button
                class="animated-button button1"
                :class="{ active: activeButton === 'button1' }"
-               @click="setActiveButton('button1')"
+               @click="selectAnimation('button1')"
                aria-label="Vælg minimal animation">
                Knap 1
             </button>
             <button
                class="animated-button button2"
                :class="{ active: activeButton === 'button2' }"
-               @click="setActiveButton('button2')"
+               @click="selectAnimation('button2')"
                aria-label="Vælg medium animation">
                Knap 2
             </button>
             <button
                class="animated-button button3"
                :class="{ active: activeButton === 'button3' }"
-               @click="setActiveButton('button3')"
+               @click="selectAnimation('button3')"
                @mouseover="bounceButton"
                aria-label="Vælg stor animation">
                Knap 3
@@ -35,7 +35,7 @@
             <button
                class="animated-button button4"
                :class="{ active: activeButton === 'button4' }"
-               @click="setActiveButton('button4')"
+               @click="selectAnimation('button4')"
                aria-label="Vælg maksimal animation">
                Knap 4
             </button>
@@ -43,15 +43,10 @@
       </div>
       <v-btn
          class="mt-10"
-         @click="
-            showFeedbackPopup = true;
-            updateShowNextButton(true);
-         "
-         color=""
-         aria-label="Næste"
-         >Næste</v-btn
-
-      >
+         @click="saveAnimationSelection"
+         color="primary"
+         aria-label="Gem animationsvalg og fortsæt"
+         >Næste</v-btn>
    </div>
    <FeedbackPop
       v-if="showFeedbackPopup"
@@ -65,6 +60,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import FeedbackPop from "@/components/feedback/FeedbackPop.vue";
+import axios from "axios";
 
 export default {
    components: {
@@ -72,34 +68,65 @@ export default {
    },
    data() {
       return {
-         showFeedbackPopup: false, // Kontrollerer synligheden af popup
-         feedbackTitle: "Spændende!", // Titel til FeedbackPop
+         showFeedbackPopup: false,
+         feedbackTitle: "Spændende!",
          feedbackContent:
-            "Når du vælger animationer til din hjemmeside, er det vigtigt at balancere visuel effekt og ydeevne. Flere animationer kan se godt ud, men kan også belaste systemet og øge indlæsningstiden. For mange animationer kan påvirke både ydeevne og bæredygtighed, så vælg en passende mængde for en bedre brugeroplevelse og mindre energiforbrug.", // Indhold til FeedbackPop
-         feedbackImageUrl: require("@/images/AnimationMeme3.png"), // Billede URL til FeedbackPop
+            "Når du vælger animationer til din hjemmeside, er det vigtigt at balancere visuel effekt og ydeevne. Flere animationer kan se godt ud, men kan også belaste systemet og øge indlæsningstiden. For mange animationer kan påvirke både ydeevne og bæredygtighed, så vælg en passende mængde for en bedre brugeroplevelse og mindre energiforbrug.",
+         feedbackImageUrl: require("@/images/AnimationMeme3.png"),
          activeButton: null, // Sporer den aktive knap
+         animationMapping: {
+            button1: 44, // Option ID for minimal animation
+            button2: 45, // Option ID for medium animation
+            button3: 46, // Option ID for stor animation
+            button4: 47, // Option ID for maksimal animation
+         },
       };
    },
    computed: {
       ...mapState(["showNextButton"]),
    },
    methods: {
-      ...mapActions(["updateSelectedFont", "updateShowNextButton"]),
-
-      goBack() {
-         this.$router.push("/"); // Navigerer tilbage til hovedsiden
+      ...mapActions(["updateShowNextButton"]),
+      
+      selectAnimation(button) {
+         this.activeButton = button; // Sæt aktiv knap
       },
-      goForward() {
-         this.$router.push("/another-route"); // Navigerer til en anden side
+      async saveAnimationSelection() {
+         try {
+            const userId = localStorage.getItem("user_id"); // Hent bruger-ID fra localStorage
+            if (!userId) {
+               alert("Bruger ikke fundet! Opret en bruger først.");
+               return;
+            }
+
+            const questionId = 6; // ID for spørgsmålet "Vælg animationsgrad"
+            const optionId = this.animationMapping[this.activeButton]; // Find option ID baseret på aktiv knap
+
+            if (!optionId) {
+               alert("Vælg venligst en animationsgrad før du fortsætter.");
+               return;
+            }
+
+            // Send POST-anmodning til backend
+            const response = await axios.post("http://localhost:3000/userAnswer", {
+               user_id: userId,
+               question_id: questionId,
+               option_id: optionId,
+            });
+
+            console.log("Animationsvalg gemt:", response.data);
+            alert("Dit valg er blevet gemt!");
+            this.$router.push("/icon-format"); // Naviger til næste trin
+         } catch (error) {
+            console.error("Fejl ved gemning af animationsvalg:", error.message);
+            alert("Der opstod en fejl. Prøv igen senere.");
+         }
       },
       bounceButton(event) {
          const button = event.target;
-         button.classList.remove("bounce"); // Fjerner bounce-animationen
-         void button.offsetWidth; // Tvinger reflow for at genstarte animationen
-         button.classList.add("bounce"); // Tilføjer bounce-animationen
-      },
-      setActiveButton(button) {
-         this.activeButton = button; // Sætter den aktive knap
+         button.classList.remove("bounce"); // Fjern bounce-animation
+         void button.offsetWidth; // Tving reflow
+         button.classList.add("bounce"); // Tilføj bounce-animation
       },
    },
 };
